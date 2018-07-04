@@ -1,0 +1,11 @@
+{
+  // "extends": "./node_modules/@tradie/component-config/tsconfig",
+  "compilerOptions": {
+    "jsx": "react",
+    "moduleResolution": "node",
+    "baseUrl": "./packages",
+    "paths": {
+      "@substance/*": ["./*/src"]
+    }
+  }
+}

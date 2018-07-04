@@ -1,0 +1,10 @@
+{
+  "name": "@substance/box",
+  "version": "1.0.0",
+  "peerDependencies": {
+    "@types/react": "^16.4.6",
+    "react": "^16.4.1",
+    "styled-components": "^3.3.3"
+  },
+  "license": "MIT"
+}

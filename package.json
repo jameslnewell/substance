@@ -1,0 +1,19 @@
+{
+  "name": "substance",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "website"
+  ],
+  "scripts": {
+    "clean": "component-scripts clean",
+    "build": "component-scripts build",
+    "start": "component-scripts start",
+    "test": "component-scripts test"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "webpack-hot-client": "^4.0.4"
+  }
+}
