@@ -4,7 +4,7 @@ import {bg} from '@substance/color';
 import {Consumer} from '../ProjectInfoContext';
 
 const Wrapper = styled.div`
-  ${bg('grey')}
+  ${bg('shades.light')}
   width: 300px;
 `;
 
@@ -17,18 +17,16 @@ export class Nav extends React.Component {
             <h1>{project.root.name}</h1>
             {project.workspaces.map(workspace => {
               return (
-                <>
-                  <h4 key={workspace.name}>{workspace.name}</h4>
+                <React.Fragment key={workspace.name}>
+                  <h4>{workspace.name}</h4>
                   {workspace.examples.map(example => {
                     return (
-                      <>
-                        <button key={example.name}>
-                          {example.name}
-                        </button>
-                      </>
+                      <button key={example.name}>
+                        {example.name}
+                      </button>
                     );
                   })}
-                </>
+                </React.Fragment>
               );
             })}
           </Wrapper>

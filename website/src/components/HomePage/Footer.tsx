@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import {color, bg} from '@substance/color';
 import Container from '@substance/container';
 import {px} from '@substance/spacing';
-import {font} from '@substance/typography';
+import {copy} from '@substance/typography';
 
 const FooterWrapper = styled.footer`
   ${px({mobile: 2, desktop: 0})}
-  ${font()}
-  ${bg('dark')};
+  ${copy()}
+  ${bg('shades.dark')};
 `;
 
 export const Footer = () => (

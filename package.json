@@ -6,6 +6,9 @@
     "packages/*",
     "website"
   ],
+  "devDependencies": {
+    "@types/jest": "^23.1.5"
+  },
   "scripts": {
     "clean": "component-scripts clean",
     "build": "component-scripts build",
@@ -13,7 +16,7 @@
     "test": "component-scripts test"
   },
   "license": "MIT",
-  "devDependencies": {
-    "webpack-hot-client": "^4.0.4"
+  "dependencies": {
+    "webpack-hot-client": "^4.1.1"
   }
 }

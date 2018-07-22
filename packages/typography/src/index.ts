@@ -4,7 +4,7 @@ import {select} from '@substance/theme';
 
 export type Alignment = 'left' | 'center' | 'right' | 'justify';
 
-export function align(values: Value<Alignment> | BreakpointValueMap<Alignment>) {
+function align(values: Value<Alignment> | BreakpointValueMap<Alignment>) {
   return map(values, value => {
     if (!value) {
       return '';
@@ -13,16 +13,14 @@ export function align(values: Value<Alignment> | BreakpointValueMap<Alignment>) 
   })
 }
 
-export function font(name: string = 'primary') {
-  return css`font-family: ${select(({fonts = {}}) => fonts[name])};`;
+export function heading(options: {} = {}) {
+  return `
+  `;
 }
 
-export function fontSize(val: 1 | 2 | 3 | 4) {
-
+export function copy(options: {align?: Alignment} = {}) {
+  return css`
+    font-family: ${select('typography.copy.font')};
+    ${align(options.align)}
+  `;
 }
-
-export function fontWeight(val: 1 | 2 | 3 | 4) {
-
-}
-
-// what about copy and headings?

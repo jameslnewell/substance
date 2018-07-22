@@ -1,26 +1,28 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import {grid, unit} from '@substance/grid';
 import {color, bg} from '@substance/color';
 import {container} from '@substance/container';
-import {py, px} from '@substance/spacing';
-import {font, align} from '@substance/typography';
+import {py, px, p} from '@substance/spacing';
+import {copy} from '@substance/typography';
 
 const FeatureWrapper = styled.div`
-  ${font()}
-  border-bottom: 1px solid ${color('dark')};
-  ${bg('success')};
+  border-bottom: 1px solid ${color('shades.dark')};
+  ${bg('alert.success')};
 `;
 
 const FeatureContent = styled.div`
   ${container}
-  /* \${grid()} */
-  ${py({mobile: 4, tablet: 5, desktop: 6})}
+  ${grid({})}
+  ${py({mobile: 2, tablet: 5, desktop: 6})}
   ${px({mobile: 2, desktop: 0})}
-  ${align({mobile: 'center', tablet: 'left'})}
 `;
 
 const Feature = styled.div`
-  /* \${grid.unit()} */
+  box-sizing: border-box;
+  ${unit({size: {tablet: 1/3}})}
+  ${p({mobile: 3})}
+  ${copy({align: 'center'})}
 `;
 
 export const FeaturePanel = () => (

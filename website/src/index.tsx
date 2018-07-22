@@ -5,6 +5,12 @@ import Theme from '@substance/theme';
 import {Provider} from './components/ProjectInfoContext'
 import App from './components/App';
 
+const theme = {
+  colors: {
+    dark: 'red'
+  }
+}
+
 ReactDOM.render(
   <Theme>
     <Provider>

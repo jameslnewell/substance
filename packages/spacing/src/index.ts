@@ -8,7 +8,7 @@ export function p(val: string | number | {[breakpoint: string]: string | number}
       return '';
     }
     return css`
-      padding: ${select(({spacing = {}}) => spacing[value])};
+      padding: ${select(`spacing.${value}`)};
     `;
   }));
 }
@@ -19,8 +19,8 @@ export function px(val: string | number) {
       return '';
     }
     return css`
-      padding-left: ${select(({spacing = {}}) => spacing[value])};
-      padding-right: ${select(({spacing = {}}) => spacing[value])};
+      padding-left: ${select(`spacing.${value}`)};
+      padding-right: ${select(`spacing.${value}`)};
     `;
   }));
 }
@@ -31,8 +31,8 @@ export function py(val: string | number) {
       return '';
     }
     return css`
-      padding-top: ${select(({spacing = {}}) => spacing[value])};
-      padding-bottom: ${select(({spacing = {}}) => spacing[value])};
+      padding-top: ${select(`spacing.${value}`)};
+      padding-bottom: ${select(`spacing.${value}`)};
     `;
   }));
 }

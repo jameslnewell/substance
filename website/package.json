@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@substance/breakpoint": "^1.0.0",
+    "@substance/grid": "^1.0.0",
     "@substance/container": "^1.0.0",
     "@substance/reset": "^1.0.0",
     "@substance/color": "^1.0.0",
