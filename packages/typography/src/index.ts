@@ -1,15 +1,15 @@
 import {css} from 'styled-components';
-import {map, Value, BreakpointValueMap} from '@substance/breakpoint';
+import {map, BreakpointValue, BreakpointValueMap} from '@substance/breakpoint';
 import {select} from '@substance/theme';
 
 export type Alignment = 'left' | 'center' | 'right' | 'justify';
 
-function align(values: Value<Alignment> | BreakpointValueMap<Alignment>) {
-  return map(values, value => {
-    if (!value) {
+function align(alignment: BreakpointValue<Alignment> | BreakpointValueMap<Alignment>) {
+  return map(alignment, val => {
+    if (!val) {
       return '';
     }
-    return `text-align: ${value};`;
+    return `text-align: ${val};`;
   })
 }
 
@@ -18,7 +18,7 @@ export function heading(options: {} = {}) {
   `;
 }
 
-export function copy(options: {align?: Alignment} = {}) {
+export function copy(options: {align?: BreakpointValue<Alignment> | BreakpointValueMap<Alignment>} = {}) {
   return css`
     font-family: ${select('typography.copy.font')};
     ${align(options.align)}

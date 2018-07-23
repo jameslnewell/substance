@@ -1,10 +1,10 @@
-import {css, SimpleInterpolation, Interpolation, ThemedStyledProps, InterpolationValue, FlattenInterpolation, ThemedCssFunction} from 'styled-components';
+import {css, SimpleInterpolation, ThemedCssFunction} from 'styled-components';
 import {select} from '@substance/theme';
 
 export type Breakpoint = string;
-export type Value<V> = V;
-export type BreakpointValueMap<V> = {[breakpoint: string]: Value<V> };
-export type MapValueToStyleFunction<V> = (value?: Value<V>) => SimpleInterpolation;
+export type BreakpointValue<V> = V;
+export type BreakpointValueMap<V> = {[breakpoint: string]: BreakpointValue<V> };
+export type MapValueToStyleFunction<V> = (value?: BreakpointValue<V>) => any;
 
 export function gte<T>(breakpoint: Breakpoint): ThemedCssFunction<T> {
   return (strings: TemplateStringsArray, ...interpolations: SimpleInterpolation[]) => {
@@ -22,7 +22,7 @@ export function lte<T>(breakpoint: Breakpoint): ThemedCssFunction<T> {
   };
 }
 
-export function map<V, P, T>(values: Value<V> | BreakpointValueMap<V>, mapValueToStyle: MapValueToStyleFunction<V>) {
+export function map<V>(values: BreakpointValue<V> | BreakpointValueMap<V>, mapValueToStyle: MapValueToStyleFunction<V>) {
   if (typeof values !== 'object') {
     return mapValueToStyle(values);
   }

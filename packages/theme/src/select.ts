@@ -1,9 +1,9 @@
 import {Theme} from './types';
 
-export function select(path: string, value: any = undefined): any {
+export function select(path: string, defaultValue: any = undefined): any {
   return ({theme}: {theme?: Partial<Theme>}) => {
     if (!theme) {
-      return value;
+      return defaultValue;
     }
     if (theme[path]) {
       return theme[path];
@@ -14,8 +14,7 @@ export function select(path: string, value: any = undefined): any {
       if (obj.hasOwnProperty(key)) {
         obj = obj[key];
       } else {
-        console.log(keys, 'default value');
-        return value;
+        return defaultValue;
       }
     }
     return obj;

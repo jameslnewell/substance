@@ -1,38 +1,40 @@
 import {css} from 'styled-components'
-import {map} from '@substance/breakpoint';
+import {map, BreakpointValue, BreakpointValueMap} from '@substance/breakpoint';
 import {select} from '@substance/theme';
 
-export function p(val: string | number | {[breakpoint: string]: string | number}) {
-  return map(val, (value => {
-    if (value === undefined) {
+export type Size = BreakpointValue<string | number> | BreakpointValueMap<string | number>;
+
+export function p(size: Size) {
+  return map(size, (s => {
+    if (s === undefined) {
       return '';
     }
     return css`
-      padding: ${select(`spacing.${value}`)};
+      padding: ${select(`spacing.${s}`)};
     `;
   }));
 }
 
-export function px(val: string | number) {
-  return map(val, (value => {
-    if (value === undefined) {
+export function px(size: Size) {
+  return map(size, (s => {
+    if (s === undefined) {
       return '';
     }
     return css`
-      padding-left: ${select(`spacing.${value}`)};
-      padding-right: ${select(`spacing.${value}`)};
+      padding-left: ${select(`spacing.${s}`)};
+      padding-right: ${select(`spacing.${s}`)};
     `;
   }));
 }
 
-export function py(val: string | number) {
-  return map(val, (value => {
-    if (value === undefined) {
+export function py(size: Size) {
+  return map(size, (s => {
+    if (s === undefined) {
       return '';
     }
     return css`
-      padding-top: ${select(`spacing.${value}`)};
-      padding-bottom: ${select(`spacing.${value}`)};
+      padding-top: ${select(`spacing.${s}`)};
+      padding-bottom: ${select(`spacing.${s}`)};
     `;
   }));
 }
