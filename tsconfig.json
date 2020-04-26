@@ -1,5 +1,5 @@
 {
-  // "extends": "./node_modules/@tradie/component-config/tsconfig",
+  "extends": "./node_modules/@jameslnewell/typescript-config/tsconfig.json",
   "compilerOptions": {
     "jsx": "react",
     "moduleResolution": "node",
@@ -7,5 +7,7 @@
     "paths": {
       "@substance/*": ["./*/src"]
     }
-  }
+  },
+  "include": ["packages/*/src"],
+  "exclude": ["node_modules", "packages/core"]
 }

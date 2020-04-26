@@ -1,0 +1,14 @@
+{
+  "extends": "../node_modules/@jameslnewell/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react",
+    "lib": ["DOM"],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "../packages",
+    "paths": {
+      "@substance/*": ["./*/src"]
+    }
+  },
+  "include": ["../packages/breakpoints/src", "../packages/spacing/src"]
+}

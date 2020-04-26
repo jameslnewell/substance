@@ -1,5 +1,5 @@
 {
-  "name": "@substance/reset",
+  "name": "@substance/core",
   "version": "1.0.0-preview.1",
   "source": "src/index.ts",
   "main": "dist/cjs/index.js",

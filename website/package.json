@@ -1,26 +1,15 @@
 {
   "name": "@substance/website",
-  "version": "1.0.0",
+  "version": "1.0.0-preview.1",
   "private": true,
   "dependencies": {
-    "@substance/breakpoint": "^1.0.0",
-    "@substance/grid": "^1.0.0",
-    "@substance/container": "^1.0.0",
-    "@substance/reset": "^1.0.0",
-    "@substance/color": "^1.0.0",
-    "@substance/spacing": "^1.0.0",
-    "@substance/theme": "^1.0.0",
-    "@types/react": "^16.9.9",
-    "@types/react-dom": "^16.9.2",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
-    "styled-components": "^4.4.0"
+    "@types/react": "^16.9.25",
+    "@types/react-dom": "^16.9.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "styled-components": "^5.0.1"
   },
   "scripts": {
-    "clean": "component-scripts clean",
-    "build": "component-scripts build",
-    "start": "component-scripts start",
-    "test": "component-scripts test"
   },
   "license": "MIT"
 }

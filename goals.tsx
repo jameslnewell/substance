@@ -1,0 +1,82 @@
+import { css } from "styled-components";
+
+const combine = (map) => props => {
+    return Object.keys(props).map(key => {
+        if (map[key]) {
+            return map[key](props[key]);
+        }
+        return undefined;
+    });
+}
+
+export interface VariantStyleMap {
+    [key: string]: typeof css | CSSObject | ((props) => typeof css | CSSObject)
+}
+
+const variant = (styleMap, getStyleKey = props => props.variant) => (props) => {
+    return styleMap[getStyleKey(props)];
+}
+
+variant({
+    primary: {},
+    secondary: {},
+    tertiary: {}
+});
+
+// @substance/style/mixins
+// How to support themed or static???
+const marginLeft = value => `margin-left: ${value};`;
+const marginRight = value => `margin-right: ${value};`;
+const paddingLeft = value => `padding-left: ${value};`;
+const paddingRight = value => `padding-right: ${value};`;
+
+// @substance/style/props
+const margin = combine({
+    marginLeft,
+    marginRight,
+    ml: marginLeft,
+    mr: marginRight,
+});
+const padding = combine({
+    paddingLeft,
+    paddingRight,
+    pl: paddingLeft,
+    pr: paddingRight,
+});
+
+// *.native.js
+const Box = styled.div``;
+
+// Flex
+const Flex = styled.div``;
+
+// Grid
+const Grid = styled.div``;
+
+// Tex
+const Text = styled.p``;
+
+
+// popover
+
+<Popover>
+
+</Popover>
+
+// inline-edit
+<InlineEdit/>
+
+// Focusable
+<Focusable>{props => <div {...props}/>}</Focusable>
+
+// FocusGroup
+<FocusGroup orientation="">
+    <FocusGroup.Item>
+        {props => <div {...props}/>}
+    </FocusGroup.Item>
+</FocusGroup>
+
+// list - style free, just accessibility
+<List focusable>
+    <List.Item></List.Item>
+</List>

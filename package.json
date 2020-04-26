@@ -5,12 +5,16 @@
   "workspaces": {
     "packages": [
       "packages/*",
+      "storybook",
       "website"
     ]
   },
   "dependencies": {
+    "@jameslnewell/editor-config": "^1.0.1",
+    "@jameslnewell/typescript-config": "^3.0.0"
   },
   "scripts": {
+    "start": "yarn workspace @substance/storybook run start"
   },
   "license": "MIT"
 }
