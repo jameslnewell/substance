@@ -10,11 +10,10 @@ const Square = styled.div(
   square,
   map(
     {
-      sm: 'red',
-      md: 'green',
-      lg: 'blue',
+      sm: 'dark',
+      lg: 'light',
     },
-    (value, props) => ({backgroundColor: props.theme?.colors[value]}),
+    (value, props) => ({backgroundColor: props.theme?.colors.green?.[value]}),
   ),
 );
 
