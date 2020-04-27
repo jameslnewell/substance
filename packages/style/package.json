@@ -1,6 +1,16 @@
 {
   "name": "@substance/style",
-  "version": "0.1.0-preview.2",
+  "version": "0.1.0-preview.3",
+  "keywords": [
+    "substance",
+    "react",
+    "components",
+    "style",
+    "styling"
+  ],
+  "description": "Primitives for styling.",
+  "author": "James Newell",
+  "repository": "jameslnewell/substance",
   "source": "src/index.ts",
   "main": "dist/style.cjs.js",
   "module": "dist/style.esm.js",

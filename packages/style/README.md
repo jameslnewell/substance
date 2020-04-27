@@ -1,6 +1,6 @@
 # @substance/style 🧬
 
-Utilities for styling.
+Primitives for styling.
 
 ## Installation
 
