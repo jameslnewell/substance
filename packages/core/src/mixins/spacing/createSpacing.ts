@@ -1,22 +1,30 @@
-import {DefaultTheme} from 'styled-components';
-import {createStyle, StyleProperty} from '@substance/core';
-import {BreakpointNameConstraint, MapFunction} from '@substance/breakpoints';
-import {SpacingNameConstraint, SpacingMap, SpacingFunction} from './types';
+import { BreakpointNameConstraint, MapFunction, StyleProperty } from '../../types';
+import {createMixin} from '../../createMixin'
+import { SpacingMap, SpacingNameConstraint, SpacingFunction } from './types';
 
-export interface GetSpacingMapFunction<SpacingName extends SpacingNameConstraint, Theme = DefaultTheme> {
+export interface GetSpacingMapFunction<SpacingName extends SpacingNameConstraint, Theme> {
   (theme: Theme | undefined): SpacingMap<SpacingName>;
 }
 
 const createSpacingFactory = (properties: StyleProperty[]) => {
-  return <Breakpoint extends BreakpointNameConstraint, SpacingName extends SpacingNameConstraint, Theme = DefaultTheme>(
+  return <Breakpoint extends BreakpointNameConstraint, SpacingName extends SpacingNameConstraint, Theme>({
+    map,
+    spacings: spacingMapOrGetSpacingMap
+  }: {
     map: MapFunction<Breakpoint, Theme>, 
-    spacingMapOrGetSpacingMap: SpacingMap<SpacingName> | GetSpacingMapFunction<SpacingName, Theme>
-  ): SpacingFunction<Breakpoint, SpacingName> => {
-    if (typeof spacingMapOrGetSpacingMap === 'function') {
-      return (value) => map(value, createStyle<SpacingName, Theme>(properties, value => ({theme}) => spacingMapOrGetSpacingMap(theme)[value])); 
-    } else {
-      return (value) => map(value, createStyle<SpacingName, Theme>(properties, value => spacingMapOrGetSpacingMap[value]));
-    }
+    spacings: SpacingMap<SpacingName> | GetSpacingMapFunction<SpacingName, Theme>
+  }): SpacingFunction<Breakpoint, SpacingName, Theme> => {
+    return createMixin<Breakpoint, SpacingName, Theme>({
+      map, 
+      properties, 
+      transform: (value, {theme}) => {
+        if (typeof spacingMapOrGetSpacingMap === 'function') {
+          return spacingMapOrGetSpacingMap(theme)[value]
+        } else {
+          return spacingMapOrGetSpacingMap[value];
+        }
+      }
+    });
   };
 }
 

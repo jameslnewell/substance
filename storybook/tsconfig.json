@@ -10,5 +10,5 @@
       "@substance/*": ["./*/src"]
     }
   },
-  "include": ["../packages/breakpoints/src", "../packages/spacing/src"]
+  "include": ["../packages/*/src"]
 }

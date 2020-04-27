@@ -1,7 +1,7 @@
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
-    stories: ['../../packages/spacing/src/**/*.stories.tsx'],
+    stories: ['../../packages/core/src/**/*.stories.tsx'],
     addons: [
       {
         name: '@storybook/preset-typescript',

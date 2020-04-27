@@ -2,7 +2,7 @@ import { SpacingMap } from "./types";
 
 export type DefaultSpacingName = 0 | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '-xs' | '-sm' | '-md' | '-lg' | '-xl';
 
-export const defaults: SpacingMap<DefaultSpacingName> = {
+export const defaultSpacings: SpacingMap<DefaultSpacingName> = {
   '-xl': '-4em',
   '-lg': '-2em',
   '-md': '-1em',

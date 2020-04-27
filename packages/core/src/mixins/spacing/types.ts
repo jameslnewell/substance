@@ -1,4 +1,4 @@
-import {BreakpointNameConstraint, ResponsiveValueOrMap} from '@substance/breakpoints';
+import { BreakpointNameConstraint, MapValueOrMap, Style } from "../../types";
 
 export type SpacingNameConstraint = string | number;
 export type SpacingMap<SpacingName extends SpacingNameConstraint> = {[name in SpacingName]: number | string};
@@ -6,6 +6,7 @@ export type SpacingMap<SpacingName extends SpacingNameConstraint> = {[name in Sp
 export interface SpacingFunction<
   Breakpoint extends BreakpointNameConstraint, 
   SpacingName extends SpacingNameConstraint,
+  Theme
 > {
-  (value: ResponsiveValueOrMap<Breakpoint, SpacingName>): any; // FIXME: 
+  (value: MapValueOrMap<Breakpoint, SpacingName>): Style<Theme>;
 }
