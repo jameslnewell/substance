@@ -13,7 +13,7 @@ const Square = styled.div(
       sm: 'dark',
       lg: 'light',
     },
-    (value, props) => ({backgroundColor: props.theme?.colors.green?.[value]}),
+    (value, props) => ({backgroundColor: props.theme?.color.green?.[value]}),
   ),
 );
 

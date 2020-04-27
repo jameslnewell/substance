@@ -1,11 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {
-  defaultBreakpoints,
-  createBreakpoint,
-  createMap,
-  createProps,
-} from '../..';
+import {defaultMedia, createMatch, createMap, createProps} from '../..';
 import {
   createColor,
   createBackgroundColor,
@@ -14,7 +9,7 @@ import {
 
 export default {title: 'createColor'};
 
-const colors = {
+const defaultColor = {
   green: {
     light: 'lightgreen',
     dark: 'darkgreen',
@@ -22,11 +17,11 @@ const colors = {
 };
 
 const map = createMap({
-  breakpoint: createBreakpoint({breakpoints: defaultBreakpoints}),
+  match: createMatch({media: defaultMedia}),
 });
-const color = createColor({map, colors});
-const backgroundColor = createBackgroundColor({map, colors});
-const borderColor = createBorderColor({map, colors});
+const color = createColor({map, color: defaultColor});
+const backgroundColor = createBackgroundColor({map, color: defaultColor});
+const borderColor = createBorderColor({map, color: defaultColor});
 
 const colorProps = createProps({
   _color_: color,

@@ -1,14 +1,14 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {defaultBreakpoints} from './defaultBreakpoints';
-import {createBreakpoint} from './createBreakpoint';
+import {defaultMedia} from './defaultMedia';
+import {createMatch} from './createMatch';
 import {createMap} from './createMap';
 import {square} from './story-styles';
 
 export default {title: 'createMap()'};
 
 const map = createMap({
-  breakpoint: createBreakpoint({breakpoints: defaultBreakpoints}),
+  match: createMatch({media: defaultMedia}),
 });
 
 const colors = {

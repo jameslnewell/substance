@@ -20,38 +20,36 @@ export type StyleFunction<Props, Theme> = (
 ) => StyleObject;
 export type Style<Props, Theme> = StyleObject | StyleFunction<Props, Theme>;
 
-// ========== BREAKPOINTS ==========
+// ========== MEDIA ==========
 
-export type BreakpointNameConstraint = string | number;
-export type BreakpointMap<BreakpointName extends BreakpointNameConstraint> = {
-  [name in BreakpointName]: number;
+export type MediaNameConstraint = string | number;
+export type MediaMap<MediaName extends MediaNameConstraint> = {
+  [name in MediaName]: string;
 };
 
-export interface BreakpointFunction<
-  BreakpointName extends BreakpointNameConstraint,
-  Theme
-> {
+export interface MediaFunction<MediaName extends MediaNameConstraint, Theme> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (name: BreakpointName): (style: StyleObject) => Style<any, Theme>;
+  (name: MediaName): (style: StyleObject) => Style<any, Theme>;
 }
 
 export type MapValueConstraint = string | number | boolean;
 export type MapValueMap<
-  BreakpointName extends BreakpointNameConstraint,
+  MediaName extends MediaNameConstraint,
   Value extends MapValueConstraint
-> = {[name in BreakpointName]?: Value};
+> = {[name in MediaName]?: Value};
+
 export type MapValueOrMap<
-  BreakpointName extends BreakpointNameConstraint,
+  MediaName extends MediaNameConstraint,
   Value extends MapValueConstraint
-> = Value | MapValueMap<BreakpointName, Value>;
+> = Value | MapValueMap<MediaName, Value>;
 
 export interface MapFunction<
-  BreakpointName extends BreakpointNameConstraint,
+  MediaName extends MediaNameConstraint,
   Props,
   Theme = DefaultTheme
 > {
   <Value extends MapValueConstraint>(
-    values: Value | MapValueMap<BreakpointName, Value>,
+    values: Value | MapValueMap<MediaName, Value>,
     style: (value: Value, props: ThemeProps<Props, Theme>) => StyleObject,
   ): Style<Props, Theme>;
 }

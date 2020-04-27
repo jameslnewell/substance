@@ -13,7 +13,7 @@ export type DefaultSpacingName =
   | '-lg'
   | '-xl';
 
-export const defaultSpacings: SpacingMap<DefaultSpacingName> = {
+export const defaultSpace: SpacingMap<DefaultSpacingName> = {
   '-xl': '-4em',
   '-lg': '-2em',
   '-md': '-1em',

@@ -1,41 +1,39 @@
 import {
   DefaultTheme,
-  BreakpointNameConstraint,
+  MediaNameConstraint,
   MapFunction,
-  BreakpointFunction,
+  MediaFunction,
 } from './types';
 
 export const createMap = <
-  BreakpointName extends BreakpointNameConstraint,
+  MediaName extends MediaNameConstraint,
   Props,
   Theme = DefaultTheme
 >({
-  breakpoint,
+  match,
 }: {
-  breakpoint: BreakpointFunction<BreakpointName, Theme>;
-}): MapFunction<BreakpointName, Props, Theme> => {
+  match: MediaFunction<MediaName, Theme>;
+}): MapFunction<MediaName, Props, Theme> => {
   return (values, style) => {
     return (props) => {
       if (typeof values !== 'object') {
         return style(values, props);
       }
-      return (Object.keys(values) as BreakpointName[]).reduce(
-        (styles, name) => {
-          if (!Object.prototype.hasOwnProperty.call(values, name)) {
-            return styles;
-          }
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const stylesForValue = style(values[name] as any, props); // FIXME:
-          const stylesForBreakpoint = breakpoint(name)(stylesForValue);
-          return {
-            ...styles,
-            ...(typeof stylesForBreakpoint === 'function'
-              ? stylesForBreakpoint(props)
-              : stylesForBreakpoint),
-          };
-        },
-        {},
-      );
+      // TODO: how to consider ordering
+      return (Object.keys(values) as MediaName[]).reduce((styles, name) => {
+        if (!Object.prototype.hasOwnProperty.call(values, name)) {
+          return styles;
+        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const stylesForValue = style(values[name] as any, props); // FIXME:
+        const stylesForMedia = match(name)(stylesForValue);
+        return {
+          ...styles,
+          ...(typeof stylesForMedia === 'function'
+            ? stylesForMedia(props)
+            : stylesForMedia),
+        };
+      }, {});
     };
   };
 };

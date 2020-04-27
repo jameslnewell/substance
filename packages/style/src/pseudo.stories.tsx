@@ -1,12 +1,12 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {createBreakpoint} from './createBreakpoint';
-import {defaultBreakpoints} from './defaultBreakpoints';
+import {createMatch} from './createMatch';
+import {defaultMedia} from './defaultMedia';
 import {pseudo} from './pseudo';
 
 export default {title: 'pseudo()'};
 
-const breakpoint = createBreakpoint({breakpoints: defaultBreakpoints});
+const match = createMatch({media: defaultMedia});
 
 const Device = styled.div(
   {},
@@ -15,13 +15,13 @@ const Device = styled.div(
     {
       padding: `1em`,
     },
-    breakpoint('mobile')({
+    match('mobile')({
       content: '"📱"',
     }),
-    breakpoint('tablet')({
+    match('tablet')({
       content: '"💻"',
     }),
-    breakpoint('desktop')({
+    match('desktop')({
       content: '"🖥"',
     }),
   ),

@@ -1,5 +1,5 @@
 import {
-  BreakpointNameConstraint,
+  MediaNameConstraint,
   DefaultTheme,
   MapFunction,
   StyleProperty,
@@ -19,18 +19,18 @@ export interface GetColorMapFunction<Theme = DefaultTheme> {
 }
 
 const createColorFactory = (properties: StyleProperty[]) => <
-  Breakpoint extends BreakpointNameConstraint,
+  MediaName extends MediaNameConstraint,
   ColorName extends ColorNameConstraint,
   Props,
   Theme = DefaultTheme
 >({
   map,
-  colors: colorsMapOrGetColorMap,
+  color: colorsMapOrGetColorMap,
 }: {
-  map: MapFunction<Breakpoint, Props, Theme>;
-  colors: ColorMap | GetColorMapFunction<Theme>;
+  map: MapFunction<MediaName, Props, Theme>;
+  color: ColorMap | GetColorMapFunction<Theme>;
 }) => {
-  return createMixin<Breakpoint, ColorName, Props, Theme>({
+  return createMixin<MediaName, ColorName, Props, Theme>({
     map,
     properties,
     transform: (color, {theme}) => {

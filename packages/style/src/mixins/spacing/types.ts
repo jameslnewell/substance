@@ -1,5 +1,5 @@
 import {
-  BreakpointNameConstraint,
+  MediaNameConstraint,
   MapValueOrMap,
   Style,
   DefaultTheme,
@@ -11,10 +11,10 @@ export type SpacingMap<SpacingName extends SpacingNameConstraint> = {
 };
 
 export interface SpacingFunction<
-  Breakpoint extends BreakpointNameConstraint,
+  MediaName extends MediaNameConstraint,
   SpacingName extends SpacingNameConstraint,
   Props,
   Theme = DefaultTheme
 > {
-  (value: MapValueOrMap<Breakpoint, SpacingName>): Style<Props, Theme>;
+  (value: MapValueOrMap<MediaName, SpacingName>): Style<Props, Theme>;
 }

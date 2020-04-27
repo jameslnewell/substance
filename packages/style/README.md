@@ -20,16 +20,16 @@ yarn add @substance/style
 
 ```jsx
 import styled from 'styled-components';
-import {breakpoint} from '@substance/style';
+import {match} from '@substance/style';
 
 export const Sidebar = styled.div(
   {
     width: 100,
   },
-  breakpoint('tablet')({
+  match('tablet')({
     width: 200,
   }),
-  breakpoint('desktop')({
+  match('desktop')({
     width: 300,
   }),
 );

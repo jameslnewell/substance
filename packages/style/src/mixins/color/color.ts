@@ -9,16 +9,16 @@ import {
 
 const getColorMap: GetColorMapFunction<DefaultTheme> = (theme) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const colors = (theme as any)?.colors;
-  if (colors) {
-    return colors;
+  const color = (theme as any)?.color;
+  if (color) {
+    return color;
   }
   return {};
 };
 
-export const color = createColor({map, colors: getColorMap});
+export const color = createColor({map, color: getColorMap});
 export const backgroundColor = createBackgroundColor({
   map,
-  colors: getColorMap,
+  color: getColorMap,
 });
-export const borderColor = createBorderColor({map, colors: getColorMap});
+export const borderColor = createBorderColor({map, color: getColorMap});

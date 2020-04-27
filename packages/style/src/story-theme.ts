@@ -1,21 +1,21 @@
 import {DefaultTheme} from 'styled-components';
 
 type Theme = {
-  breakpoints: {
-    sm: number;
-    md: number;
-    lg: number;
+  color: {
+    green: {
+      [name: string]: string;
+    };
   };
-  spacings: {
+  media: {
+    sm: string;
+    md: string;
+    lg: string;
+  };
+  space: {
     0: 0;
     1: string;
     2: string;
     3: string;
-  };
-  colors: {
-    green: {
-      [name: string]: string;
-    };
   };
 };
 
@@ -30,18 +30,18 @@ declare module './types' {
 }
 
 export const theme: DefaultTheme = {
-  breakpoints: {
-    sm: 0,
-    md: 757,
-    lg: 1025,
-  },
-  colors: {
+  color: {
     green: {
       light: 'lightgreen',
       dark: 'darkgreen',
     },
   },
-  spacings: {
+  media: {
+    sm: '(min-width: 0em)',
+    md: '(min-width: 30em)',
+    lg: '(min-width: 50em)',
+  },
+  space: {
     0: 0,
     1: '0.25em',
     2: '0.5em',

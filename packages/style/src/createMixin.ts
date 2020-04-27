@@ -6,7 +6,7 @@ import {
   StyleObject,
   Style,
   MapFunction,
-  BreakpointNameConstraint,
+  MediaNameConstraint,
   MapValueOrMap,
   MapValueConstraint,
 } from './types';
@@ -39,7 +39,7 @@ export interface CreateMixinTransformFunction<Value extends any, Theme> {
  *
  */
 export const createMixin = <
-  Breakpoint extends BreakpointNameConstraint,
+  MediaName extends MediaNameConstraint,
   Value extends MapValueConstraint,
   Props,
   Theme = DefaultTheme
@@ -48,11 +48,11 @@ export const createMixin = <
   properties,
   transform,
 }: {
-  map: MapFunction<Breakpoint, Props, Theme>;
+  map: MapFunction<MediaName, Props, Theme>;
   properties: StyleProperty[];
   transform: CreateMixinTransformFunction<Value, Theme>;
 }) => {
-  return (value: MapValueOrMap<Breakpoint, Value>): Style<Props, Theme> => {
+  return (value: MapValueOrMap<MediaName, Value>): Style<Props, Theme> => {
     return map(value, (v, props) => {
       return createStylesFromTransformedValue(properties, transform(v, props));
     });

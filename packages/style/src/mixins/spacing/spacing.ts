@@ -1,7 +1,7 @@
 import {DefaultTheme} from 'styled-components';
 import {map} from '../../map';
 import {SpacingMap} from './types';
-import {defaultSpacings, DefaultSpacingName} from './defaultSpacings';
+import {defaultSpace, DefaultSpacingName} from './defaultSpacings';
 import {
   GetSpacingMapFunction,
   createMargin,
@@ -21,7 +21,7 @@ import {
 } from './createSpacing';
 
 type DefaultThemeSpacingName = DefaultTheme extends {
-  spacings: SpacingMap<infer SpacingName>;
+  space: SpacingMap<infer SpacingName>;
 }
   ? SpacingName
   : DefaultSpacingName;
@@ -31,28 +31,28 @@ const getSpacingMap: GetSpacingMapFunction<
   DefaultTheme
 > = (theme) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const spacings = (theme as any)?.spacings;
-  if (spacings) {
-    return spacings;
+  const space = (theme as any)?.space;
+  if (space) {
+    return space;
   }
-  return defaultSpacings;
+  return defaultSpace;
 };
 
-export const margin = createMargin({map, spacings: getSpacingMap});
-export const marginX = createMarginX({map, spacings: getSpacingMap});
-export const marginY = createMarginY({map, spacings: getSpacingMap});
-export const marginTop = createMarginTop({map, spacings: getSpacingMap});
-export const marginRight = createMarginRight({map, spacings: getSpacingMap});
-export const marginBottom = createMarginBottom({map, spacings: getSpacingMap});
-export const marginLeft = createMarginLeft({map, spacings: getSpacingMap});
+export const margin = createMargin({map, space: getSpacingMap});
+export const marginX = createMarginX({map, space: getSpacingMap});
+export const marginY = createMarginY({map, space: getSpacingMap});
+export const marginTop = createMarginTop({map, space: getSpacingMap});
+export const marginRight = createMarginRight({map, space: getSpacingMap});
+export const marginBottom = createMarginBottom({map, space: getSpacingMap});
+export const marginLeft = createMarginLeft({map, space: getSpacingMap});
 
-export const padding = createPadding({map, spacings: getSpacingMap});
-export const paddingX = createPaddingX({map, spacings: getSpacingMap});
-export const paddingY = createPaddingY({map, spacings: getSpacingMap});
-export const paddingTop = createPaddingTop({map, spacings: getSpacingMap});
-export const paddingRight = createPaddingRight({map, spacings: getSpacingMap});
+export const padding = createPadding({map, space: getSpacingMap});
+export const paddingX = createPaddingX({map, space: getSpacingMap});
+export const paddingY = createPaddingY({map, space: getSpacingMap});
+export const paddingTop = createPaddingTop({map, space: getSpacingMap});
+export const paddingRight = createPaddingRight({map, space: getSpacingMap});
 export const paddingBottom = createPaddingBottom({
   map,
-  spacings: getSpacingMap,
+  space: getSpacingMap,
 });
-export const paddingLeft = createPaddingLeft({map, spacings: getSpacingMap});
+export const paddingLeft = createPaddingLeft({map, space: getSpacingMap});

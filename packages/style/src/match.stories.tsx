@@ -1,21 +1,21 @@
 import * as React from 'react';
 import styled, {ThemeProvider} from 'styled-components';
-import {breakpoint} from './breakpoint';
+import {match} from './match';
 import {theme} from './story-theme';
 import {square} from './story-styles';
 
-export default {title: 'breakpoint()'};
+export default {title: 'match()'};
 
 const Square = styled.div(
   square,
-  breakpoint('sm')({
-    backgroundColor: 'green.dark',
+  match('sm')({
+    backgroundColor: 'red',
   }),
-  breakpoint('md')({
-    backgroundColor: 'green.light',
+  match('md')({
+    backgroundColor: 'green',
   }),
-  breakpoint('lg')({
-    backgroundColor: 'green.light',
+  match('lg')({
+    backgroundColor: 'blue',
   }),
 );
 

@@ -1,22 +1,17 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {
-  defaultBreakpoints,
-  createBreakpoint,
-  createMap,
-  createProps,
-} from '../..';
+import {defaultMedia, createMatch, createMap, createProps} from '../..';
 import {square} from '../../story-styles';
-import {defaultSpacings} from './defaultSpacings';
+import {defaultSpace} from './defaultSpacings';
 import {createPadding, createPaddingX} from './createSpacing';
 
 export default {title: 'spacing'};
 
 const map = createMap({
-  breakpoint: createBreakpoint({breakpoints: defaultBreakpoints}),
+  match: createMatch({media: defaultMedia}),
 });
-const padding = createPadding({map, spacings: defaultSpacings});
-const paddingX = createPaddingX({map, spacings: defaultSpacings});
+const padding = createPadding({map, space: defaultSpace});
+const paddingX = createPaddingX({map, space: defaultSpace});
 
 const paddingProps = createProps({
   padding,

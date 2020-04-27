@@ -1,4 +1,5 @@
 import {DefaultTheme, Style} from './types';
+import {combine} from './combine';
 // variant('variant', variants)
 
 export const createVariant = <
@@ -14,14 +15,7 @@ export const createVariant = <
     const styles = variants[variant];
 
     if (Array.isArray(styles)) {
-      return (props) => {
-        return styles.reduce((s, style) => {
-          return {
-            ...s,
-            ...(typeof style !== 'function' ? style : style(props)),
-          };
-        }, {});
-      };
+      return combine(...styles);
     }
 
     if (typeof styles === 'function' || typeof styles === 'object') {
