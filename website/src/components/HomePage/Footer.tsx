@@ -13,8 +13,6 @@ const FooterWrapper = styled.footer`
 
 export const Footer = () => (
   <FooterWrapper>
-    <Container>
-      Copyright &copy; 2018.
-    </Container>
+    <Container>Copyright &copy; 2018.</Container>
   </FooterWrapper>
 );

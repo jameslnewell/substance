@@ -15,16 +15,12 @@ export class Nav extends React.Component {
         {(project: any): React.ReactNode => (
           <Wrapper>
             <h1>{project.root.name}</h1>
-            {project.workspaces.map(workspace => {
+            {project.workspaces.map((workspace) => {
               return (
                 <React.Fragment key={workspace.name}>
                   <h4>{workspace.name}</h4>
-                  {workspace.examples.map(example => {
-                    return (
-                      <button key={example.name}>
-                        {example.name}
-                      </button>
-                    );
+                  {workspace.examples.map((example) => {
+                    return <button key={example.name}>{example.name}</button>;
                   })}
                 </React.Fragment>
               );
@@ -32,6 +28,6 @@ export class Nav extends React.Component {
           </Wrapper>
         )}
       </Consumer>
-    )
+    );
   }
 }

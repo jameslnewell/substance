@@ -16,8 +16,6 @@ const HeaderWrapper = styled.header`
 
 export const Header = () => (
   <HeaderWrapper>
-    <Container>
-      @substance
-    </Container>
+    <Container>@substance</Container>
   </HeaderWrapper>
 );

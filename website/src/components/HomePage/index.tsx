@@ -9,13 +9,13 @@ export class HomePage extends React.Component<{}> {
   render() {
     return (
       <div>
-        <Header/>
+        <Header />
         <div>
-          <HeroPanel/>
-          <FeaturePanel/>
+          <HeroPanel />
+          <FeaturePanel />
         </div>
-        <Nav/>
-        <Footer/>
+        <Nav />
+        <Footer />
       </div>
     );
   }

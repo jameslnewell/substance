@@ -20,7 +20,7 @@ const FeatureContent = styled.div`
 
 const Feature = styled.div`
   box-sizing: border-box;
-  ${unit({size: {tablet: 1/3}})}
+  ${unit({size: {tablet: 1 / 3}})}
   ${p({mobile: 3})}
   ${copy({align: 'center'})}
 `;
@@ -28,19 +28,11 @@ const Feature = styled.div`
 export const FeaturePanel = () => (
   <FeatureWrapper>
     <FeatureContent>
+      <Feature>Themeable.</Feature>
 
-      <Feature>
-        Themeable.
-      </Feature>
+      <Feature>Modular.</Feature>
 
-      <Feature>
-        Modular.
-      </Feature>
-
-      <Feature>
-        Tiny.
-      </Feature>
-
+      <Feature>Tiny.</Feature>
     </FeatureContent>
   </FeatureWrapper>
 );

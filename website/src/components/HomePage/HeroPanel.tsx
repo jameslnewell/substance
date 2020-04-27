@@ -22,7 +22,8 @@ const HeroContent = styled.div`
 export const HeroPanel = () => (
   <HeroWrapper>
     <HeroContent>
-      Primitives for building design systems with <code>styled-components 💅</code>.
+      Primitives for building design systems with{' '}
+      <code>styled-components 💅</code>.
     </HeroContent>
   </HeroWrapper>
 );
