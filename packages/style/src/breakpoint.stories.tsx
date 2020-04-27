@@ -9,13 +9,13 @@ export default {title: 'breakpoint()'};
 const Square = styled.div(
   square,
   breakpoint('sm')({
-    backgroundColor: 'red',
+    backgroundColor: 'green.dark',
   }),
   breakpoint('md')({
-    backgroundColor: 'green',
+    backgroundColor: 'green.light',
   }),
   breakpoint('lg')({
-    backgroundColor: 'blue',
+    backgroundColor: 'green.light',
   }),
 );
 

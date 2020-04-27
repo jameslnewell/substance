@@ -13,9 +13,9 @@ type Theme = {
     3: string;
   };
   colors: {
-    red: string;
-    green: string;
-    blue: string;
+    green: {
+      [name: string]: string;
+    };
   };
 };
 
@@ -36,9 +36,10 @@ export const theme: DefaultTheme = {
     lg: 1025,
   },
   colors: {
-    red: 'pink',
-    green: 'lime',
-    blue: 'skyblue',
+    green: {
+      light: 'lightgreen',
+      dark: 'darkgreen',
+    },
   },
   spacings: {
     0: 0,

@@ -28,16 +28,18 @@
   },
   "scripts": {
     "postinstall": "preconstruct dev",
-    "testing": "jest --passWithNoTests",
+    "testing": "jest",
     "typing": "tsc --noEmit",
     "linting": "eslint --ext .ts,.tsx packages",
     "formatting": "prettier --check .",
+    "start": "yarn workspace @substance/storybook run start",
     "build": "preconstruct build",
-    "start": "yarn workspace @substance/storybook run start"
+    "prepublish": "yarn run build && yarn run testing && yarn run typing && yarn run linting && yarn run formatting",
+    "publish": "cd packages/style && npm publish"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick"
+      "pre-commit": "pretty-quick --staged"
     }
   },
   "preconstruct": {
