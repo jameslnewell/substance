@@ -6,8 +6,9 @@
     "baseUrl": "./packages",
     "paths": {
       "@substance/*": ["./*/src"]
-    }
+    },
+    "skipLibCheck": true
   },
   "include": ["packages/*/src"],
-  "exclude": ["node_modules", "packages/core"]
+  "exclude": ["node_modules", "packages/*/dist"]
 }

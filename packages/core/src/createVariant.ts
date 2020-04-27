@@ -1,2 +1,0 @@
-
-// variant('variant', variants)

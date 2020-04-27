@@ -10,11 +10,40 @@
     ]
   },
   "dependencies": {
+    "@babel/core": "^7.9.0",
+    "@jameslnewell/babel-preset": "^2.0.0",
     "@jameslnewell/editor-config": "^1.0.1",
-    "@jameslnewell/typescript-config": "^3.0.0"
+    "@jameslnewell/eslint-config": "^0.13.5",
+    "@jameslnewell/jest-preset-test": "^5.1.0",
+    "@jameslnewell/prettier-config": "^1.0.1",
+    "@jameslnewell/typescript-config": "^3.0.0",
+    "@preconstruct/cli": "^1.1.12",
+    "@types/jest": "^25.2.1",
+    "eslint": "^6.8.0",
+    "husky": "^4.2.5",
+    "jest": "^25.4.0",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1",
+    "typescript": "^3.8.3"
   },
   "scripts": {
+    "postinstall": "preconstruct dev",
+    "testing": "jest --passWithNoTests",
+    "typing": "tsc --noEmit",
+    "linting": "eslint --ext .ts,.tsx packages",
+    "formatting": "prettier --check .",
+    "build": "preconstruct build",
     "start": "yarn workspace @substance/storybook run start"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick"
+    }
+  },
+  "preconstruct": {
+    "packages": [
+      "packages/*"
+    ]
   },
   "license": "MIT"
 }

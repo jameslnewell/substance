@@ -1,6 +1,6 @@
-import {injectGlobal} from 'styled-components';
+import {createGlobalStyle} from 'styled-components';
 
-injectGlobal`
+export const Reset = createGlobalStyle`
   html, body {
     margin: 0;
     padding: 0;

@@ -1,0 +1,7 @@
+{
+  "preconstruct": {
+    "source": "../src/mixins/index.ts"
+  },
+  "main": "dist/style.cjs.js",
+  "module": "dist/style.esm.js"
+}

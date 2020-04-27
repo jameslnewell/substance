@@ -1,0 +1,23 @@
+{
+  "name": "@substance/style",
+  "version": "1.0.0-preview.1",
+  "source": "src/index.ts",
+  "main": "dist/style.cjs.js",
+  "module": "dist/style.esm.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist",
+    "mixins"
+  ],
+  "peerDependencies": {
+    "styled-components": ">=5.0.1"
+  },
+  "preconstruct": {
+    "source": "src/index.ts",
+    "entrypoints": [
+      ".",
+      "mixins"
+    ]
+  },
+  "license": "MIT"
+}
