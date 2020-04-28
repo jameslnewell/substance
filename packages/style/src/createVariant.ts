@@ -12,6 +12,7 @@ export const createVariant = <
   },
 ) => {
   return (variant: Variant): Style<Props, Theme> => {
+    // TODO: make it responsive
     const styles = variants[variant];
 
     if (Array.isArray(styles)) {
