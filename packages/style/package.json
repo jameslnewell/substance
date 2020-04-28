@@ -1,6 +1,6 @@
 {
   "name": "@substance/style",
-  "version": "0.1.0-preview.4",
+  "version": "0.1.0-preview.5",
   "keywords": [
     "substance",
     "react",
@@ -14,7 +14,7 @@
   "source": "src/index.ts",
   "main": "dist/style.cjs.js",
   "module": "dist/style.esm.js",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/declarations/src/index.d.ts",
   "files": [
     "dist",
     "mixins"
