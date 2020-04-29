@@ -1,12 +1,12 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import {createMatch} from './createMatch';
-import {defaultMedia} from './defaultMedia';
+import {defaultMediaQueries} from './defaultMediaQueries';
 import {pseudo} from './pseudo';
 
 export default {title: 'pseudo()'};
 
-const match = createMatch({media: defaultMedia});
+const match = createMatch({mediaQueries: defaultMediaQueries});
 
 const Device = styled.div(
   {},

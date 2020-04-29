@@ -1,42 +1,66 @@
 import {
-  MediaNameConstraint,
+  MediaConstraint,
   MapFunction,
   StyleProperty,
   DefaultTheme,
+  ThemeProps,
+  ThemeConstraint,
+  StyleValue,
+  PropsConstraint,
+  DefaultProps,
 } from '../../types';
+import {Spaces, SpaceConstraint} from './types';
 import {createMixin} from '../../createMixin';
-import {SpacingMap, SpacingNameConstraint, SpacingFunction} from './types';
 
-export interface GetSpacingMapFunction<
-  SpacingName extends SpacingNameConstraint,
-  Theme = DefaultTheme
+export interface GetSpacesFunction<
+  Space extends SpaceConstraint,
+  Theme extends ThemeConstraint = DefaultTheme
 > {
-  (theme: Theme | undefined): SpacingMap<SpacingName>;
+  (theme: Theme | undefined): Spaces<Space>;
 }
+
+export interface GetSpaceFunction<
+  Space extends SpaceConstraint,
+  Theme extends ThemeConstraint = DefaultTheme
+> {
+  <Props extends PropsConstraint = DefaultProps>(
+    space: Space,
+    props: ThemeProps<Props, Theme>,
+  ): StyleValue;
+}
+
+export const createGetSpace = <
+  Space extends SpaceConstraint,
+  Theme extends ThemeConstraint = DefaultTheme
+>(
+  spacesOrGetSpaces: Spaces<Space> | GetSpacesFunction<Space, Theme>,
+) => {
+  if (typeof spacesOrGetSpaces === 'function') {
+    return <Props extends PropsConstraint = DefaultProps>(
+      value: Space,
+      {theme}: ThemeProps<Props, Theme>,
+    ): StyleValue => spacesOrGetSpaces(theme)[value];
+  } else {
+    return (value: Space): StyleValue => spacesOrGetSpaces[value];
+  }
+};
 
 const createSpaceFactory = (properties: StyleProperty[]) => {
   return <
-    MediaName extends MediaNameConstraint,
-    SpacingName extends SpacingNameConstraint,
-    Props,
-    Theme = DefaultTheme
+    Media extends MediaConstraint,
+    Space extends SpaceConstraint,
+    Theme extends ThemeConstraint = DefaultTheme
   >({
     map,
-    space: spacingMapOrGetSpacingMap,
+    getSpace,
   }: {
-    map: MapFunction<MediaName, Props, Theme>;
-    space: SpacingMap<SpacingName> | GetSpacingMapFunction<SpacingName, Theme>;
-  }): SpacingFunction<MediaName, SpacingName, Props, Theme> => {
-    return createMixin<MediaName, SpacingName, Props, Theme>({
-      map,
+    map: MapFunction<Media, Theme>;
+    getSpace: GetSpaceFunction<Space, Theme>;
+  }) => {
+    return createMixin<Media, Space, Theme>({
+      map: map,
       properties,
-      transform: (value, {theme}) => {
-        if (typeof spacingMapOrGetSpacingMap === 'function') {
-          return spacingMapOrGetSpacingMap(theme)[value];
-        } else {
-          return spacingMapOrGetSpacingMap[value];
-        }
-      },
+      transform: getSpace,
     });
   };
 };

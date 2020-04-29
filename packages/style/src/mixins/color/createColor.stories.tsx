@@ -1,15 +1,16 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {defaultMedia, createMatch, createMap, createProps} from '../..';
+import {defaultMediaQueries, createMatch, createMap, createProps} from '../..';
 import {
   createColor,
   createBackgroundColor,
   createBorderColor,
+  createGetColor,
 } from './createColor';
 
 export default {title: 'createColor'};
 
-const defaultColor = {
+const defaultColors = {
   green: {
     light: 'lightgreen',
     dark: 'darkgreen',
@@ -17,36 +18,31 @@ const defaultColor = {
 };
 
 const map = createMap({
-  match: createMatch({media: defaultMedia}),
+  match: createMatch({mediaQueries: defaultMediaQueries}),
 });
-const color = createColor({map, color: defaultColor});
-const backgroundColor = createBackgroundColor({map, color: defaultColor});
-const borderColor = createBorderColor({map, color: defaultColor});
+const getColor = createGetColor(defaultColors);
+const color = createColor({map, getColor});
+const backgroundColor = createBackgroundColor({map, getColor});
+const borderColor = createBorderColor({map, getColor});
 
 const colorProps = createProps({
-  _color_: color,
-  backgroundColor,
+  fg: color,
+  bg: backgroundColor,
   borderColor,
 });
 
 const Box = styled.div({borderWidth: 2, borderStyle: 'solid'}, colorProps);
 
-export const Color = () => <Box _color_="green.dark">Hello World!</Box>;
+export const Color = () => <Box fg="green.dark">Hello World!</Box>;
 
 export const ColorResponsive = () => (
-  <Box _color_={{mobile: 'green.light', desktop: 'green.dark'}}>
-    Hello World!
-  </Box>
+  <Box fg={{mobile: 'green.light', desktop: 'green.dark'}}>Hello World!</Box>
 );
 
-export const BackgroundColor = () => (
-  <Box backgroundColor="green.dark">Hello World!</Box>
-);
+export const BackgroundColor = () => <Box bg="green.dark">Hello World!</Box>;
 
 export const BackgroundColorResponsive = () => (
-  <Box backgroundColor={{mobile: 'green.light', desktop: 'green.dark'}}>
-    Hello World!
-  </Box>
+  <Box fg={{mobile: 'green.light', desktop: 'green.dark'}}>Hello World!</Box>
 );
 
 export const BorderColor = () => (

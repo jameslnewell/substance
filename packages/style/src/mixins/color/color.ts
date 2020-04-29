@@ -4,10 +4,11 @@ import {
   createColor,
   createBackgroundColor,
   createBorderColor,
-  GetColorMapFunction,
+  GetColorsFunction,
+  createGetColor,
 } from './createColor';
 
-const getColorMap: GetColorMapFunction<DefaultTheme> = (theme) => {
+const getColors: GetColorsFunction<DefaultTheme> = (theme) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const color = (theme as any)?.color;
   if (color) {
@@ -16,9 +17,11 @@ const getColorMap: GetColorMapFunction<DefaultTheme> = (theme) => {
   return {};
 };
 
-export const color = createColor({map, color: getColorMap});
+const getColor = createGetColor(getColors);
+
+export const color = createColor({map, getColor});
 export const backgroundColor = createBackgroundColor({
   map,
-  color: getColorMap,
+  getColor,
 });
-export const borderColor = createBorderColor({map, color: getColorMap});
+export const borderColor = createBorderColor({map, getColor});

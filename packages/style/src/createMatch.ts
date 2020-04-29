@@ -1,32 +1,32 @@
 import {
   DefaultTheme,
-  MediaNameConstraint,
-  MediaMap,
-  MediaFunction,
+  MediaConstraint,
+  MediaQueries,
+  MatchFunction,
 } from './types';
 
-export interface GetMediaMapFunction<
-  MediaName extends MediaNameConstraint,
+export interface GetMediaQueriesFunction<
+  Media extends MediaConstraint,
   Theme = DefaultTheme
 > {
-  (theme: Theme | undefined): MediaMap<MediaName>;
+  (theme: Theme | undefined): MediaQueries<Media>;
 }
 
 export const createMatch = <
-  MediaName extends MediaNameConstraint,
+  Media extends MediaConstraint,
   Theme = DefaultTheme
 >({
-  media,
+  mediaQueries,
 }: {
-  media: MediaMap<MediaName> | GetMediaMapFunction<MediaName, Theme>;
-}): MediaFunction<MediaName, Theme> => {
-  if (typeof media === 'function') {
-    return (name) => (style) => (props) => ({
-      [`@media ${media(props.theme)[name]}`]: style,
+  mediaQueries: MediaQueries<Media> | GetMediaQueriesFunction<Media, Theme>;
+}): MatchFunction<Media, Theme> => {
+  if (typeof mediaQueries === 'function') {
+    return (media) => (style) => (props) => ({
+      [`@media ${mediaQueries(props.theme)[media]}`]: style,
     });
   } else {
-    return (name) => (style) => ({
-      [`@media ${media[name]}`]: style,
+    return (media) => (style) => ({
+      [`@media ${mediaQueries[media]}`]: style,
     });
   }
 };

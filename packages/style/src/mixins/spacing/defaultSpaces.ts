@@ -1,6 +1,6 @@
-import {SpacingMap} from './types';
+import {Spaces} from './types';
 
-export type DefaultSpacingName =
+export type DefaultSpace =
   | 0
   | 'xs'
   | 'sm'
@@ -13,7 +13,7 @@ export type DefaultSpacingName =
   | '-lg'
   | '-xl';
 
-export const defaultSpace: SpacingMap<DefaultSpacingName> = {
+export const defaultSpaces: Spaces<DefaultSpace> = {
   '-xl': '-4em',
   '-lg': '-2em',
   '-md': '-1em',

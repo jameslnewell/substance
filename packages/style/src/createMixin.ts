@@ -4,11 +4,15 @@ import {
   StyleProperty,
   StyleValue,
   StyleObject,
-  Style,
   MapFunction,
-  MediaNameConstraint,
-  MapValueOrMap,
-  MapValueConstraint,
+  MediaConstraint,
+  ResponsiveValueConstraint,
+  ResponsiveMixinFunction,
+  PropsConstraint,
+  ResponsiveValues,
+  ThemeConstraint,
+  DefaultProps,
+  Style,
 } from './types';
 
 const createStylesFromTransformedValue = (
@@ -24,13 +28,19 @@ const createStylesFromTransformedValue = (
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface CreateMixinTransformFunction<Value extends any, Theme> {
-  <Props>(value: Value, props: ThemeProps<Props, Theme>): StyleValue;
+export interface CreateMixinTransformFunction<
+  Value extends ResponsiveValueConstraint,
+  Theme extends ThemeConstraint = DefaultTheme
+> {
+  <Props extends PropsConstraint = DefaultProps>(
+    value: Value,
+    props: ThemeProps<Props, Theme>,
+  ): StyleValue;
 }
 
 /**
- * Create a function for creating CSS declarations based on a list of CSS properties
- * @param properties The CSS property name
+ * Creates a responsive mixin for a set of properties
+ * @param properties The CSS property names
  * @param transform  The transformation function
  *
  * @example
@@ -39,22 +49,26 @@ export interface CreateMixinTransformFunction<Value extends any, Theme> {
  *
  */
 export const createMixin = <
-  MediaName extends MediaNameConstraint,
-  Value extends MapValueConstraint,
-  Props,
-  Theme = DefaultTheme
+  Media extends MediaConstraint,
+  Value extends ResponsiveValueConstraint,
+  Theme extends ThemeConstraint = DefaultTheme
 >({
   map,
   properties,
   transform,
 }: {
-  map: MapFunction<MediaName, Props, Theme>;
+  map: MapFunction<Media, Theme>;
   properties: StyleProperty[];
   transform: CreateMixinTransformFunction<Value, Theme>;
-}) => {
-  return (value: MapValueOrMap<MediaName, Value>): Style<Props, Theme> => {
-    return map(value, (v, props) => {
-      return createStylesFromTransformedValue(properties, transform(v, props));
+}): ResponsiveMixinFunction<Media, Value> => {
+  return <Props extends PropsConstraint = DefaultProps>(
+    valueOrValues: Value | ResponsiveValues<Media, Value>,
+  ): Style<Props, Theme> => {
+    return map<Value, Props>(valueOrValues, (value, props) => {
+      return createStylesFromTransformedValue(
+        properties,
+        transform(value, props),
+      );
     });
   };
 };

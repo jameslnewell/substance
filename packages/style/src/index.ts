@@ -6,5 +6,5 @@ export * from './createMap';
 export * from './createMixin';
 export * from './createProps';
 export * from './createVariant';
-export * from './defaultMedia';
+export * from './defaultMediaQueries';
 export * from './map';

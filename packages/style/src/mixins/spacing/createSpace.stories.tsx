@@ -1,17 +1,19 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {defaultMedia, createMatch, createMap, createProps} from '../..';
+import {defaultMediaQueries, createMatch, createMap, createProps} from '../..';
 import {square} from '../../story-styles';
-import {defaultSpace} from './defaultSpacings';
-import {createPadding, createPaddingX} from './createSpacing';
+import {createPadding, createPaddingX, createGetSpace} from './createSpace';
+import {defaultSpaces} from './defaultSpaces';
 
 export default {title: 'spacing'};
 
 const map = createMap({
-  match: createMatch({media: defaultMedia}),
+  match: createMatch({mediaQueries: defaultMediaQueries}),
 });
-const padding = createPadding({map, space: defaultSpace});
-const paddingX = createPaddingX({map, space: defaultSpace});
+
+const getSpace = createGetSpace(defaultSpaces);
+const padding = createPadding({map, getSpace});
+const paddingX = createPaddingX({map, getSpace});
 
 const paddingProps = createProps({
   padding,

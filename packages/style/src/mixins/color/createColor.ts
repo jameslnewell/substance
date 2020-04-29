@@ -1,46 +1,71 @@
 import {
-  MediaNameConstraint,
+  MediaConstraint,
   DefaultTheme,
   MapFunction,
   StyleProperty,
+  ThemeConstraint,
+  PropsConstraint,
+  DefaultProps,
+  ThemeProps,
+  StyleValue,
 } from '../../types';
 import {createMixin} from '../../createMixin';
 import {get} from '../../get';
 
-export type ColorNameConstraint = string;
-export type ColorName = '';
-export type ColorMap = {
+export type ColorConstraint = string;
+export type Color = '';
+export type Colors = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [name: string]: any;
 };
 
-export interface GetColorMapFunction<Theme = DefaultTheme> {
-  (theme: Theme | undefined): ColorMap;
+export interface GetColorsFunction<
+  Theme extends ThemeConstraint = DefaultTheme
+> {
+  (theme: Theme | undefined): Colors;
 }
 
-const createColorFactory = (properties: StyleProperty[]) => <
-  MediaName extends MediaNameConstraint,
-  ColorName extends ColorNameConstraint,
-  Props,
-  Theme = DefaultTheme
->({
-  map,
-  color: colorsMapOrGetColorMap,
-}: {
-  map: MapFunction<MediaName, Props, Theme>;
-  color: ColorMap | GetColorMapFunction<Theme>;
-}) => {
-  return createMixin<MediaName, ColorName, Props, Theme>({
+export interface GetColorFunction<
+  Color extends ColorConstraint,
+  Theme extends ThemeConstraint = DefaultTheme
+> {
+  <Props extends PropsConstraint = DefaultProps>(
+    color: Color,
+    props: ThemeProps<Props, Theme>,
+  ): StyleValue;
+}
+
+export const createGetColor = <
+  Color extends ColorConstraint,
+  Theme extends ThemeConstraint = DefaultTheme
+>(
+  colorsOrGetColors: Colors | GetColorsFunction<Theme>,
+): GetColorFunction<Color, Theme> => {
+  if (typeof colorsOrGetColors === 'function') {
+    return (value, {theme}) => get(value, colorsOrGetColors(theme));
+  } else {
+    return (value) => get(value, colorsOrGetColors);
+  }
+};
+
+const createColorFactory = (properties: StyleProperty[]) => {
+  return <
+    Media extends MediaConstraint,
+    Color extends ColorConstraint,
+    Theme extends ThemeConstraint = DefaultTheme
+  >({
     map,
-    properties,
-    transform: (color, {theme}) => {
-      if (typeof colorsMapOrGetColorMap === 'function') {
-        return get<string>(color, colorsMapOrGetColorMap(theme));
-      } else {
-        return get<string>(color, colorsMapOrGetColorMap);
-      }
-    },
-  });
+    getColor: getColor,
+  }: {
+    map: MapFunction<Media, Theme>;
+    getColor: GetColorFunction<Color, Theme>;
+  }) => {
+    return createMixin<Media, Color, Theme>({
+      map: map,
+      properties,
+      transform: getColor,
+    });
+  };
 };
 
 export const createColor = createColorFactory(['color']);
