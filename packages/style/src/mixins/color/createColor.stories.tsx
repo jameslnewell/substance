@@ -8,7 +8,7 @@ import {
   createGetColor,
 } from './createColor';
 
-export default {title: 'createColor'};
+export default {title: 'style/createColor'};
 
 const defaultColors = {
   green: {

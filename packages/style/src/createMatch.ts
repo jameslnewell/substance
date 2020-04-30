@@ -20,13 +20,25 @@ export const createMatch = <
 }: {
   mediaQueries: MediaQueries<Media> | GetMediaQueriesFunction<Media, Theme>;
 }): MatchFunction<Media, Theme> => {
+  const getMediaValue = (queries: MediaQueries<Media>, media: Media) => {
+    if (process.env.NODE_ENV !== 'production') {
+      if (!Object.prototype.hasOwnProperty.call(queries, media)) {
+        console.warn(`Media "${media}" not found in queries.`);
+      }
+    }
+    return queries[media];
+  };
   if (typeof mediaQueries === 'function') {
-    return (media) => (style) => (props) => ({
-      [`@media ${mediaQueries(props.theme)[media]}`]: style,
-    });
+    return (media) => (style) => (props) => {
+      return {
+        [`@media ${getMediaValue(mediaQueries(props.theme), media)}`]: style,
+      };
+    };
   } else {
-    return (media) => (style) => ({
-      [`@media ${mediaQueries[media]}`]: style,
-    });
+    return (media) => (style) => {
+      return {
+        [`@media ${getMediaValue(mediaQueries, media)}`]: style,
+      };
+    };
   }
 };

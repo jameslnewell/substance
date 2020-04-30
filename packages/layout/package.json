@@ -1,0 +1,23 @@
+{
+  "name": "@substance/layout",
+  "version": "0.1.0-preview.1",
+  "source": "src/index.ts",
+  "main": "dist/layout.cjs.js",
+  "module": "dist/layout.esm.js",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "react": ">=16.13.1",
+    "styled-components": ">=5.0.1"
+  },
+  "dependencies": {
+    "@substance/style": "^0.1.0-preview.1",
+    "react-keyed-flatten-children": "^1.2.0"
+  },
+  "devDependencies": {
+    "@substance/box": "^0.1.0-preview.1"
+  },
+  "license": "MIT"
+}

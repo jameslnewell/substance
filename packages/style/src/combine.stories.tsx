@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import {combine} from './combine';
 
-export default {title: 'combine()'};
+export default {title: 'style/combine()'};
 
 const Square = styled.div(
   {},

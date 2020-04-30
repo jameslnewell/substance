@@ -5,7 +5,7 @@ import {createMatch} from './createMatch';
 import {createMap} from './createMap';
 import {square} from './story-styles';
 
-export default {title: 'createMap()'};
+export default {title: 'style/createMap()'};
 
 const map = createMap({
   match: createMatch({mediaQueries: defaultMediaQueries}),

@@ -4,7 +4,7 @@ import {createMatch} from './createMatch';
 import {defaultMediaQueries} from './defaultMediaQueries';
 import {pseudo} from './pseudo';
 
-export default {title: 'pseudo()'};
+export default {title: 'style/pseudo()'};
 
 const match = createMatch({mediaQueries: defaultMediaQueries});
 
@@ -16,7 +16,9 @@ const Device = styled.div(
       padding: `1em`,
     },
     match('mobile')({
-      content: '"📱"',
+      ':after': {
+        content: '"📱"',
+      },
     }),
     match('tablet')({
       content: '"💻"',

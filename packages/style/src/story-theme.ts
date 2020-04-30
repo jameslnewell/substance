@@ -1,4 +1,5 @@
 import {DefaultTheme} from 'styled-components';
+import {DefaultSpace, Spaces, defaultSpaces} from './mixins';
 
 type Theme = {
   color: {
@@ -11,12 +12,7 @@ type Theme = {
     md: string;
     lg: string;
   };
-  space: {
-    0: 0;
-    1: string;
-    2: string;
-    3: string;
-  };
+  space: Spaces<DefaultSpace>;
 };
 
 declare module 'styled-components' {
@@ -41,10 +37,5 @@ export const theme: DefaultTheme = {
     md: '(min-width: 30em)',
     lg: '(min-width: 50em)',
   },
-  space: {
-    0: 0,
-    1: '0.25em',
-    2: '0.5em',
-    3: '1em',
-  },
+  space: defaultSpaces,
 };

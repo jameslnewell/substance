@@ -30,17 +30,19 @@ export const createProps = <
   mixins: Mixins,
 ) => {
   return (props: Props): Style<Props, Theme> => {
-    return Object.keys(mixins).reduce<Style<Props, Theme>>((styles, name) => {
+    const styles: Style<Props, Theme>[] = [];
+    for (const name of Object.keys(props)) {
+      if (
+        !Object.prototype.hasOwnProperty.call(props, name) ||
+        !Object.prototype.hasOwnProperty.call(mixins, name)
+      ) {
+        continue;
+      }
       const mixin = mixins[name];
       const prop = props[name];
-      if (mixin === undefined || prop === undefined) {
-        return styles;
-      }
       const style = mixin(prop);
-      return {
-        ...styles,
-        ...(typeof style === 'function' ? style(props) : style),
-      };
-    }, {});
+      styles.push(typeof style === 'function' ? style(props) : style);
+    }
+    return styles;
   };
 };

@@ -1,0 +1,72 @@
+# createVariant(variations)
+
+Create a mixin that returns styles for a specific variation.
+
+## Usage
+
+```js
+import {createProps, createVariant} from '@substance/style';
+
+const variant = createVariant({
+  primary: {
+    color: 'red',
+  },
+  secondary: {
+    color: 'green',
+  },
+  tertiary: {
+    color: 'blue',
+  },
+});
+
+const size = createVariant({
+  small: {
+    fontSize: '12px',
+  },
+  large: {
+    fontSize: '16px',
+  },
+});
+
+const Button = styled.button(
+  {
+    cursor: 'pointer',
+  },
+  createProps({
+    variant,
+    size,
+  }),
+);
+
+<Button variant="primary" size="small">
+  Contribute
+</Button>;
+```
+
+### Responsive
+
+Variants may be responsive.
+
+```jsx
+<Button variant="primary" size={{mobile: 'small', desktop: 'large'}}>
+  Contribute
+</Button>
+```
+
+### Complex styles
+
+Variants may contain complex styles.
+
+```jsx
+createVariant({
+  'variation-using-style-function': ({theme}) => ({color: theme.foo.color}),
+  'variation-using-style-array': [
+    {
+      ':before': {
+        content: '""',
+      },
+    },
+    ({theme}) => ({color: theme.foo.color}),
+  ],
+});
+```

@@ -35,6 +35,7 @@ export interface GetColorFunction<
   ): StyleValue;
 }
 
+// TODO: pass through other values
 export const createGetColor = <
   Color extends ColorConstraint,
   Theme extends ThemeConstraint = DefaultTheme
@@ -42,9 +43,9 @@ export const createGetColor = <
   colorsOrGetColors: Colors | GetColorsFunction<Theme>,
 ): GetColorFunction<Color, Theme> => {
   if (typeof colorsOrGetColors === 'function') {
-    return (value, {theme}) => get(value, colorsOrGetColors(theme));
+    return (value, {theme}) => get(value, colorsOrGetColors(theme)) || value;
   } else {
-    return (value) => get(value, colorsOrGetColors);
+    return (value) => get(value, colorsOrGetColors) || value;
   }
 };
 

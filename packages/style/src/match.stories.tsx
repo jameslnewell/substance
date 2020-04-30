@@ -4,7 +4,7 @@ import {match} from './match';
 import {theme} from './story-theme';
 import {square} from './story-styles';
 
-export default {title: 'match()'};
+export default {title: 'style/match()'};
 
 const Square = styled.div(
   square,

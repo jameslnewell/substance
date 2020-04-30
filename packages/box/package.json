@@ -1,12 +1,15 @@
 {
-  "name": "@substance/reset",
+  "name": "@substance/box",
   "private": true,
   "version": "0.1.0-preview.1",
   "source": "src/index.ts",
-  "main": "dist/reset.cjs.js",
-  "module": "dist/reset.esm.js",
+  "main": "dist/box.cjs.js",
+  "module": "dist/box.esm.js",
   "peerDependencies": {
     "styled-components": ">=5.0.1"
+  },
+  "dependencies": {
+    "@substance/style": "^0.1.0-preview.1"
   },
   "license": "MIT"
 }

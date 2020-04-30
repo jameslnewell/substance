@@ -5,7 +5,7 @@ import {square} from '../../story-styles';
 import {createPadding, createPaddingX, createGetSpace} from './createSpace';
 import {defaultSpaces} from './defaultSpaces';
 
-export default {title: 'spacing'};
+export default {title: 'style/spacing'};
 
 const map = createMap({
   match: createMatch({mediaQueries: defaultMediaQueries}),
@@ -23,8 +23,8 @@ const paddingProps = createProps({
 const Square = styled.div(square, paddingProps);
 
 export const Padding = () => (
-  <Square padding={{mobile: 'xs', tablet: 'md', desktop: 'lg'}} />
+  <Square padding={{mobile: 2, tablet: 3, desktop: 4}} />
 );
 export const PaddingX = () => (
-  <Square paddingX={{mobile: 'xs', tablet: 'md', desktop: 'lg'}} />
+  <Square paddingX={{mobile: 2, tablet: 3, desktop: 4}} />
 );

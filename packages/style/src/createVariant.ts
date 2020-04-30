@@ -1,6 +1,4 @@
 import {DefaultTheme, Style} from './types';
-import {combine} from './combine';
-// variant('variant', variants)
 
 export const createVariant = <
   Variant extends string | number,
@@ -8,22 +6,17 @@ export const createVariant = <
   Theme = DefaultTheme
 >(
   variants: {
-    [variant in Variant]: Style<Props, Theme> | Array<Style<Props, Theme>>;
+    [variant in Variant]: Style<Props, Theme>;
   },
 ) => {
   return (variant: Variant): Style<Props, Theme> => {
     // TODO: make it responsive
     const styles = variants[variant];
-
-    if (Array.isArray(styles)) {
-      return combine(...styles);
+    if (process.env.NODE_ENV !== 'production') {
+      if (!Object.prototype.hasOwnProperty.call(variants, variant)) {
+        console.warn(`Variant "${variant}" was not found.`);
+      }
     }
-
-    if (typeof styles === 'function' || typeof styles === 'object') {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return styles as any; // FIXME: https://github.com/Microsoft/TypeScript/issues/23542
-    }
-
-    return {};
+    return styles || undefined;
   };
 };

@@ -18,7 +18,7 @@ export type ThemeProps<
   Props extends PropsConstraint,
   Theme extends ThemeConstraint
 > = Props & {
-  theme?: Theme;
+  theme: Theme;
 };
 
 // ========== STYLE ==========
@@ -31,12 +31,20 @@ export type StyleValue = CSSProperties[StyleProperty];
 export interface StyleObject extends CSSProperties, CSSPeudoProperties {
   [key: string]: StyleObject | string | number | undefined;
 }
-export type StyleFunction<Props, Theme extends ThemeConstraint> = (
-  props: ThemeProps<Props, Theme>,
-) => StyleObject;
-export type Style<Props, Theme extends ThemeConstraint> =
+
+export type StyleFunction<
+  Props extends PropsConstraint,
+  Theme extends ThemeConstraint
+> = (props: ThemeProps<Props, Theme>) => Style<Props, Theme>;
+
+export type Style<
+  Props extends PropsConstraint,
+  Theme extends ThemeConstraint
+> =
+  | Style<Props, Theme>[]
   | StyleObject
-  | StyleFunction<Props, Theme>;
+  | StyleFunction<Props, Theme>
+  | undefined;
 
 // ========== MEDIA ==========
 

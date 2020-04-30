@@ -10,5 +10,6 @@
       "@substance/*": ["./*/src"]
     }
   },
-  "include": ["../packages/*/src"]
+  "include": ["../packages/*/src"],
+  "exclude": ["../packages/layout/src/"]
 }

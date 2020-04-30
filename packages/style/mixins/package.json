@@ -4,6 +4,5 @@
   },
   "main": "dist/style.cjs.js",
   "module": "dist/style.esm.js",
-  "types": "../dist/declarations/src/mixins/index.d.ts",
   "sideEffects": false
 }

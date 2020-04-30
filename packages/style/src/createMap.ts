@@ -33,14 +33,14 @@ export const createMap = <
         return style(valueOrValues, props);
       }
       // TODO: consider ordering???
-      return (Object.keys(valueOrValues) as Media[]).reduce(
-        (styles, mediaName) => {
-          if (!Object.prototype.hasOwnProperty.call(valueOrValues, mediaName)) {
+      const result = (Object.keys(valueOrValues) as Media[]).reduce(
+        (styles, media) => {
+          if (!Object.prototype.hasOwnProperty.call(valueOrValues, media)) {
             return styles;
           }
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const stylesForValue = style(valueOrValues[mediaName] as any, props); // FIXME:
-          const stylesForMedia = match(mediaName)(stylesForValue);
+          const stylesForValue = style(valueOrValues[media] as any, props); // FIXME:
+          const stylesForMedia = match(media)(stylesForValue);
           return {
             ...styles,
             ...(typeof stylesForMedia === 'function'
@@ -50,6 +50,7 @@ export const createMap = <
         },
         {},
       );
+      return result;
     };
   };
 };

@@ -4,7 +4,7 @@ import {defaultMediaQueries} from './defaultMediaQueries';
 import {createMatch} from './createMatch';
 import {square} from './story-styles';
 
-export default {title: 'createMatch()'};
+export default {title: 'style/createMatch()'};
 
 const match = createMatch({mediaQueries: defaultMediaQueries});
 

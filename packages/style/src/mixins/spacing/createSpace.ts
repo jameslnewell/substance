@@ -29,6 +29,7 @@ export interface GetSpaceFunction<
   ): StyleValue;
 }
 
+// TODO: support negative spacings
 export const createGetSpace = <
   Space extends SpaceConstraint,
   Theme extends ThemeConstraint = DefaultTheme

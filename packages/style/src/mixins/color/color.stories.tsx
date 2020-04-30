@@ -4,7 +4,7 @@ import {createProps} from '../../createProps';
 import {theme} from '../../story-theme';
 import {color, backgroundColor} from '.';
 
-export default {title: 'themed color'};
+export default {title: 'style/themed color'};
 
 const paddingProps = createProps({
   color,

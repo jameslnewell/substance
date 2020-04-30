@@ -5,7 +5,7 @@ import {theme} from '../../story-theme';
 import {square} from '../../story-styles';
 import {padding, paddingX} from '.';
 
-export default {title: 'themed spacing'};
+export default {title: 'style/themed spacing'};
 
 const paddingProps = createProps({
   padding,

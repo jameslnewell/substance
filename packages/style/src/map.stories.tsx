@@ -4,7 +4,7 @@ import {map} from './map';
 import {theme} from './story-theme';
 import {square} from './story-styles';
 
-export default {title: 'map()'};
+export default {title: 'style/map()'};
 
 const Square = styled.div(
   square,

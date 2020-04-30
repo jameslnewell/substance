@@ -3,10 +3,10 @@
   "compilerOptions": {
     "jsx": "react",
     "moduleResolution": "node",
-    "baseUrl": "./packages",
-    "paths": {
-      "@substance/*": ["./*/src"]
-    },
+    // "baseUrl": "./packages",
+    // "paths": {
+    //   "@substance/*": ["./*/src"]
+    // },
     "skipLibCheck": true
   },
   "include": ["packages/*/src"],

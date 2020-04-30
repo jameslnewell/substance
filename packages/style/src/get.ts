@@ -11,7 +11,9 @@ export const get = <V, O extends {[segment: string]: any} = {}>(
   const segments = path.split('.');
   for (const segment of segments) {
     if (!Object.prototype.hasOwnProperty.call(result, segment)) {
-      console.warn(`Path "${path}" not found on object`);
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn(`Path "${path}" not found on object.`);
+      }
       return undefined;
     }
     result = result[segment];
