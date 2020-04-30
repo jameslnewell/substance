@@ -7,7 +7,6 @@ import {
   MapFunction,
   MediaConstraint,
   ResponsiveValueConstraint,
-  ResponsiveMixinFunction,
   PropsConstraint,
   ResponsiveValues,
   ThemeConstraint,
@@ -44,8 +43,10 @@ export interface CreateMixinTransformFunction<
  * @param transform  The transformation function
  *
  * @example
- *  createMixin(['margin-left', 'margin-right'], value => `${value}px`)(0);
- *  createMixin(['margin-left', 'margin-right'], value => ({theme}) => `${theme.space[value]}px`)(0);
+ * const marginLeft = createMixin(['margin-left', 'margin-right'], value => `${value}px`)(0);
+ * const marginLeft = createMixin(['margin-left', 'margin-right'], value => ({theme}) => `${theme.space[value]}px`)(0);
+ * marginLeft(1);
+ * marginLeft({mobile: 1, desktop: 2});
  *
  */
 export const createMixin = <
@@ -60,11 +61,11 @@ export const createMixin = <
   map: MapFunction<Media, Theme>;
   properties: StyleProperty[];
   transform: CreateMixinTransformFunction<Value, Theme>;
-}): ResponsiveMixinFunction<Media, Value> => {
+}) => {
   return <Props extends PropsConstraint = DefaultProps>(
     valueOrValues: Value | ResponsiveValues<Media, Value>,
   ): Style<Props, Theme> => {
-    return map<Value, Props>(valueOrValues, (value, props) => {
+    return map(valueOrValues, (value, props) => {
       return createStylesFromTransformedValue(
         properties,
         transform(value, props),

@@ -1,31 +1,73 @@
-import {Style, DefaultTheme, StyleFunction, StyleObject} from './types';
+import {
+  Style,
+  DefaultProps,
+  PropsConstraint,
+  ThemeConstraint,
+  ThemeProps,
+  FlatStyle,
+  StyleObject,
+  DefaultTheme,
+} from './types';
 
-interface PropsConstraint {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+function mergeInto(
+  srcStyle: StyleObject | undefined,
+  destStyle: StyleObject,
+): void {
+  debugger;
+  if (srcStyle === undefined) {
+    return;
+  }
+  for (const key in Object.keys(srcStyle)) {
+    if (!Object.prototype.hasOwnProperty.call(srcStyle, key)) {
+      destStyle[key] = srcStyle[key];
+    }
+    // TODO: handle key collision
+  }
 }
 
-export const combine = <Props extends PropsConstraint, Theme = DefaultTheme>(
-  ...styles: Style<Props, Theme>[]
-): StyleFunction<Props, Theme> => {
-  return (props) => {
-    const combined: StyleObject = {};
+function flatten<Props, Theme>(
+  styles: Style<Props, Theme>,
+  props: ThemeProps<Props, Theme>,
+): StyleObject | undefined {
+  if (Array.isArray(styles)) {
+    let count = 0;
+    const combinedStyle: StyleObject = {};
     for (const style of styles) {
-      const styleObject = typeof style !== 'function' ? style : style(props);
-      Object.keys(styleObject).forEach((prop) => {
-        const currentValue = combined[prop];
-        const nextValue = styleObject[prop];
-        if (
-          Object.prototype.hasOwnProperty.call(styleObject, prop) &&
-          typeof currentValue === 'object' &&
-          typeof nextValue === 'object'
-        ) {
-          combined[prop] = {...currentValue, ...styleObject};
-        } else {
-          combined[prop] = styleObject[prop];
-        }
-      });
+      if (style !== undefined) ++count;
+      mergeInto(flatten(style, props), combinedStyle);
     }
-    return combined;
-  };
-};
+    if (count > 0) {
+      return combinedStyle;
+    } else {
+      return undefined;
+    }
+  }
+
+  if (typeof styles === 'function') {
+    return flatten(styles(props), props);
+  }
+
+  return styles;
+}
+
+export function combine<
+  Props extends PropsConstraint = DefaultProps,
+  Theme extends ThemeConstraint = DefaultTheme
+>(...styles: Style<Props, Theme>[]): FlatStyle<Props, Theme> {
+  if (styles.length === 0) {
+    return undefined;
+  }
+
+  if (styles.length === 1) {
+    const style = styles[0];
+    if (!Array.isArray(style)) {
+      if (typeof style === 'function') {
+        return (props) => flatten(style(props), props);
+      } else {
+        return style;
+      }
+    }
+  }
+
+  return (props) => flatten<Props, Theme>(styles, props);
+}

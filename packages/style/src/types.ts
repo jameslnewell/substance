@@ -41,10 +41,20 @@ export type Style<
   Props extends PropsConstraint,
   Theme extends ThemeConstraint
 > =
-  | Style<Props, Theme>[]
+  | undefined
   | StyleObject
   | StyleFunction<Props, Theme>
-  | undefined;
+  | Style<Props, Theme>[];
+
+export type FlatStyleFunction<
+  Props extends PropsConstraint,
+  Theme extends ThemeConstraint
+> = (props: ThemeProps<Props, Theme>) => Style<Props, Theme>;
+
+export type FlatStyle<
+  Props extends PropsConstraint,
+  Theme extends ThemeConstraint
+> = undefined | StyleObject | FlatStyleFunction<Props, Theme>;
 
 // ========== MEDIA ==========
 
@@ -69,7 +79,13 @@ export interface MatchFunction<
   Theme extends ThemeConstraint
 > {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (media: Media): (style: StyleObject) => Style<{}, Theme>;
+  (media: Media): (
+    style: StyleObject,
+  ) =>
+    | StyleObject
+    | (<Props extends PropsConstraint = DefaultProps>(
+        props: ThemeProps<Props, Theme>,
+      ) => StyleObject);
 }
 
 // ========== MAP MEDIA ==========
@@ -90,9 +106,12 @@ export interface MapFunction<
     Value extends ResponsiveValueConstraint,
     Props extends PropsConstraint = DefaultProps
   >(
-    values: Value | ResponsiveValues<Media, Value>,
+    valueOrValues: Value | ResponsiveValues<Media, Value>,
     style: MapStyleFunction<Value, Props, Theme>,
-  ): Style<Props, Theme>;
+  ):
+    | StyleObject
+    | StyleObject[]
+    | ((props: ThemeProps<Props, Theme>) => StyleObject | StyleObject[]);
 }
 
 // ========== MIXIN ==========

@@ -12,6 +12,12 @@ import {
   StyleObject,
 } from './types';
 
+/**
+ *
+ * Create a mixin that maps a value to styles for each media query
+ *
+ * @param options
+ */
 export const createMap = <
   Media extends MediaConstraint,
   Theme extends ThemeConstraint = DefaultTheme
@@ -27,30 +33,28 @@ export const createMap = <
     valueOrValues: Value | ResponsiveValues<Media, Value>,
     style: MapStyleFunction<Value, Props, Theme>,
   ) => {
-    // TODO: for perf, map props only for style functions that take two params? (will require adjusting MapFunction typings to use overrides)
-    return (props: ThemeProps<Props, Theme>): StyleObject => {
+    // TODO: for perf, nest and pass props only for style functions that take two params? (will require adjusting MapFunction typings to use overrides)
+    return (props: ThemeProps<Props, Theme>): StyleObject | StyleObject[] => {
       if (typeof valueOrValues !== 'object') {
         return style(valueOrValues, props);
       }
       // TODO: consider ordering???
-      const result = (Object.keys(valueOrValues) as Media[]).reduce(
-        (styles, media) => {
-          if (!Object.prototype.hasOwnProperty.call(valueOrValues, media)) {
-            return styles;
-          }
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const stylesForValue = style(valueOrValues[media] as any, props); // FIXME:
-          const stylesForMedia = match(media)(stylesForValue);
-          return {
-            ...styles,
-            ...(typeof stylesForMedia === 'function'
-              ? stylesForMedia(props)
-              : stylesForMedia),
-          };
-        },
-        {},
-      );
-      return result;
+      const styles: StyleObject[] = [];
+      for (const media of Object.keys(valueOrValues) as Media[]) {
+        if (!Object.prototype.hasOwnProperty.call(valueOrValues, media)) {
+          continue;
+        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const stylesForValue = style(valueOrValues[media] as any, props); // FIXME:
+        const stylesForMedia = match(media)(stylesForValue);
+
+        styles.push(
+          typeof stylesForMedia === 'function'
+            ? stylesForMedia(props)
+            : stylesForMedia,
+        );
+      }
+      return styles;
     };
   };
 };

@@ -1,4 +1,4 @@
-import {DefaultTheme, Style} from './types';
+import {DefaultTheme, Style, ThemeConstraint} from './types';
 
 type MixinsConstraint = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -10,9 +10,10 @@ type PropsConstraint<Mixins extends MixinsConstraint> = {
 };
 
 /**
- * Create a style function that maps each prop to a mixin
- * @param mixins A map of mixins
- * @returns A style function
+ * Create a mixin that maps props to mixins
+ *
+ * @param mixins The mixins
+ * @returns A mixin
  *
  * @example
  * const Box = styled.div(
@@ -25,7 +26,7 @@ type PropsConstraint<Mixins extends MixinsConstraint> = {
 export const createProps = <
   Mixins extends MixinsConstraint,
   Props extends PropsConstraint<Mixins>,
-  Theme = DefaultTheme
+  Theme extends ThemeConstraint = DefaultTheme
 >(
   mixins: Mixins,
 ) => {

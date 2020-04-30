@@ -8,7 +8,6 @@ import {
   MapFunction,
   ThemeConstraint,
   DefaultTheme,
-  Style,
 } from '@substance/style';
 import {
   SpaceConstraint,
@@ -38,7 +37,7 @@ export interface CreateInlineLayoutOptions<
   getSpace: GetSpaceFunction<Space, Theme>;
 }
 
-const createInlineLayout = <
+export const createInlineLayout = <
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 >({

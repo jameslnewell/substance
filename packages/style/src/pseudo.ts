@@ -1,4 +1,4 @@
-import {Style, DefaultTheme, StyleFunction} from './types';
+import {Style, DefaultTheme, StyleFunction, ThemeProps} from './types';
 import {combine} from './combine';
 
 interface PropsConstraint {
@@ -6,13 +6,18 @@ interface PropsConstraint {
   [prop: string]: any;
 }
 
+// FIXME:
 export const pseudo = <Props extends PropsConstraint, Theme = DefaultTheme>(
   pseudo: string,
   ...styles: Style<Props, Theme>[]
 ): StyleFunction<Props, Theme> => {
-  return (props) => {
+  return (props: ThemeProps<Props, Theme>): Style<Props, Theme> => {
+    const style = combine(...styles);
+    if (style === undefined) {
+      return style;
+    }
     return {
-      [pseudo]: combine(...styles)(props),
+      [pseudo]: typeof style === 'function' ? style(props) : style,
     };
   };
 };

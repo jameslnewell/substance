@@ -239,31 +239,3 @@ export const UsingStyleArrays = () => {
     </>
   );
 };
-
-export const WithResponsiveValue = () => {
-  const circle = {
-    display: 'inline-block',
-    width: 100,
-    height: 100,
-    borderRadius: '100%',
-  };
-
-  const Light = styled.div(
-    circle,
-    createProps({
-      type: createVariant({
-        slow: () => ({
-          backgroundColor: 'orange',
-        }),
-        stop: () => ({
-          backgroundColor: 'red',
-        }),
-        go: () => ({
-          backgroundColor: 'green',
-        }),
-      }),
-    }),
-  );
-
-  return <Light type={{mobile: 'go', tablet: 'slow', desktop: 'stop'}} />;
-};
