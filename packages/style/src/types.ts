@@ -62,10 +62,10 @@ export type MediaQueries<Media extends MediaConstraint> = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ValueConstraint = any;
 export type ResponsiveValueConstraint = string | number | boolean;
-export type ResponsiveValues<
+export type ResponsiveValue<
   Media extends MediaConstraint,
   Value extends ResponsiveValueConstraint
-> = {[name in Media]?: Value};
+> = Value | {[name in Media]?: Value};
 
 // ========== MATCH MEDIA ==========
 
@@ -101,7 +101,7 @@ export interface MapFunction<
     Value extends ResponsiveValueConstraint,
     Props extends PropsConstraint = DefaultProps
   >(
-    valueOrValues: Value | ResponsiveValues<Media, Value>,
+    valueOrValues: Value | ResponsiveValue<Media, Value>,
     style: MapStyleFunction<Value, Props, Theme>,
   ):
     | StyleObject
@@ -121,6 +121,6 @@ export interface ResponsiveMixinFunction<
   Theme extends ThemeConstraint = DefaultTheme
 > {
   <Props extends PropsConstraint = DefaultProps>(
-    valueOrValues: Value | ResponsiveValues<Media, Value>,
+    valueOrValues: Value | ResponsiveValue<Media, Value>,
   ): Style<PropsWithTheme<Props, Theme>>;
 }

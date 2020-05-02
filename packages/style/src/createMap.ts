@@ -3,7 +3,7 @@ import {
   MediaConstraint,
   MatchFunction,
   ResponsiveValueConstraint,
-  ResponsiveValues,
+  ResponsiveValue,
   MapStyleFunction,
   PropsConstraint,
   DefaultProps,
@@ -30,7 +30,7 @@ export const createMap = <
     Value extends ResponsiveValueConstraint,
     Props extends PropsConstraint = DefaultProps
   >(
-    valueOrValues: Value | ResponsiveValues<Media, Value>,
+    valueOrValues: ResponsiveValue<Media, Value>,
     style: MapStyleFunction<Value, Props, Theme>,
   ) => {
     // TODO: for perf, nest and pass props only for style functions that take two params? (will require adjusting MapFunction typings to use overrides)

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import flattenChildren from 'react-keyed-flatten-children';
 import {
   map,
-  ResponsiveValues,
+  ResponsiveValue,
   MediaConstraint,
   MapFunction,
   ThemeConstraint,
@@ -22,10 +22,8 @@ export interface InlineLayoutProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  align?:
-    | InlineLayoutAlignment
-    | ResponsiveValues<Media, InlineLayoutAlignment>;
-  space?: Space | ResponsiveValues<Media, Space>;
+  align?: ResponsiveValue<Media, InlineLayoutAlignment>;
+  space?: ResponsiveValue<Media, Space>;
 }
 
 export interface CreateInlineLayoutOptions<

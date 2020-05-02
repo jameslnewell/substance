@@ -1,74 +1,144 @@
 import React from 'react';
+import styled from 'styled-components';
+import flattenChildren from 'react-keyed-flatten-children';
+import {
+  ResponsiveValue,
+  MediaConstraint,
+  MapFunction,
+  ThemeConstraint,
+  DefaultTheme,
+  map,
+} from '@substance/style';
+import {
+  SpaceConstraint,
+  GetSpaceFunction,
+  getSpace,
+} from '@substance/style/src/mixins';
+import {createSpaceStyles} from './styles';
 
-export type TilesAlignment = 'left' | 'center' | 'right';
+export type TilesLayoutAlignment = 'left' | 'center' | 'right';
 
-export interface TilesLayoutProps {
-  columns?: ResponsiveValue<number>;
-  space?: ResponsiveValue<Space>;
-  align?: ResponsiveValue<TilesAlignment>;
+export interface TilesLayoutProps<
+  Media extends MediaConstraint,
+  Space extends SpaceConstraint
+> {
+  columns?: ResponsiveValue<Media, number>;
+  space?: ResponsiveValue<Media, Space>;
+  align?: ResponsiveValue<Media, TilesLayoutAlignment>;
 }
 
-const getJustifyContent = (
-  align: ResponsiveValue<TilesAlignment> | undefined,
-): ResponsiveValue<string> =>
-  map<TilesAlignment, string>(align, (a) => {
-    switch (a) {
-      case 'left':
-        return 'flex-start';
-      case 'center':
-        return 'center';
-      case 'right':
-        return 'flex-end';
-      default:
-        return null;
-    }
+type WrapperProps<
+  Media extends MediaConstraint,
+  Space extends SpaceConstraint
+> = Pick<TilesLayoutProps<Media, Space>, 'space'>;
+type ContainerProps<
+  Media extends MediaConstraint,
+  Space extends SpaceConstraint
+> = Pick<TilesLayoutProps<Media, Space>, 'align' | 'space'>;
+type ItemProps<
+  Media extends MediaConstraint,
+  Space extends SpaceConstraint
+> = Pick<TilesLayoutProps<Media, Space>, 'columns' | 'space'>;
+
+export interface CreateTilesLayoutOptions<
+  Media extends MediaConstraint,
+  Space extends SpaceConstraint,
+  Theme extends ThemeConstraint = DefaultTheme
+> {
+  map: MapFunction<Media>;
+  getSpace: GetSpaceFunction<Space, Theme>;
+}
+
+export const createTilesLayout = <
+  Media extends MediaConstraint,
+  Space extends SpaceConstraint
+>({
+  map,
+  getSpace,
+}: CreateTilesLayoutOptions<Media, Space>) => {
+  const styles = createSpaceStyles<Media, Space>({
+    map,
+    getSpace,
   });
 
-const getFlex = (
-  columns: ResponsiveValue<number> | undefined,
-): ResponsiveValue<number> => map(columns, (c) => (c === null ? 1 : null));
+  const Wrapper = styled.div<WrapperProps<Media, Space>>({}, styles.wrapper);
 
-const getBasis = (
-  columns: ResponsiveValue<number> | undefined,
-): ResponsiveValue<string> =>
-  map(columns, (c) => (c !== null ? `${(1 / c) * 100}%` : null));
-
-const getMargin = (
-  space: ResponsiveValue<Space> | undefined,
-): ResponsiveValue<number> => map(space, (s) => (s ? -1 * s : null));
-
-const getPadding = (
-  space: ResponsiveValue<Space> | undefined,
-): ResponsiveValue<Space> => map(space, (s) => s);
-
-export const TilesLayout: React.FC<TilesLayoutProps> = ({
-  columns,
-  space,
-  align,
-  children,
-}) => (
-  <Box
-    display="flex"
-    flexWrap="wrap"
-    justifyContent={getJustifyContent(align)}
-    marginTop={getMargin(space)}
-    marginLeft={getMargin(space)}
-  >
-    {React.Children.map(children, (child) => {
-      if (!React.isValidElement(child)) {
-        return child;
+  const Container = styled.div<ContainerProps<Media, Space>>(
+    {
+      display: 'flex',
+      flexWrap: 'wrap',
+    },
+    styles.container,
+    ({align}) => {
+      if (align === undefined) {
+        return undefined;
       }
-      return (
-        <Box
-          paddingTop={getPadding(space)}
-          paddingLeft={getPadding(space)}
-          flexGrow={getFlex(columns)}
-          flexShrink={getFlex(columns)}
-          flexBasis={getBasis(columns)}
-        >
-          {child}
-        </Box>
-      );
-    })}
-  </Box>
-);
+      return map(align, (a) => {
+        switch (a) {
+          case 'left':
+            return {
+              justifyContent: 'flex-start',
+            };
+          case 'center':
+            return {
+              justifyContent: 'center',
+            };
+          case 'right':
+            return {
+              justifyContent: 'flex-end',
+            };
+          default:
+            return {
+              justifyContent: a,
+            };
+        }
+      });
+    },
+  );
+
+  const Item = styled.div<ItemProps<Media, Space>>(
+    {
+      flexGrow: 1,
+      flexShrink: 1,
+    },
+    styles.item,
+    ({columns}) => {
+      if (columns === undefined) {
+        return undefined;
+      }
+      return map(columns, (c) => {
+        return {
+          flexGrow: 0,
+          flexShrink: 0,
+          flexBasis: c !== undefined ? `${(1 / c) * 100}%` : undefined,
+        };
+      });
+    },
+  );
+
+  const TilesLayout: React.FC<TilesLayoutProps<Media, Space>> = ({
+    columns,
+    space,
+    align,
+    children,
+  }) => (
+    <Wrapper space={space}>
+      <Container align={align} space={space}>
+        {flattenChildren(children).map((child, index) => {
+          if (!React.isValidElement(child)) {
+            return child;
+          }
+          return (
+            <Item key={child.key || index} columns={columns} space={space}>
+              {child}
+            </Item>
+          );
+        })}
+      </Container>
+    </Wrapper>
+  );
+
+  return TilesLayout;
+};
+
+export const TilesLayout = createTilesLayout({map, getSpace});

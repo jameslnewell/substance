@@ -1,1 +1,1 @@
-{"extends": "../tsconfig"}
+{"extends": "../tsconfig", "compilerOptions": {"target": "es5"}}

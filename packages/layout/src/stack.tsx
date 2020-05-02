@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import flattenChildren from 'react-keyed-flatten-children';
 import {
   createProps,
-  ResponsiveValues,
+  ResponsiveValue,
   MediaConstraint,
   ThemeConstraint,
   DefaultTheme,
@@ -18,7 +18,7 @@ export interface StackLayoutProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  space?: Space | ResponsiveValues<Media, Space>;
+  space?: ResponsiveValue<Media, Space>;
 }
 
 export interface CreateStackLayoutOptions<

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {
   map,
-  ResponsiveValues,
+  ResponsiveValue,
   MediaConstraint,
   MapFunction,
   ThemeConstraint,
@@ -19,9 +19,7 @@ import {createSpaceStyles} from './styles';
 export type ColumnsLayoutColumnWidth = number | 'content';
 
 export interface ColumnsLayoutColumnProps<Media extends MediaConstraint> {
-  width?:
-    | ColumnsLayoutColumnWidth
-    | ResponsiveValues<Media, ColumnsLayoutColumnWidth>;
+  width?: ResponsiveValue<Media, ColumnsLayoutColumnWidth>;
   className?: string;
 }
 
@@ -32,13 +30,9 @@ export interface ColumnsLayoutProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  space?: Space | ResponsiveValues<Media, Space>;
-  halign?:
-    | ColumnsHorizontalAlignment
-    | ResponsiveValues<Media, ColumnsHorizontalAlignment>;
-  valign?:
-    | ColumnsVerticalAlignment
-    | ResponsiveValues<Media, ColumnsVerticalAlignment>;
+  space?: ResponsiveValue<Media, Space>;
+  halign?: ResponsiveValue<Media, ColumnsHorizontalAlignment>;
+  valign?: ResponsiveValue<Media, ColumnsVerticalAlignment>;
 }
 
 type WrapperProps<
@@ -112,7 +106,7 @@ export const createColumnsLayout = <
   getSpace,
 }: CreateColumnsLayoutOptions<Media, Space>) => {
   const SpaceContext = React.createContext<
-    Space | ResponsiveValues<Media, Space> | undefined
+    ResponsiveValue<Media, Space> | undefined
   >(undefined);
 
   const styles = createSpaceStyles<Media, Space>({

@@ -3,7 +3,7 @@ import {
   DefaultTheme,
   MediaConstraint,
   MapFunction,
-  ResponsiveValues,
+  ResponsiveValue,
   PropsWithTheme,
   Style,
 } from '@substance/style';
@@ -23,7 +23,7 @@ export interface StyleProps<
   Space extends SpaceConstraint,
   Theme extends ThemeConstraint = DefaultTheme
 > extends PropsWithTheme<{}, Theme> {
-  space?: Space | ResponsiveValues<Media, Space>;
+  space?: ResponsiveValue<Media, Space>;
 }
 
 export const createSpaceStyles = <

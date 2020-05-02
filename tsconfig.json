@@ -10,7 +10,9 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "noEmit": true
+    "noEmit": true,
+    "target": "ESNext",
+    "module": "ESNext"
   },
   "include": ["types", "packages/*/src"],
   "exclude": ["node_modules", "packages/*/dist"]

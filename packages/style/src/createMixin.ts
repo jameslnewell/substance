@@ -8,7 +8,7 @@ import {
   MediaConstraint,
   ResponsiveValueConstraint,
   PropsConstraint,
-  ResponsiveValues,
+  ResponsiveValue,
   ThemeConstraint,
   DefaultProps,
   Style,
@@ -63,7 +63,7 @@ export const createMixin = <
   transform: CreateMixinTransformFunction<Value, Theme>;
 }) => {
   return <Props extends PropsWithTheme<PropsConstraint, Theme>>(
-    valueOrValues: Value | ResponsiveValues<Media, Value>,
+    valueOrValues: ResponsiveValue<Media, Value>,
   ): Style<Props> => {
     return map(valueOrValues, (value, props) => {
       return createStylesFromTransformedValue(
