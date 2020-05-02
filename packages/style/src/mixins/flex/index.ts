@@ -31,11 +31,15 @@ const factory = <Value extends ValueConstraint>(
 };
 
 export const createFlexBasis = factory<StyleValue>(['flexBasis']);
-export const createFlexDirection = factory(['flexDirection']);
-export const createFlexGrow = factory(['flexGrow']);
-export const createFlexShrink = factory(['flexShrink']);
+export const createFlexDirection = factory<StyleValue>(['flexDirection']);
+export const createFlexGrow = factory<StyleValue>(['flexGrow']);
+export const createFlexShrink = factory<StyleValue>(['flexShrink']);
+export const createAlignItems = factory<StyleValue>(['alignItems']);
+export const createJustifyContent = factory<StyleValue>(['justifyContent']);
 
 export const flexBasis = createFlexBasis({map});
 export const flexDirection = createFlexBasis({map});
 export const flexGrow = createFlexBasis({map});
 export const flexShrink = createFlexBasis({map});
+export const alignItems = createAlignItems({map});
+export const justifyContent = createJustifyContent({map});
