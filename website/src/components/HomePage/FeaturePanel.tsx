@@ -1,14 +1,18 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {grid, unit} from '@substance/grid';
-import {color, bg} from '@substance/color';
-import {container} from '@substance/container';
-import {py, px, p} from '@substance/spacing';
+import {Container, ColumnsLayout} from '@substance/layout';
+import {
+  color,
+  backgroundColor,
+  paddingY,
+  paddingX,
+  padding,
+} from '@substance/style/mixins';
 import {copy} from '@substance/typography';
 
 const FeatureWrapper = styled.div`
   border-bottom: 1px solid ${color('shades.dark')};
-  ${bg('alert.success')};
+  ${backgroundColor('alert.success')};
 `;
 
 const FeatureContent = styled.div`

@@ -23,7 +23,14 @@ export const HeroPanel = () => (
   <HeroWrapper>
     <HeroContent>
       Primitives for building design systems with{' '}
-      <code>styled-components 💅</code>.
+      <code>
+        styled-components{' '}
+        <span role="img" label="styled-components">
+          {' '}
+          💅
+        </span>
+      </code>
+      .
     </HeroContent>
   </HeroWrapper>
 );

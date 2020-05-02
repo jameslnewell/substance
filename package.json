@@ -34,7 +34,8 @@
     "linting": "eslint --ext .ts,.tsx packages",
     "formatting": "prettier --check .",
     "format": "prettier --write .",
-    "start": "yarn workspace @substance/storybook run start",
+    "start:storybook": "yarn workspace @substance/storybook run start",
+    "start:website": "yarn workspace @substance/website run start",
     "build": "preconstruct build",
     "prepublish": "yarn run build && yarn run testing && yarn run typing && yarn run linting && yarn run formatting",
     "publish": "cd packages/style && npm publish"

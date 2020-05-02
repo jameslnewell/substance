@@ -9,9 +9,13 @@
     "react-dom": "^16.13.1",
     "styled-components": "^5.0.1"
   },
-  "scripts": {},
-  "license": "MIT",
   "devDependencies": {
+    "@mdx-js/loader": "^1.6.1",
+    "@next/mdx": "^9.3.6",
     "next": "^9.3.6"
-  }
+  },
+  "scripts": {
+    "start": "next dev"
+  },
+  "license": "MIT"
 }

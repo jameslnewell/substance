@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {Header} from './Header';
+import {Header} from '../Layout/Header';
 import {HeroPanel} from './HeroPanel';
 import {FeaturePanel} from './FeaturePanel';
-import {Nav} from './Nav';
-import {Footer} from './Footer';
+import {Nav} from '../Layout/Nav';
+import {Footer} from '../Layout/Footer';
 
 export class HomePage extends React.Component<{}> {
   render() {
