@@ -2,32 +2,28 @@ import {
   Style,
   DefaultProps,
   PropsConstraint,
-  ThemeConstraint,
-  ThemeProps,
   FlatStyle,
   StyleObject,
-  DefaultTheme,
 } from './types';
 
 function mergeInto(
   srcStyle: StyleObject | undefined,
   destStyle: StyleObject,
 ): void {
-  debugger;
   if (srcStyle === undefined) {
     return;
   }
-  for (const key in Object.keys(srcStyle)) {
-    if (!Object.prototype.hasOwnProperty.call(srcStyle, key)) {
+  for (const key of Object.keys(srcStyle)) {
+    if (!Object.prototype.hasOwnProperty.call(destStyle, key)) {
       destStyle[key] = srcStyle[key];
     }
     // TODO: handle key collision
   }
 }
 
-function flatten<Props, Theme>(
-  styles: Style<Props, Theme>,
-  props: ThemeProps<Props, Theme>,
+function flatten<Props>(
+  styles: Style<Props>,
+  props: Props,
 ): StyleObject | undefined {
   if (Array.isArray(styles)) {
     let count = 0;
@@ -50,10 +46,9 @@ function flatten<Props, Theme>(
   return styles;
 }
 
-export function combine<
-  Props extends PropsConstraint = DefaultProps,
-  Theme extends ThemeConstraint = DefaultTheme
->(...styles: Style<Props, Theme>[]): FlatStyle<Props, Theme> {
+export function combine<Props extends PropsConstraint = DefaultProps>(
+  ...styles: Style<Props>[]
+): FlatStyle<Props> {
   if (styles.length === 0) {
     return undefined;
   }
@@ -62,12 +57,12 @@ export function combine<
     const style = styles[0];
     if (!Array.isArray(style)) {
       if (typeof style === 'function') {
-        return (props) => flatten(style(props), props);
+        return (props) => flatten<Props>(style(props), props);
       } else {
         return style;
       }
     }
   }
 
-  return (props) => flatten<Props, Theme>(styles, props);
+  return (props) => flatten<Props>(styles, props);
 }

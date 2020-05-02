@@ -7,7 +7,7 @@ import {
   MapStyleFunction,
   PropsConstraint,
   DefaultProps,
-  ThemeProps,
+  PropsWithTheme,
   ThemeConstraint,
   StyleObject,
 } from './types';
@@ -34,7 +34,9 @@ export const createMap = <
     style: MapStyleFunction<Value, Props, Theme>,
   ) => {
     // TODO: for perf, nest and pass props only for style functions that take two params? (will require adjusting MapFunction typings to use overrides)
-    return (props: ThemeProps<Props, Theme>): StyleObject | StyleObject[] => {
+    return (
+      props: PropsWithTheme<Props, Theme>,
+    ): StyleObject | StyleObject[] => {
       if (typeof valueOrValues !== 'object') {
         return style(valueOrValues, props);
       }

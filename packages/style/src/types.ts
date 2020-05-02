@@ -14,7 +14,7 @@ export type ThemeConstraint = any;
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface DefaultTheme {}
 
-export type ThemeProps<
+export type PropsWithTheme<
   Props extends PropsConstraint,
   Theme extends ThemeConstraint
 > = Props & {
@@ -32,29 +32,24 @@ export interface StyleObject extends CSSProperties, CSSPeudoProperties {
   [key: string]: StyleObject | string | number | undefined;
 }
 
-export type StyleFunction<
-  Props extends PropsConstraint,
-  Theme extends ThemeConstraint
-> = (props: ThemeProps<Props, Theme>) => Style<Props, Theme>;
+export type StyleFunction<Props extends PropsConstraint> = (
+  props: Props,
+) => Style<Props>;
 
-export type Style<
-  Props extends PropsConstraint,
-  Theme extends ThemeConstraint
-> =
+export type Style<Props extends PropsConstraint> =
   | undefined
   | StyleObject
-  | StyleFunction<Props, Theme>
-  | Style<Props, Theme>[];
+  | StyleFunction<Props>
+  | Array<Style<Props>>;
 
-export type FlatStyleFunction<
-  Props extends PropsConstraint,
-  Theme extends ThemeConstraint
-> = (props: ThemeProps<Props, Theme>) => Style<Props, Theme>;
+export type FlatStyleFunction<Props extends PropsConstraint> = (
+  props: Props,
+) => undefined | StyleObject;
 
-export type FlatStyle<
-  Props extends PropsConstraint,
-  Theme extends ThemeConstraint
-> = undefined | StyleObject | FlatStyleFunction<Props, Theme>;
+export type FlatStyle<Props extends PropsConstraint> =
+  | undefined
+  | StyleObject
+  | FlatStyleFunction<Props>;
 
 // ========== MEDIA ==========
 
@@ -84,7 +79,7 @@ export interface MatchFunction<
   ) =>
     | StyleObject
     | (<Props extends PropsConstraint = DefaultProps>(
-        props: ThemeProps<Props, Theme>,
+        props: PropsWithTheme<Props, Theme>,
       ) => StyleObject);
 }
 
@@ -95,7 +90,7 @@ export interface MapStyleFunction<
   Props extends PropsConstraint = DefaultProps,
   Theme extends ThemeConstraint = DefaultTheme
 > {
-  (value: Value, props: ThemeProps<Props, Theme>): StyleObject;
+  (value: Value, props: PropsWithTheme<Props, Theme>): StyleObject;
 }
 
 export interface MapFunction<
@@ -111,28 +106,21 @@ export interface MapFunction<
   ):
     | StyleObject
     | StyleObject[]
-    | ((props: ThemeProps<Props, Theme>) => StyleObject | StyleObject[]);
+    | ((props: PropsWithTheme<Props, Theme>) => StyleObject | StyleObject[]);
 }
 
 // ========== MIXIN ==========
 
 export interface MixinFunction<Value extends ValueConstraint> {
-  <
-    Props extends PropsConstraint = DefaultProps,
-    Theme extends ThemeConstraint = DefaultTheme
-  >(
-    value: Value,
-  ): Style<Props, Theme>;
+  <Props extends PropsConstraint = DefaultProps>(value: Value): Style<Props>;
 }
 
 export interface ResponsiveMixinFunction<
   Media extends MediaConstraint,
-  Value extends ResponsiveValueConstraint
+  Value extends ResponsiveValueConstraint,
+  Theme extends ThemeConstraint = DefaultTheme
 > {
-  <
-    Props extends PropsConstraint = DefaultProps,
-    Theme extends ThemeConstraint = DefaultTheme
-  >(
+  <Props extends PropsConstraint = DefaultProps>(
     valueOrValues: Value | ResponsiveValues<Media, Value>,
-  ): Style<Props, Theme>;
+  ): Style<PropsWithTheme<Props, Theme>>;
 }

@@ -1,6 +1,11 @@
 import {Properties} from 'csstype';
 import styled from 'styled-components';
-import {createProps, createMixin, map} from '@substance/style';
+import {
+  createProps,
+  createMixin,
+  map,
+  DefaultThemeMediaName,
+} from '@substance/style';
 import {
   margin,
   marginX,
@@ -21,15 +26,36 @@ import {
   borderColor,
 } from '@substance/style/mixins';
 
-type BorderRadius = Required<Properties<string | number>>['borderRadius'];
-
-const borderRadius = createMixin({
+const borderRadius = createMixin<
+  DefaultThemeMediaName,
+  Required<Properties<string | number>>['borderRadius']
+>({
   map,
   properties: ['borderRadius'],
-  transform: (value: BorderRadius) => value,
+  transform: (value) => value,
+});
+
+const width = createMixin<
+  DefaultThemeMediaName,
+  Required<Properties<string | number>>['width']
+>({
+  map,
+  properties: ['width'],
+  transform: (value) => value,
+});
+
+const height = createMixin<
+  DefaultThemeMediaName,
+  Required<Properties<string | number>>['height']
+>({
+  map,
+  properties: ['height'],
+  transform: (value) => value,
 });
 
 const props = createProps({
+  width,
+  height,
   color,
   backgroundColor,
   borderColor,

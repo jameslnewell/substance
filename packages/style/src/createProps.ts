@@ -1,8 +1,8 @@
-import {DefaultTheme, Style, ThemeConstraint} from './types';
+import {Style} from './types';
 
 type MixinsConstraint = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: (value: any) => Style<any, any>;
+  [prop: string]: (value: any) => Style<any>;
 };
 
 type PropsConstraint<Mixins extends MixinsConstraint> = {
@@ -25,13 +25,12 @@ type PropsConstraint<Mixins extends MixinsConstraint> = {
  */
 export const createProps = <
   Mixins extends MixinsConstraint,
-  Props extends PropsConstraint<Mixins>,
-  Theme extends ThemeConstraint = DefaultTheme
+  Props extends PropsConstraint<Mixins>
 >(
   mixins: Mixins,
 ) => {
-  return (props: Props): Style<Props, Theme> => {
-    const styles: Style<Props, Theme>[] = [];
+  return (props: Props): Style<Props> => {
+    const styles: Style<Props>[] = [];
     for (const name of Object.keys(props)) {
       if (
         !Object.prototype.hasOwnProperty.call(props, name) ||

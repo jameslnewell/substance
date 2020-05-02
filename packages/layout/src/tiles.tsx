@@ -1,13 +1,8 @@
 import React from 'react';
-import {ResponsiveValue} from 'styled-system';
-
-import {Box} from '../../Box';
-import {Space} from '../../theming';
-import {map} from '../map';
 
 export type TilesAlignment = 'left' | 'center' | 'right';
 
-export interface TilesProps {
+export interface TilesLayoutProps {
   columns?: ResponsiveValue<number>;
   space?: ResponsiveValue<Space>;
   align?: ResponsiveValue<TilesAlignment>;
@@ -46,7 +41,7 @@ const getPadding = (
   space: ResponsiveValue<Space> | undefined,
 ): ResponsiveValue<Space> => map(space, (s) => s);
 
-export const Tiles: React.FC<TilesProps> = ({
+export const TilesLayout: React.FC<TilesLayoutProps> = ({
   columns,
   space,
   align,

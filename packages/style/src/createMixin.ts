@@ -1,6 +1,6 @@
 import {
   DefaultTheme,
-  ThemeProps,
+  PropsWithTheme,
   StyleProperty,
   StyleValue,
   StyleObject,
@@ -33,7 +33,7 @@ export interface CreateMixinTransformFunction<
 > {
   <Props extends PropsConstraint = DefaultProps>(
     value: Value,
-    props: ThemeProps<Props, Theme>,
+    props: PropsWithTheme<Props, Theme>,
   ): StyleValue;
 }
 
@@ -62,9 +62,9 @@ export const createMixin = <
   properties: StyleProperty[];
   transform: CreateMixinTransformFunction<Value, Theme>;
 }) => {
-  return <Props extends PropsConstraint = DefaultProps>(
+  return <Props extends PropsWithTheme<PropsConstraint, Theme>>(
     valueOrValues: Value | ResponsiveValues<Media, Value>,
-  ): Style<Props, Theme> => {
+  ): Style<Props> => {
     return map(valueOrValues, (value, props) => {
       return createStylesFromTransformedValue(
         properties,

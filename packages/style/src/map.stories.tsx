@@ -1,7 +1,6 @@
 import * as React from 'react';
-import styled, {ThemeProvider} from 'styled-components';
+import styled from 'styled-components';
 import {map} from './map';
-import {theme} from './story-theme';
 import {square} from './story-styles';
 
 export default {title: 'style/map()'};
@@ -17,8 +16,4 @@ const Square = styled.div(
   ),
 );
 
-export const Default: React.FC = () => (
-  <ThemeProvider theme={theme}>
-    <Square />
-  </ThemeProvider>
-);
+export const Default: React.FC = () => <Square />;

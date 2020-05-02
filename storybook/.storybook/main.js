@@ -9,6 +9,7 @@ module.exports = {
         tsLoaderOptions: {
           transpileOnly: true,
         },
+        transpileManager: true,
       },
     },
   ],

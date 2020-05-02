@@ -3,12 +3,15 @@
   "compilerOptions": {
     "jsx": "react",
     "moduleResolution": "node",
-    // "baseUrl": "./packages",
-    // "paths": {
-    //   "@substance/*": ["./*/src"]
-    // },
-    "skipLibCheck": true
+    "baseUrl": ".",
+    "paths": {
+      "@substance/*": ["packages/*/src"]
+    },
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true
   },
-  "include": ["packages/*/src"],
+  "include": ["types", "packages/*/src"],
   "exclude": ["node_modules", "packages/*/dist"]
 }

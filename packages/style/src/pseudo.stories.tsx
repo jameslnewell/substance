@@ -16,9 +16,7 @@ const Device = styled.div(
       padding: `1em`,
     },
     match('mobile')({
-      ':after': {
-        content: '"📱"',
-      },
+      content: '"📱"',
     }),
     match('tablet')({
       content: '"💻"',

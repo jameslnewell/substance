@@ -2,7 +2,7 @@ import {DefaultTheme, MediaQueries} from './types';
 import {defaultMediaQueries, DefaultMedia} from './defaultMediaQueries';
 import {createMatch} from './createMatch';
 
-type DefaultThemeMediaName = DefaultTheme extends {
+export type DefaultThemeMediaName = DefaultTheme extends {
   media: MediaQueries<infer MediaName>;
 }
   ? MediaName

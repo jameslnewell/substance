@@ -1,10 +1,4 @@
-import {
-  DefaultTheme,
-  Style,
-  PropsConstraint,
-  DefaultProps,
-  ThemeConstraint,
-} from './types';
+import {Style, PropsConstraint, DefaultProps} from './types';
 
 export type VariantConstraint = string | number;
 
@@ -39,14 +33,13 @@ export type VariantConstraint = string | number;
  */
 export const createVariant = <
   Variant extends VariantConstraint,
-  Props extends PropsConstraint = DefaultProps,
-  Theme extends ThemeConstraint = DefaultTheme
+  Props extends PropsConstraint = DefaultProps
 >(
   variants: {
-    [variant in Variant]: Style<Props, Theme>;
+    [variant in Variant]: Style<Props>;
   },
 ) => {
-  return (variant: Variant): Style<Props, Theme> => {
+  return (variant: Variant): Style<Props> => {
     const styles = variants[variant];
     if (process.env.NODE_ENV !== 'production') {
       if (!Object.prototype.hasOwnProperty.call(variants, variant)) {

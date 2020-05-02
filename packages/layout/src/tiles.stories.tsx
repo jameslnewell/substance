@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { Placeholder } from '../../Placeholder';
-import { Tiles } from '.';
+import {Placeholder} from '../../Placeholder';
+import {TilesLayout} from './tiles';
 
 export default {
-  title: 'layout/Tiles',
-  component: Tiles,
+  title: 'layout/TilesLayout',
+  component: TilesLayout,
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

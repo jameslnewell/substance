@@ -6,7 +6,7 @@ import {
   ThemeConstraint,
   PropsConstraint,
   DefaultProps,
-  ThemeProps,
+  PropsWithTheme,
   StyleValue,
 } from '../../types';
 import {createMixin} from '../../createMixin';
@@ -31,7 +31,7 @@ export interface GetColorFunction<
 > {
   <Props extends PropsConstraint = DefaultProps>(
     color: Color,
-    props: ThemeProps<Props, Theme>,
+    props: PropsWithTheme<Props, Theme>,
   ): StyleValue;
 }
 

@@ -3,7 +3,7 @@ import {
   MapFunction,
   StyleProperty,
   DefaultTheme,
-  ThemeProps,
+  PropsWithTheme,
   ThemeConstraint,
   StyleValue,
   PropsConstraint,
@@ -25,7 +25,7 @@ export interface GetSpaceFunction<
 > {
   <Props extends PropsConstraint = DefaultProps>(
     space: Space,
-    props: ThemeProps<Props, Theme>,
+    props: PropsWithTheme<Props, Theme>,
   ): StyleValue;
 }
 
@@ -39,7 +39,7 @@ export const createGetSpace = <
   if (typeof spacesOrGetSpaces === 'function') {
     return <Props extends PropsConstraint = DefaultProps>(
       value: Space,
-      {theme}: ThemeProps<Props, Theme>,
+      {theme}: PropsWithTheme<Props, Theme>,
     ): StyleValue => spacesOrGetSpaces(theme)[value];
   } else {
     return (value: Space): StyleValue => spacesOrGetSpaces[value];
