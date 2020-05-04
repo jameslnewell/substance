@@ -1,6 +1,6 @@
 {
   "name": "@substance/layout",
-  "version": "0.1.0-preview.2",
+  "version": "0.1.0-preview.3",
   "source": "src/index.ts",
   "main": "dist/layout.cjs.js",
   "module": "dist/layout.esm.js",

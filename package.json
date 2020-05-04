@@ -39,9 +39,9 @@
     "start:website": "yarn workspace @substance/website run start",
     "build:packages": "preconstruct build",
     "build:other": "lerna run build",
-    "build": "yarn run build:packages & yarn run build:other",
+    "build": "yarn run build:packages && yarn run build:other",
     "version": "changeset add",
-    "release": "yarn run build && changeset publish"
+    "release": "yarn run build && sleep 3 && changeset publish"
   },
   "husky": {
     "hooks": {
