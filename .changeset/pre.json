@@ -9,5 +9,9 @@
     "@substance/storybook": "1.0.0",
     "@substance/website": "1.0.0-preview.1"
   },
-  "changesets": ["nervous-bats-fly"]
+  "changesets": [
+    "nervous-bats-fly",
+    "silver-mice-unite",
+    "sweet-boats-refuse"
+  ]
 }
