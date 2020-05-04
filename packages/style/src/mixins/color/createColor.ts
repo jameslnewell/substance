@@ -72,3 +72,4 @@ const createColorFactory = (properties: StyleProperty[]) => {
 export const createColor = createColorFactory(['color']);
 export const createBackgroundColor = createColorFactory(['backgroundColor']);
 export const createBorderColor = createColorFactory(['borderColor']);
+export const createFill = createColorFactory(['fill']);
