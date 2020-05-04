@@ -30,12 +30,20 @@ const factory = <Value extends ValueConstraint>(
   };
 };
 
-export const createFlexBasis = factory<StyleValue>(['flexBasis']);
-export const createFlexDirection = factory<StyleValue>(['flexDirection']);
-export const createFlexGrow = factory<StyleValue>(['flexGrow']);
-export const createFlexShrink = factory<StyleValue>(['flexShrink']);
-export const createAlignItems = factory<StyleValue>(['alignItems']);
-export const createJustifyContent = factory<StyleValue>(['justifyContent']);
+export const createFlexBasis = factory<StyleValue<'flexBasis'>>(['flexBasis']);
+export const createFlexDirection = factory<StyleValue<'flexDirection'>>([
+  'flexDirection',
+]);
+export const createFlexGrow = factory<StyleValue<'flexGrow'>>(['flexGrow']);
+export const createFlexShrink = factory<StyleValue<'flexShrink'>>([
+  'flexShrink',
+]);
+export const createAlignItems = factory<StyleValue<'alignItems'>>([
+  'alignItems',
+]);
+export const createJustifyContent = factory<StyleValue<'justifyContent'>>([
+  'justifyContent',
+]);
 
 export const flexBasis = createFlexBasis({map});
 export const flexDirection = createFlexBasis({map});

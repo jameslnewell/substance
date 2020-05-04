@@ -27,7 +27,9 @@ type CSSProperties = Properties<string | number>;
 type CSSPeudoProperties = {[property in Pseudos]?: StyleObject};
 
 export type StyleProperty = keyof CSSProperties;
-export type StyleValue = CSSProperties[StyleProperty];
+export type StyleValue<
+  Property extends StyleProperty = StyleProperty
+> = CSSProperties[Property];
 export interface StyleObject extends CSSProperties, CSSPeudoProperties {
   [key: string]: StyleObject | string | number | undefined;
 }
