@@ -40,7 +40,7 @@
     "build:packages": "preconstruct build",
     "build:other": "lerna run build",
     "build": "yarn run build:packages && yarn run build:other",
-    "version": "changeset add",
+    "changeset": "changeset add && git add .changeset && git commit -am 'added changeset'",
     "release": "yarn run build && sleep 3 && changeset publish"
   },
   "husky": {

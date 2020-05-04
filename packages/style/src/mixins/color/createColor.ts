@@ -32,10 +32,9 @@ export interface GetColorFunction<
   <Props extends PropsConstraint = DefaultProps>(
     color: Color,
     props: PropsWithTheme<Props, Theme>,
-  ): StyleValue;
+  ): StyleValue<'color'>;
 }
 
-// TODO: pass through other values
 export const createGetColor = <
   Color extends ColorConstraint,
   Theme extends ThemeConstraint = DefaultTheme
