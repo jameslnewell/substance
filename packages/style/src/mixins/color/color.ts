@@ -4,6 +4,7 @@ import {
   createColor,
   createBackgroundColor,
   createBorderColor,
+  createFill,
   GetColorsFunction,
   createGetColor,
 } from './createColor';
@@ -25,3 +26,4 @@ export const backgroundColor = createBackgroundColor({
   getColor,
 });
 export const borderColor = createBorderColor({map, getColor});
+export const fill = createFill({map, getColor});
