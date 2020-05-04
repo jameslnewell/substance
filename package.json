@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.9.0",
+    "@changesets/cli": "^2.6.5",
     "@jameslnewell/babel-preset": "^2.0.0",
     "@jameslnewell/editor-config": "^1.0.1",
     "@jameslnewell/eslint-config": "^0.13.5",
@@ -39,8 +40,8 @@
     "build:packages": "preconstruct build",
     "build:other": "lerna run build",
     "build": "yarn run build:packages & yarn run build:other",
-    "prepublishOnly": "yarn run build && yarn run testing && yarn run typing && yarn run linting && yarn run formatting",
-    "publish": "cd packages/style && npm publish"
+    "version": "changeset add",
+    "release": "yarn run build && changeset publish"
   },
   "husky": {
     "hooks": {
