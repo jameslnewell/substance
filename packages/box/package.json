@@ -1,7 +1,7 @@
 {
   "name": "@substance/box",
   "private": true,
-  "version": "0.1.0-preview.1",
+  "version": "0.1.0-preview.2",
   "source": "src/index.ts",
   "main": "dist/box.cjs.js",
   "module": "dist/box.esm.js",
@@ -9,7 +9,7 @@
     "styled-components": ">=5.0.1"
   },
   "dependencies": {
-    "@substance/style": "^0.1.0-preview.1"
+    "@substance/style": "^0.1.0-preview.10"
   },
   "license": "MIT"
 }

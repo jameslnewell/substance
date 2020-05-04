@@ -1,7 +1,7 @@
 {
   "name": "@substance/reset",
   "private": true,
-  "version": "0.1.0-preview.1",
+  "version": "0.1.0-preview.2",
   "source": "src/index.ts",
   "main": "dist/reset.cjs.js",
   "module": "dist/reset.esm.js",
