@@ -13,7 +13,7 @@ import {
   SpaceConstraint,
   GetSpaceFunction,
   getSpace,
-} from '@substance/style/src/mixins';
+} from '@substance/style/mixins';
 import {createSpaceStyles} from './styles';
 
 export type TilesLayoutAlignment = 'left' | 'center' | 'right';

@@ -8,9 +8,10 @@
       "@substance/*": ["packages/*/src"]
     },
     "skipLibCheck": true,
+    "isolatedModules": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "noEmit": true,
+    // "noEmit": true,
     "target": "ESNext",
     "module": "ESNext"
   },
