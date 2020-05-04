@@ -1,6 +1,6 @@
 import {} from 'styled-components';
-import {createMixin} from '../../createMixin';
 import {
+  createMixin,
   StyleProperty,
   MediaConstraint,
   ValueConstraint,
@@ -8,8 +8,8 @@ import {
   DefaultTheme,
   MapFunction,
   StyleValue,
-} from '../../types';
-import {map} from '../../map';
+  map,
+} from '@substance/style';
 
 const factory = <Value extends ValueConstraint>(
   properties: StyleProperty[],

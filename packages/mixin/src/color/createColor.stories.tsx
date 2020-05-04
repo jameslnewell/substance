@@ -1,12 +1,17 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {defaultMediaQueries, createMatch, createMap, createProps} from '../..';
+import {
+  defaultMediaQueries,
+  createMatch,
+  createMap,
+  createProps,
+} from '@substance/style';
 import {
   createColor,
   createBackgroundColor,
   createBorderColor,
   createGetColor,
-} from './createColor';
+} from '.';
 
 export default {title: 'style/createColor'};
 

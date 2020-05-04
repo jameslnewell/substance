@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {createProps} from '../../createProps';
+import {createProps} from '@substance/style';
 import {color, backgroundColor} from '.';
 
 export default {title: 'style/themed color'};

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {backgroundColor} from '@substance/style/mixins';
+import {backgroundColor} from '@substance/mixin';
 
 const Wrapper = styled.nav`
   ${backgroundColor('shades.light')}

@@ -1,16 +1,15 @@
 {
-  "name": "@substance/box",
+  "name": "@substance/mixin",
   "private": true,
-  "version": "0.1.0-preview.2",
+  "version": "0.1.0-preview.1",
   "source": "src/index.ts",
-  "main": "dist/box.cjs.js",
-  "module": "dist/box.esm.js",
+  "main": "dist/mixin.cjs.js",
+  "module": "dist/mixin.esm.js",
   "peerDependencies": {
     "styled-components": ">=5.0.1"
   },
   "dependencies": {
-    "@substance/style": "^0.1.0-preview.13",
-    "@substance/mixin": "^0.1.0-preview.1"
+    "@substance/style": "^0.1.0-preview.13"
   },
   "devDependencies": {
     "react": "^16.13.1",

@@ -9,11 +9,7 @@ import {
   DefaultTheme,
   map,
 } from '@substance/style';
-import {
-  SpaceConstraint,
-  GetSpaceFunction,
-  getSpace,
-} from '@substance/style/mixins';
+import {SpaceConstraint, GetSpaceFunction, getSpace} from '@substance/mixin';
 import {createSpaceStyles} from './styles';
 
 export type TilesLayoutAlignment = 'left' | 'center' | 'right';
@@ -25,6 +21,7 @@ export interface TilesLayoutProps<
   columns?: ResponsiveValue<Media, number>;
   space?: ResponsiveValue<Media, Space>;
   align?: ResponsiveValue<Media, TilesLayoutAlignment>;
+  className?: string;
 }
 
 type WrapperProps<
@@ -121,8 +118,9 @@ export const createTilesLayout = <
     space,
     align,
     children,
+    ...otherProps
   }) => (
-    <Wrapper space={space}>
+    <Wrapper {...otherProps} space={space}>
       <Container align={align} space={space}>
         {flattenChildren(children).map((child, index) => {
           if (!React.isValidElement(child)) {

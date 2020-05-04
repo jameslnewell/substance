@@ -1,5 +1,5 @@
 import '@substance/style';
-import {Spaces, DefaultSpace} from '@substance/style/mixins';
+import {Spaces, DefaultSpace} from '@substance/mixin';
 
 export type Theme = {
   color: {

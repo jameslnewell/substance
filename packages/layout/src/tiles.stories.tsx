@@ -1,11 +1,16 @@
 import React from 'react';
 import {Box} from '@substance/box';
+import styled from 'styled-components';
 import {TilesLayout} from './tiles';
 
 export default {
   title: 'layout/TilesLayout',
   component: TilesLayout,
 };
+
+const CustomTiles = styled(TilesLayout)({
+  backgroundColor: 'red',
+});
 
 const Tile: React.FC = () => (
   <Box backgroundColor="grey" padding={2}>
@@ -61,4 +66,10 @@ export const WithResponsiveSpace: React.FC = () => (
   <TilesLayout columns={2} space={{sm: 3, md: 4, lg: 5}}>
     {createTiles(5)}
   </TilesLayout>
+);
+
+export const WithClassName: React.FC = () => (
+  <CustomTiles columns={2} space={3}>
+    {createTiles(3)}
+  </CustomTiles>
 );

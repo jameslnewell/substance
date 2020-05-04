@@ -3,48 +3,11 @@ import {
   MapFunction,
   StyleProperty,
   DefaultTheme,
-  PropsWithTheme,
   ThemeConstraint,
-  StyleValue,
-  PropsConstraint,
-  DefaultProps,
-} from '../../types';
-import {Spaces, SpaceConstraint} from './types';
-import {createMixin} from '../../createMixin';
-
-export interface GetSpacesFunction<
-  Space extends SpaceConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
-> {
-  (theme: Theme | undefined): Spaces<Space>;
-}
-
-export interface GetSpaceFunction<
-  Space extends SpaceConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
-> {
-  <Props extends PropsConstraint = DefaultProps>(
-    space: Space,
-    props: PropsWithTheme<Props, Theme>,
-  ): StyleValue;
-}
-
-// TODO: support negative spacings
-export const createGetSpace = <
-  Space extends SpaceConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
->(
-  spacesOrGetSpaces: Spaces<Space> | GetSpacesFunction<Space, Theme>,
-) => {
-  if (typeof spacesOrGetSpaces === 'function') {
-    return <Props extends PropsConstraint = DefaultProps>(
-      value: Space,
-      {theme}: PropsWithTheme<Props, Theme>,
-    ): StyleValue => spacesOrGetSpaces(theme)[value];
-  } else {
-    return (value: Space): StyleValue => spacesOrGetSpaces[value];
-  }
-};
+  createMixin,
+} from '@substance/style';
+import {SpaceConstraint} from './types';
+import {GetSpaceFunction} from './createGetSpace';
 
 const createSpaceFactory = (properties: StyleProperty[]) => {
   return <

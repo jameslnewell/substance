@@ -30,6 +30,7 @@
   },
   "scripts": {
     "postinstall": "preconstruct dev",
+    "clean": "lerna exec -- rm -rf dist .next && lerna clean",
     "testing": "jest",
     "typing": "tsc --noEmit",
     "linting": "eslint --ext .ts,.tsx packages",
@@ -41,7 +42,7 @@
     "build:other": "lerna run build",
     "build": "yarn run build:packages && yarn run build:other",
     "changeset": "changeset add && git add .changeset && git commit -am 'added changeset'",
-    "release": "yarn run build && sleep 3 && changeset publish"
+    "release": "yarn run build && changeset publish"
   },
   "husky": {
     "hooks": {

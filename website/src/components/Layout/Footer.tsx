@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {backgroundColor, paddingX} from '@substance/style/mixins';
+import {backgroundColor, paddingX} from '@substance/mixin';
 import {Container} from '@substance/layout';
 
 // ${copy()}

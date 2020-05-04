@@ -7,7 +7,7 @@ import {
   paddingY,
   paddingX,
   padding,
-} from '@substance/style/mixins';
+} from '@substance/mixin';
 import {copy} from '@substance/typography';
 
 const FeatureWrapper = styled.div`

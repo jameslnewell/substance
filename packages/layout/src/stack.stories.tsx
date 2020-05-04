@@ -1,10 +1,15 @@
 import React from 'react';
+import styled from 'styled-components';
 import {StackLayout} from './stack';
 
 export default {
   title: 'layout/StackLayout',
   component: StackLayout,
 };
+
+const CustomStackLayout = styled(StackLayout)({
+  backgroundColor: 'red',
+});
 
 const content = (
   <>
@@ -27,4 +32,8 @@ export const WithSpace: React.FC = () => (
 
 export const WithResponsiveSpace: React.FC = () => (
   <StackLayout space={{sm: 2, md: 4}}>{content}</StackLayout>
+);
+
+export const WithClassName: React.FC = () => (
+  <CustomStackLayout space={3}>{content}</CustomStackLayout>
 );

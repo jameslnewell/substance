@@ -1,9 +1,13 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {defaultMediaQueries, createMatch, createMap, createProps} from '../..';
-import {square} from '../../story-styles';
-import {createPadding, createPaddingX, createGetSpace} from './createSpace';
-import {defaultSpaces} from './defaultSpaces';
+import {
+  defaultMediaQueries,
+  createMatch,
+  createMap,
+  createProps,
+} from '@substance/style';
+import {square} from '@substance/style/src/story-styles';
+import {createPadding, createPaddingX, createGetSpace, defaultSpaces} from '.';
 
 export default {title: 'style/spacing'};
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Box} from '@substance/box';
+import styled from 'styled-components';
 import {ColumnsLayout} from './columns';
 
 export default {
@@ -16,6 +17,14 @@ const Placeholder: React.FC<PlaceholderProps> = ({children, ...otherProps}) => (
     {children}
   </Box>
 );
+
+const CustomColumns = styled(ColumnsLayout)({
+  backgroundColor: 'purple',
+});
+
+const CustomColumn = styled(ColumnsLayout.Column)({
+  backgroundColor: 'orange',
+});
 
 export const WithWidth: React.FC = () => (
   <ColumnsLayout>
@@ -154,4 +163,21 @@ export const WithSpaceWrappedColumnAndHAlign: React.FC = () => (
       <Placeholder>2/3</Placeholder>
     </ColumnsLayout.Column>
   </ColumnsLayout>
+);
+
+export const WithClassName: React.FC = () => (
+  <CustomColumns space={3}>
+    <CustomColumn width={1 / 2}>
+      <Placeholder>1/2</Placeholder>
+    </CustomColumn>
+    <CustomColumn width="content">
+      <Placeholder>content</Placeholder>
+    </CustomColumn>
+    <CustomColumn>
+      <Placeholder>rest</Placeholder>
+    </CustomColumn>
+    <CustomColumn width={2 / 3}>
+      <Placeholder>2/3</Placeholder>
+    </CustomColumn>
+  </CustomColumns>
 );

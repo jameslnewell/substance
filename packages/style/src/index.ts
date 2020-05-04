@@ -8,3 +8,4 @@ export * from './createProps';
 export * from './createVariant';
 export * from './defaultMediaQueries';
 export * from './map';
+export * from './get';

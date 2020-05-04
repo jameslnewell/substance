@@ -12,13 +12,14 @@ import {
   marginBottom,
   SpaceConstraint,
   SpaceMixinFunction,
-} from '@substance/style/mixins';
+} from '@substance/mixin';
 
 export interface StackLayoutProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
   space?: ResponsiveValue<Media, Space>;
+  className?: string;
 }
 
 export interface CreateStackLayoutOptions<
@@ -49,8 +50,9 @@ export const createStackLayout = <
   const StackLayout: React.FC<StackLayoutProps<Media, Space>> = ({
     space,
     children,
+    ...otherProps
   }) => (
-    <div>
+    <div {...otherProps}>
       {flattenChildren(children).map((child, index) => {
         if (!React.isValidElement(child)) {
           return child;

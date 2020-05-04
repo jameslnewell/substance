@@ -1,5 +1,5 @@
 import {DefaultTheme} from 'styled-components';
-import {map} from '../../map';
+import {map} from '@substance/style';
 import {Spaces} from './types';
 import {defaultSpaces, DefaultSpace} from './defaultSpaces';
 import {
@@ -19,9 +19,9 @@ import {
   createPaddingBottom,
   createPaddingLeft,
   createGetSpace,
-} from './createSpace';
+} from '.';
 
-type DefaultThemeSpace = DefaultTheme extends {
+export type DefaultThemeSpace = DefaultTheme extends {
   space: Spaces<infer Space>;
 }
   ? Space

@@ -16,19 +16,8 @@
   "module": "dist/style.esm.js",
   "sideEffects": false,
   "files": [
-    "dist",
-    "mixins"
+    "dist"
   ],
-  "peerDependencies": {
-    "styled-components": ">=5.0.1"
-  },
-  "preconstruct": {
-    "source": "src/index.ts",
-    "entrypoints": [
-      ".",
-      "mixins"
-    ]
-  },
   "publishConfig": {
     "access": "public"
   },

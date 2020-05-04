@@ -9,11 +9,7 @@ import {
   DefaultTheme,
   StyleObject,
 } from '@substance/style';
-import {
-  getSpace,
-  SpaceConstraint,
-  GetSpaceFunction,
-} from '@substance/style/mixins';
+import {getSpace, SpaceConstraint, GetSpaceFunction} from '@substance/mixin';
 import {createSpaceStyles} from './styles';
 
 export type ColumnsLayoutColumnWidth = number | 'content';
@@ -33,6 +29,7 @@ export interface ColumnsLayoutProps<
   space?: ResponsiveValue<Media, Space>;
   halign?: ResponsiveValue<Media, ColumnsHorizontalAlignment>;
   valign?: ResponsiveValue<Media, ColumnsVerticalAlignment>;
+  className?: string;
 }
 
 type WrapperProps<
@@ -59,6 +56,13 @@ export interface CreateColumnsLayoutOptions<
   map: MapFunction<Media>;
   getSpace: GetSpaceFunction<Space, Theme>;
 }
+
+export type ColumnsLayout<
+  Media extends MediaConstraint,
+  Space extends SpaceConstraint
+> = React.FC<ColumnsLayoutProps<Media, Space>> & {
+  Column: React.ComponentType<ColumnsLayoutColumnProps<Media>>;
+};
 
 const getHorizontalAlignment = (
   alignment: ColumnsHorizontalAlignment,
@@ -104,7 +108,7 @@ export const createColumnsLayout = <
 >({
   map,
   getSpace,
-}: CreateColumnsLayoutOptions<Media, Space>) => {
+}: CreateColumnsLayoutOptions<Media, Space>): ColumnsLayout<Media, Space> => {
   const SpaceContext = React.createContext<
     ResponsiveValue<Media, Space> | undefined
   >(undefined);
@@ -165,9 +169,9 @@ export const createColumnsLayout = <
 
   const ColumnsLayout: React.FC<ColumnsLayoutProps<Media, Space>> & {
     Column: typeof ColumnsLayoutColumn;
-  } = ({space, halign, valign, children}) => (
+  } = ({space, halign, valign, children, ...otherProps}) => (
     <SpaceContext.Provider value={space}>
-      <Wrapper space={space}>
+      <Wrapper {...otherProps} space={space}>
         <Container halign={halign} valign={valign} space={space}>
           {children}
         </Container>

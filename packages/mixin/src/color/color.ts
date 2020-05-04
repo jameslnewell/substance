@@ -1,13 +1,12 @@
-import {map} from '../../map';
-import {DefaultTheme} from '../../types';
+import {map} from '@substance/style/src/map';
+import {DefaultTheme} from '@substance/style';
 import {
   createColor,
   createBackgroundColor,
   createBorderColor,
   createFill,
-  GetColorsFunction,
-  createGetColor,
 } from './createColor';
+import {GetColorsFunction, createGetColor} from './createGetColor';
 
 const getColors: GetColorsFunction<DefaultTheme> = (theme) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

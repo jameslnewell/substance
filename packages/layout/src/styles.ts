@@ -7,7 +7,7 @@ import {
   PropsWithTheme,
   Style,
 } from '@substance/style';
-import {SpaceConstraint, GetSpaceFunction} from '@substance/style/mixins';
+import {SpaceConstraint, GetSpaceFunction} from '@substance/mixin';
 
 interface StyleOptions<
   Media extends MediaConstraint,

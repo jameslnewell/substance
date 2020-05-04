@@ -4,7 +4,7 @@ import {
   createProps,
   createMixin,
   map,
-  DefaultThemeMediaName,
+  DefaultThemeMedia,
 } from '@substance/style';
 import {
   margin,
@@ -24,10 +24,10 @@ import {
   color,
   backgroundColor,
   borderColor,
-} from '@substance/style/mixins';
+} from '@substance/mixin';
 
 const borderRadius = createMixin<
-  DefaultThemeMediaName,
+  DefaultThemeMedia,
   Required<Properties<string | number>>['borderRadius']
 >({
   map,
@@ -36,7 +36,7 @@ const borderRadius = createMixin<
 });
 
 const width = createMixin<
-  DefaultThemeMediaName,
+  DefaultThemeMedia,
   Required<Properties<string | number>>['width']
 >({
   map,
@@ -45,7 +45,7 @@ const width = createMixin<
 });
 
 const height = createMixin<
-  DefaultThemeMediaName,
+  DefaultThemeMedia,
   Required<Properties<string | number>>['height']
 >({
   map,

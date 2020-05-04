@@ -1,5 +1,5 @@
 import {DefaultTheme} from '@substance/style';
-import {DefaultSpace, Spaces, defaultSpaces} from '@substance/style/mixins';
+import {defaultSpaces} from '@substance/mixin';
 
 export const theme: DefaultTheme = {
   color: {

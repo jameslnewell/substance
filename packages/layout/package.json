@@ -13,11 +13,16 @@
     "styled-components": ">=5.0.1"
   },
   "dependencies": {
-    "@substance/style": "^0.1.0-preview.10",
+    "@substance/style": "^0.1.0-preview.13",
+    "@substance/mixin": "^0.1.0-preview.1",
     "react-keyed-flatten-children": "^1.2.0"
   },
   "devDependencies": {
-    "@substance/box": "^0.1.0-preview.2"
+    "@substance/box": "^0.1.0-preview.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-is": "^16.13.1",
+    "styled-components": "^5.0.1"
   },
   "publishConfig": {
     "access": "public"

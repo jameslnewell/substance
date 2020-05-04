@@ -9,11 +9,7 @@ import {
   ThemeConstraint,
   DefaultTheme,
 } from '@substance/style';
-import {
-  SpaceConstraint,
-  getSpace,
-  GetSpaceFunction,
-} from '@substance/style/mixins';
+import {SpaceConstraint, getSpace, GetSpaceFunction} from '@substance/mixin';
 import {createSpaceStyles} from './styles';
 
 export type InlineLayoutAlignment = 'left' | 'center' | 'right';
@@ -24,6 +20,7 @@ export interface InlineLayoutProps<
 > {
   align?: ResponsiveValue<Media, InlineLayoutAlignment>;
   space?: ResponsiveValue<Media, Space>;
+  className?: string;
 }
 
 export interface CreateInlineLayoutOptions<
@@ -64,15 +61,15 @@ export const createInlineLayout = <
         switch (a) {
           case 'left':
             return {
-              justifyContent: 'flex-start',
+              alignItems: 'flex-start',
             };
           case 'center':
             return {
-              justifyContent: 'center',
+              alignItems: 'center',
             };
           case 'right':
             return {
-              justifyContent: 'flex-end',
+              alignItems: 'flex-end',
             };
         }
       }),
@@ -99,8 +96,9 @@ export const createInlineLayout = <
     space,
     align,
     children,
+    ...otherProps
   }) => (
-    <Wrapper space={space}>
+    <Wrapper {...otherProps} space={space}>
       <Container align={align} space={space}>
         {flattenChildren(children).map((child, index) => {
           if (!React.isValidElement(child)) {

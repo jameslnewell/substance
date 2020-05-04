@@ -23,7 +23,7 @@ variant({
     tertiary: {}
 });
 
-// @substance/style/mixins
+// @substance/mixins
 // How to support themed or static???
 const marginLeft = value => `margin-left: ${value};`;
 const marginRight = value => `margin-right: ${value};`;

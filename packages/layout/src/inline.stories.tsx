@@ -1,11 +1,16 @@
 import React from 'react';
 import {Box} from '@substance/box';
+import styled from 'styled-components';
 import {InlineLayout} from './inline';
 
 export default {
   title: 'layout/InlineLayout',
   component: InlineLayout,
 };
+
+const CustomInlineLayout = styled(InlineLayout)({
+  backgroundColor: 'pink',
+});
 
 const Tag: React.FC = ({children}) => (
   <Box paddingX={2} paddingY={1} borderRadius={4} backgroundColor="skyblue">
@@ -56,4 +61,8 @@ export const WithResponsiveSpace: React.FC = () => (
   <Box backgroundColor="deeppink">
     <InlineLayout space={{sm: 2, md: 4}}>{tags}</InlineLayout>
   </Box>
+);
+
+export const WithClassName: React.FC = () => (
+  <CustomInlineLayout>{tags}</CustomInlineLayout>
 );

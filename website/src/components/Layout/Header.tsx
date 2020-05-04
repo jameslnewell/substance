@@ -1,8 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {color, backgroundColor} from '@substance/style/mixins';
+import {color, backgroundColor, paddingX} from '@substance/mixin';
 import {Container} from '@substance/layout';
-import {paddingX} from '@substance/style/mixins';
 
 // ${/*copy()*/}
 const HeaderWrapper = styled.header`

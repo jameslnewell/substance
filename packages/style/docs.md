@@ -14,7 +14,7 @@ A collection of mixins for styling specific CSS properties.
 
 ```jsx
 import styled from 'styled-components';
-import {backgroundColor, color, paddingX} from '@substance/style/mixins';
+import {backgroundColor, color, paddingX} from '@substance/mixin';
 
 export const Button = styled.button(
   {
