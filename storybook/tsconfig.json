@@ -1,1 +1,6 @@
-{"extends": "../tsconfig", "compilerOptions": {"target": "es5"}}
+{
+  "extends": "../tsconfig.base.json",
+  "files": ["types/@substance/style.d.ts", "types/styled-components.d.ts"],
+  "include": ["types", ".storybook", "../packages/*/src/**/*.stories.tsx"],
+  "exclude": ["node_modules"]
+}

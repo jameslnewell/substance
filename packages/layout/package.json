@@ -4,6 +4,7 @@
   "source": "src/index.ts",
   "main": "dist/layout.cjs.js",
   "module": "dist/layout.esm.js",
+  "types": "dist/types/index.d.ts",
   "sideEffects": false,
   "files": [
     "dist"
@@ -13,16 +14,21 @@
     "styled-components": ">=5.0.1"
   },
   "dependencies": {
+    "@babel/runtime": "^7.9.6",
     "@substance/style": "^0.1.0-preview.13",
     "@substance/mixin": "^0.1.0-preview.1",
     "react-keyed-flatten-children": "^1.2.0"
   },
   "devDependencies": {
+    "@substance/build": "^0.1.0-preview.1",
     "@substance/box": "^0.1.0-preview.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-is": "^16.13.1",
     "styled-components": "^5.0.1"
+  },
+  "scripts": {
+    "build": "substance-build"
   },
   "publishConfig": {
     "access": "public"

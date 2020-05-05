@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import {color, backgroundColor, paddingX} from '@substance/mixin';
-import {Container} from '@substance/layout';
+import {ContainerLayout} from '@substance/layout';
 
 // ${/*copy()*/}
 const HeaderWrapper = styled.header`
@@ -14,6 +14,6 @@ const HeaderWrapper = styled.header`
 
 export const Header = () => (
   <HeaderWrapper>
-    <Container>@substance</Container>
+    <ContainerLayout>@substance</ContainerLayout>
   </HeaderWrapper>
 );

@@ -5,6 +5,7 @@
   "source": "src/index.ts",
   "main": "dist/box.cjs.js",
   "module": "dist/box.esm.js",
+  "types": "dist/types/index.d.ts",
   "peerDependencies": {
     "styled-components": ">=5.0.1"
   },
@@ -13,10 +14,15 @@
     "@substance/mixin": "^0.1.0-preview.1"
   },
   "devDependencies": {
+    "@babel/runtime": "^7.9.6",
+    "@substance/build": "^0.1.0-preview.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-is": "^16.13.1",
     "styled-components": "^5.0.1"
+  },
+  "scripts": {
+    "build": "substance-build"
   },
   "license": "MIT"
 }

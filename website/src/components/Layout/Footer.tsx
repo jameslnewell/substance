@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import {backgroundColor, paddingX} from '@substance/mixin';
-import {Container} from '@substance/layout';
+import {ContainerLayout} from '@substance/layout';
 
 // ${copy()}
 const FooterWrapper = styled.footer`
@@ -11,6 +11,8 @@ const FooterWrapper = styled.footer`
 
 export const Footer = () => (
   <FooterWrapper>
-    <Container>Copyright &copy; {new Date().getFullYear()}.</Container>
+    <ContainerLayout>
+      Copyright &copy; {new Date().getFullYear()}.
+    </ContainerLayout>
   </FooterWrapper>
 );

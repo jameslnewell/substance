@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {Container, ColumnsLayout} from '@substance/layout';
+import {ContainerLayout, ColumnsLayout} from '@substance/layout';
 import {
   color,
   backgroundColor,

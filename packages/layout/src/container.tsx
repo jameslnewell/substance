@@ -10,10 +10,10 @@ export const createContainerLayout = ({
     width: width,
     maxWidth: '100%',
   });
-  const Container: React.FC = ({children, ...otherProps}) => (
+  const ContainerLayout: React.FC = ({children, ...otherProps}) => (
     <Wrapper {...otherProps}>{children}</Wrapper>
   );
-  return Container;
+  return ContainerLayout;
 };
 
-export const Container: React.ComponentType = createContainerLayout();
+export const ContainerLayout: React.ComponentType = createContainerLayout();

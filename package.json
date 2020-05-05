@@ -4,6 +4,7 @@
   "private": true,
   "workspaces": {
     "packages": [
+      "build",
       "packages/*",
       "storybook",
       "website"
@@ -18,7 +19,6 @@
     "@jameslnewell/jest-preset-test": "^5.1.0",
     "@jameslnewell/prettier-config": "^1.0.1",
     "@jameslnewell/typescript-config": "^3.0.0",
-    "@preconstruct/cli": "^1.1.14",
     "@types/jest": "^25.2.1",
     "eslint": "^6.8.0",
     "husky": "^4.2.5",
@@ -29,18 +29,15 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "postinstall": "preconstruct dev",
     "clean": "lerna exec -- rm -rf dist .next && lerna clean",
     "testing": "jest",
-    "typing": "tsc --noEmit",
+    "typing": "lerna run typing",
     "linting": "eslint --ext .ts,.tsx packages",
     "formatting": "prettier --check .",
     "format": "prettier --write .",
     "start:storybook": "yarn workspace @substance/storybook run start",
     "start:website": "yarn workspace @substance/website run start",
-    "build:packages": "preconstruct build",
-    "build:other": "lerna run build",
-    "build": "yarn run build:packages && yarn run build:other",
+    "build": "lerna run build",
     "changeset": "changeset add && git add .changeset && git commit -am 'added changeset'",
     "release": "yarn run build && changeset publish"
   },

@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@substance/mixin": "^0.1.0-preview.1",
+    "@substance/style": "^0.1.0-preview.13"
+  },
+  "devDependencies": {
     "@babel/core": "^7.9.0",
     "@storybook/preset-typescript": "^2.1.0",
     "@storybook/react": "^5.3.18",
@@ -22,6 +26,7 @@
     "webpack": "^4.42.0"
   },
   "scripts": {
+    "typing": "tsc --noEmit",
     "start": "start-storybook",
     "build": "build-storybook"
   },

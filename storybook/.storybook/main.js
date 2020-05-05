@@ -1,20 +1,13 @@
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const path = require('path');
 
 module.exports = {
   stories: ['../../packages/**/src/**/*.stories.tsx'],
-  addons: [
-    {
-      name: '@storybook/preset-typescript',
-      options: {
-        tsLoaderOptions: {
-          transpileOnly: true,
-        },
-        transpileManager: true,
-      },
-    },
-  ],
   webpackFinal: (config) => {
-    config.resolve.plugins = [new TsconfigPathsPlugin()];
+    config.module.rules.push({
+      test: /\.tsx?$/,
+      loader: 'babel-loader',
+    });
+    config.resolve.extensions = ['.tsx', '.ts', ...config.resolve.extensions];
     return config;
   },
 };
