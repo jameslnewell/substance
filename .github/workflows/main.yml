@@ -83,7 +83,7 @@ jobs:
             ${{ runner.os }}-yarn--
       - run: yarn install --frozen-lockfile
       - run: yarn run build
-      - run: yarn run typing
+      # - run: yarn run typing
       - uses: actions/upload-artifact@v2
         with:
           name: website
