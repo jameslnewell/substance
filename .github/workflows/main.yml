@@ -101,13 +101,12 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: website
+          path: ./gh-pages
       - uses: actions/download-artifact@v1
         with:
           name: storybook
-      - run: cp website gh-pages && cp storybook gh-pages/storybook
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+          path: ./gh-pages/storybook
+      - uses: peaceiris/actions-gh-pages@v3
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./gh-pages
