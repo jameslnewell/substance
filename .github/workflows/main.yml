@@ -9,14 +9,14 @@ on:
 
 jobs:
   testing:
+    name: Testing ✅
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
+      - id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - uses: actions/cache@v1
         with:
@@ -28,14 +28,14 @@ jobs:
       - run: yarn run testing
 
   linting:
+    name: Linting 👮‍♂️
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
+      - id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - uses: actions/cache@v1
         with:
@@ -47,14 +47,14 @@ jobs:
       - run: yarn run linting
 
   formatting:
+    name: Formatting ✍️
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
+      - id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - uses: actions/cache@v1
         with:
@@ -66,14 +66,14 @@ jobs:
       - run: yarn run formatting
 
   building:
+    name: Building 🏗
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
+      - id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - uses: actions/cache@v1
         with:
@@ -94,6 +94,7 @@ jobs:
           path: storybook/storybook-static
 
   deploying:
+    name: Deploying 🚀
     if: ${{ github.ref == 'refs/head/master' }}
     needs: [building, testing, linting, formatting]
     runs-on: ubuntu-latest
@@ -110,3 +111,30 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./gh-pages
+
+  publishing:
+    name: Publishing 📦
+    if: ${{ github.ref == 'refs/head/master' }}
+    needs: [building, testing, linting, formatting]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn--
+      - run: yarn install --frozen-lockfile
+      - run: yarn changeset version
+      - run: git commit -am "versioned packages 📦"
+      - run: git push
+      - run: yarn changeset publish
+      - run: git push --follow-tags
