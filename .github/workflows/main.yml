@@ -134,6 +134,8 @@ jobs:
             ${{ runner.os }}-yarn--
       - run: yarn install --frozen-lockfile
       - run: yarn changeset version
+      - run: git config --global user.email "bot@jameslnewell.dev"
+      - run: git config --global user.name jameslnewell[bot]
       - run: git commit -am "versioned packages 📦"
       - run: git push
       - run: yarn changeset publish
