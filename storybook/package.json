@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@substance/layout": "^0.1.0-preview.2",
     "@substance/mixin": "^0.1.0-preview.1",
     "@substance/style": "^0.1.0-preview.13"
   },
