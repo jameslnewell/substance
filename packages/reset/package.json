@@ -9,6 +9,10 @@
   "main": "dist/reset.cjs.js",
   "module": "dist/reset.esm.js",
   "types": "dist/types/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "peerDependencies": {
     "styled-components": ">=5.0.1"
   },
