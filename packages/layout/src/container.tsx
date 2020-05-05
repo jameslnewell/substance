@@ -7,8 +7,8 @@ export const createContainerLayout = ({
 }: {width?: number} = {}): React.ComponentType => {
   const Wrapper = styled.div({
     margin: 'auto',
-    width: width,
-    maxWidth: '100%',
+    width: '100%',
+    maxWidth: width,
   });
   const ContainerLayout: React.FC = ({children, ...otherProps}) => (
     <Wrapper {...otherProps}>{children}</Wrapper>
