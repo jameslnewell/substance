@@ -1,6 +1,6 @@
 {
   "name": "@substance/style",
-  "version": "0.1.0-preview.13",
+  "version": "0.1.0-preview.14",
   "author": "James Newell",
   "repository": "jameslnewell/substance",
   "website": "https://jameslnewell.github.io/substance",
@@ -17,9 +17,7 @@
   "module": "dist/style.esm.js",
   "types": "dist/types/index.d.ts",
   "sideEffects": false,
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "devDependencies": {
     "@babel/runtime": "^7.9.6",
     "@substance/build": "^0.1.0-preview.1"

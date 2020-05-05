@@ -1,5 +1,11 @@
 # @substance/style
 
+## 0.1.0-preview.14
+
+### Patch Changes
+
+- b6c5bd0: Just a test of the automated versioning
+
 ## 0.1.0-preview.12
 
 ### Patch Changes
