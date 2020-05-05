@@ -92,6 +92,10 @@ jobs:
         with:
           name: storybook
           path: storybook/storybook-static
+      - uses: actions/upload-artifact@v2
+        with:
+          name: packages
+          path: packages/*/dist
 
   deploying:
     name: 🚀 Deploying
@@ -139,10 +143,15 @@ jobs:
       - run: git commit -am "bumped package versions 📦" || echo "Versions not updated. Nothing to commit."
         shell: bash {0} # opt-out of exit on error
       - run: git push
-      - env:
+      - uses: actions/download-artifact@v2
+        with:
+          name: packages
+          path: .
+      - name: Authenticate NPM
+        env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-      - run: cat ~/.npmrc
-      - run: yarn changeset publish
+      - name: Publish packages
+        run: yarn changeset publish
       - run: git pull
       - run: git push --follow-tags
