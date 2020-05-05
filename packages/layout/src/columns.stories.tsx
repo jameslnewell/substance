@@ -3,30 +3,6 @@ import {Box} from '@substance/box';
 import styled from 'styled-components';
 import {ColumnsLayout} from './columns';
 
-export type Theme = {
-  color: {
-    green: {
-      [name: string]: string;
-    };
-  };
-  media: {
-    sm: string;
-    md: string;
-    lg: string;
-  };
-  space: Spaces<DefaultSpace>;
-};
-
-declare module '@substance/style' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  export interface DefaultTheme extends Theme {}
-}
-
-declare module 'styled-components' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  export interface DefaultTheme extends Theme {}
-}
-
 export default {
   title: 'layout/ColumnsLayout',
   component: ColumnsLayout,
