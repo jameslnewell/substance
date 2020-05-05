@@ -84,11 +84,11 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: yarn run build
       - run: yarn run typing
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v2
         with:
           name: website
           path: website/out
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v2
         with:
           name: storybook
           path: storybook/storybook-static
@@ -98,11 +98,11 @@ jobs:
     needs: building
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v2
         with:
           name: website
           path: ./gh-pages
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v2
         with:
           name: storybook
           path: ./gh-pages/storybook
