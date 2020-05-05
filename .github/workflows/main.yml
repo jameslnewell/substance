@@ -139,4 +139,5 @@ jobs:
       - run: git commit -am "versioned packages 📦"
       - run: git push
       - run: yarn changeset publish
+      - run: git pull
       - run: git push --follow-tags
