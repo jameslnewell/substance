@@ -1,18 +1,22 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {backgroundColor, paddingX} from '@substance/mixin';
+import {backgroundColor, paddingY} from '@substance/mixin';
 import {ContainerLayout} from '@substance/layout';
 
 // ${copy()}
-const FooterWrapper = styled.footer`
-  ${paddingX({mobile: 2, desktop: 0})}
+const Outer = styled.footer`
+  ${backgroundColor('shades.dark')};
+`;
+
+const Inner = styled.footer`
+  ${paddingY(2)}
   ${backgroundColor('shades.dark')};
 `;
 
 export const Footer = () => (
-  <FooterWrapper>
+  <Outer>
     <ContainerLayout>
-      Copyright &copy; {new Date().getFullYear()}.
+      <Inner>Copyright &copy; {new Date().getFullYear()}.</Inner>
     </ContainerLayout>
-  </FooterWrapper>
+  </Outer>
 );

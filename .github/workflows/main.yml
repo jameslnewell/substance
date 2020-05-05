@@ -136,9 +136,8 @@ jobs:
       - run: yarn changeset version
       - run: git config --global user.email "bot@jameslnewell.dev"
       - run: git config --global user.name jameslnewell[bot]
-      - run: git commit -am "versioned packages 📦"
+      - run: git diff-index --quiet HEAD || git commit -am "bumped package versions 📦"
       - run: git push
-        if: succeeded() || failed()
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
       - run: yarn changeset publish
       - run: git pull
