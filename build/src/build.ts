@@ -14,9 +14,13 @@ import {
 const exec = util.promisify(childProcess.exec);
 
 async function generateTypings() {
-  await exec(
+  const {stdout, stderr} = await exec(
     `tsc --declaration --emitDeclarationOnly --declarationDir ${getBuildTypesDirectory()}`,
   );
+  if (stdout !== '' || stderr !== '') {
+    console.log(stdout);
+    console.error(stderr);
+  }
 }
 
 async function generateBundles() {

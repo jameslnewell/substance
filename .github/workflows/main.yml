@@ -8,6 +8,12 @@ on:
   pull_request:
 
 jobs:
+  ref:
+    name: debug ref
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ github.ref }}"
+
   formatting:
     name: ✍️ Formatting
     runs-on: ubuntu-latest
