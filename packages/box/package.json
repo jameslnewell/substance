@@ -2,6 +2,8 @@
   "name": "@substance/box",
   "private": true,
   "version": "0.1.0-preview.2",
+  "repository": "jameslnewell/substance",
+  "website": "https://jameslnewell.github.io/substance",
   "source": "src/index.ts",
   "main": "dist/box.cjs.js",
   "module": "dist/box.esm.js",
