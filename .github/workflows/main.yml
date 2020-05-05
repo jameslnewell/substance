@@ -94,7 +94,7 @@ jobs:
           path: storybook/storybook-static
 
   deploying:
-    if: github.ref == "master"
+    if: ${{ github.ref == 'refs/head/master' }}
     needs: building
     runs-on: ubuntu-latest
     steps:
