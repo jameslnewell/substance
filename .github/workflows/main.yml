@@ -139,7 +139,9 @@ jobs:
       - run: git commit -am "bumped package versions 📦" || echo "Versions not updated. Nothing to commit."
         shell: bash {0} # opt-out of exit on error
       - run: git push
-      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+      - env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
       - run: cat ~/.npmrc
       - run: yarn changeset publish
       - run: git pull
