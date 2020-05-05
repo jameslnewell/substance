@@ -138,6 +138,7 @@ jobs:
       - run: git config --global user.name jameslnewell[bot]
       - run: git commit -am "versioned packages 📦"
       - run: git push
+        if: succeeded() || failed()
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
       - run: yarn changeset publish
       - run: git pull
