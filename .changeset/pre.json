@@ -11,5 +11,9 @@
     "@substance/build": "0.1.0-preview.1",
     "@substance/mixin": "0.1.0-preview.1"
   },
-  "changesets": ["nervous-bats-fly", "silver-mice-unite", "sweet-boats-refuse"]
+  "changesets": [
+    "nervous-bats-fly",
+    "silver-mice-unite",
+    "sweet-boats-refuse"
+  ]
 }
