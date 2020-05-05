@@ -1,2 +1,4 @@
 packages/**/dist
 website/.next
+website/out
+storybook/storybook-static
