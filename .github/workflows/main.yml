@@ -95,7 +95,7 @@ jobs:
 
   deploying:
     if: ${{ github.ref == 'refs/head/master' }}
-    needs: building
+    needs: [building, testing, linting, formatting]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v2
