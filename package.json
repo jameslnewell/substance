@@ -38,7 +38,7 @@
     "start:storybook": "yarn workspace @substance/storybook run start",
     "start:website": "yarn workspace @substance/website run start",
     "build": "lerna run build",
-    "changeset": "changeset add && git add .changeset && git commit -am 'added changeset'",
+    "bump": "changeset add && git add .changeset && git commit -am 'added changeset'",
     "release": "yarn run build && changeset publish"
   },
   "husky": {

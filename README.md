@@ -28,5 +28,5 @@ yarn run start:website
 ### Versioning
 
 ```
-yarn run changeset
+yarn run bump
 ```

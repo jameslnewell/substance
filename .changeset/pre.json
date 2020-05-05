@@ -7,7 +7,9 @@
     "@substance/reset": "0.1.0-preview.2",
     "@substance/style": "0.1.0-preview.10",
     "@substance/storybook": "1.0.0",
-    "@substance/website": "1.0.0-preview.1"
+    "@substance/website": "1.0.0-preview.1",
+    "@substance/build": "0.1.0-preview.1",
+    "@substance/mixin": "0.1.0-preview.1"
   },
   "changesets": ["nervous-bats-fly", "silver-mice-unite", "sweet-boats-refuse"]
 }
