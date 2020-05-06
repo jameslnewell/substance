@@ -1,11 +1,11 @@
 import React from 'react';
 import {Box} from '@substance/box';
 import styled from 'styled-components';
-import {Container} from './container';
+import {ContainerLayout} from './container';
 
 export default {
   title: 'layout/Container',
-  component: Container,
+  component: ContainerLayout,
 };
 
 const loremIpsum = `
@@ -18,15 +18,15 @@ const loremIpsum = `
   mollit anim id est laborum.
 `;
 
-const CustomContainer = styled(Container)({
+const CustomContainer = styled(ContainerLayout)({
   backgroundColor: 'aquamarine',
 });
 
 export const Default: React.FC = () => (
   <Box backgroundColor="deeppink">
-    <Container>
+    <ContainerLayout>
       <Box backgroundColor="skyblue">{loremIpsum}</Box>
-    </Container>
+    </ContainerLayout>
   </Box>
 );
 

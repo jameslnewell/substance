@@ -4,4 +4,4 @@ require('ts-node').register({
   files: true,
   project: `${__dirname}/tsconfig.json`,
 });
-require('./src/build');
+require('./src/setup');

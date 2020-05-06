@@ -10,12 +10,23 @@ export function getProjectDirectory() {
   return path.relative(process.cwd(), process.cwd()) || '.';
 }
 
+export function getSourceDirectory() {
+  return path.join(getProjectDirectory(), 'src');
+}
+
 export function getBuildDirectory() {
   return path.join(getProjectDirectory(), 'dist');
 }
 
 export function getBuildTypesDirectory() {
   return path.join(getBuildDirectory(), 'types');
+}
+
+export function getEntryFile(manifest: any) {
+  if (manifest.source) {
+    return manifest.source;
+  }
+  return path.join(getProjectDirectory(), 'src/index.ts');
 }
 
 export function getBuildBundleFile(
@@ -30,6 +41,14 @@ export function getBuildBundleFile(
     case 'esm':
       return manifest.module || defaultFile;
   }
+}
+
+export function getBuildBundleTypeFile(format: 'cjs' | 'esm', manifest: any) {
+  const buildBundleFile = getBuildBundleFile(format, manifest);
+  return `${path.dirname(buildBundleFile)}/${path.basename(
+    buildBundleFile,
+    '.js',
+  )}.d.ts`;
 }
 
 export async function emptyBuildDirectory() {

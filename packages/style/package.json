@@ -15,7 +15,6 @@
   "source": "src/index.ts",
   "main": "dist/style.cjs.js",
   "module": "dist/style.esm.js",
-  "types": "dist/types/index.d.ts",
   "sideEffects": false,
   "files": [
     "dist"
@@ -25,6 +24,7 @@
     "@substance/build": "^0.1.0-preview.1"
   },
   "scripts": {
+    "setup": "substance-setup",
     "build": "substance-build"
   },
   "publishConfig": {

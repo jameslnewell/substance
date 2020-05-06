@@ -37,6 +37,7 @@
     "format": "prettier --write .",
     "start:storybook": "yarn workspace @substance/storybook run start",
     "start:website": "yarn workspace @substance/website run start",
+    "setup": "lerna run setup",
     "build": "lerna run build",
     "bump": "changeset add && git add .changeset && git commit -am 'added changeset'",
     "release": "yarn run build && changeset publish"

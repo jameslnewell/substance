@@ -8,7 +8,6 @@
   "source": "src/index.ts",
   "main": "dist/reset.cjs.js",
   "module": "dist/reset.esm.js",
-  "types": "dist/types/index.d.ts",
   "sideEffects": false,
   "files": [
     "dist"
@@ -21,6 +20,7 @@
     "@substance/build": "^0.1.0-preview.1"
   },
   "scripts": {
+    "setup": "substance-setup",
     "build": "substance-build"
   },
   "license": "MIT"

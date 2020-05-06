@@ -7,7 +7,6 @@
   "source": "src/index.ts",
   "main": "dist/layout.cjs.js",
   "module": "dist/layout.esm.js",
-  "types": "dist/types/index.d.ts",
   "sideEffects": false,
   "files": [
     "dist"
@@ -31,6 +30,7 @@
     "styled-components": "^5.0.1"
   },
   "scripts": {
+    "setup": "substance-setup",
     "build": "substance-build"
   },
   "publishConfig": {
