@@ -18,28 +18,27 @@ export interface GetSpacesFunction<
 
 export interface GetSpaceFunction<
   Space extends SpaceConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
+  Theme extends ThemeConstraint = DefaultTheme,
+  Props extends PropsConstraint = DefaultProps
 > {
-  <Props extends PropsConstraint = DefaultProps>(
-    space: Space,
-    props: PropsWithTheme<Props, Theme>,
-  ): StyleValue<'paddingTop'>;
+  (space: Space):
+    | StyleValue<'paddingTop'>
+    | ((props: PropsWithTheme<Props, Theme>) => StyleValue<'paddingTop'>);
 }
 
 // TODO: support negative spacings
 export const createGetSpace = <
   Space extends SpaceConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
+  Theme extends ThemeConstraint = DefaultTheme,
+  Props extends PropsConstraint = DefaultProps
 >(
   spacesOrGetSpaces: Spaces<Space> | GetSpacesFunction<Space, Theme>,
-) => {
+): GetSpaceFunction<Space, Theme, Props> => {
+  // TODO: warn about unknown spaces
   if (typeof spacesOrGetSpaces === 'function') {
-    return <Props extends PropsConstraint = DefaultProps>(
-      value: Space,
-      {theme}: PropsWithTheme<Props, Theme>,
-    ): StyleValue<'paddingTop'> => get(String(value), spacesOrGetSpaces(theme));
+    return (value) => ({theme}) =>
+      get(String(value), spacesOrGetSpaces(theme)) || value;
   } else {
-    return (value: Space): StyleValue<'paddingTop'> =>
-      get(String(value), spacesOrGetSpaces);
+    return (value) => get(String(value), spacesOrGetSpaces) || value;
   }
 };

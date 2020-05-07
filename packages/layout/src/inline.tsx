@@ -76,21 +76,18 @@ export const createInlineLayout = <
     styles.container,
   );
 
-  const Item = styled.div<InlineLayoutProps<Media, Space>>(
-    {},
-    ({space, theme}) => {
-      if (space === undefined) {
-        return;
-      }
-      return map(space, (s) => {
-        const value = getSpace(s, {theme});
-        return {
-          paddingTop: value,
-          paddingLeft: value,
-        };
-      });
-    },
-  );
+  const Item = styled.div<InlineLayoutProps<Media, Space>>({}, ({space}) => {
+    if (space === undefined) {
+      return;
+    }
+    return map(space, (s) => {
+      const value = getSpace(s);
+      return {
+        paddingTop: value,
+        paddingLeft: value,
+      };
+    });
+  });
 
   const InlineLayout: React.FC<InlineLayoutProps<Media, Space>> = ({
     space,

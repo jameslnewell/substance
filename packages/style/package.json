@@ -1,6 +1,6 @@
 {
   "name": "@substance/style",
-  "version": "0.1.0-preview.17",
+  "version": "0.1.0-preview.18",
   "author": "James Newell",
   "repository": "jameslnewell/substance",
   "website": "https://jameslnewell.github.io/substance",
@@ -21,7 +21,8 @@
   ],
   "devDependencies": {
     "@babel/runtime": "^7.9.6",
-    "@substance/build": "^0.1.0-preview.1"
+    "@substance/build": "^0.1.0-preview.1",
+    "@substance/test-utilities": "0.1.0-preview.1"
   },
   "scripts": {
     "setup": "substance-setup",

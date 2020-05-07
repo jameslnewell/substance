@@ -1,60 +1,60 @@
 import {
-  DefaultTheme,
   MediaConstraint,
   MatchFunction,
   ResponsiveValueConstraint,
   ResponsiveValue,
-  MapStyleFunction,
+  MapFunctionFunction,
   PropsConstraint,
-  DefaultProps,
-  PropsWithTheme,
   ThemeConstraint,
-  StyleObject,
+  FlatStyle,
+  PropsWithTheme,
+  DefaultTheme,
+  DefaultProps,
+  MapFunction,
 } from './types';
 
 /**
  *
  * Create a mixin that maps a value to styles for each media query
  *
- * @param options
+ * @param match
  */
 export const createMap = <
   Media extends MediaConstraint,
   Theme extends ThemeConstraint = DefaultTheme
->({
-  match,
-}: {
-  match: MatchFunction<Media, Theme>;
-}) => {
+>(
+  match: MatchFunction<Media>,
+): MapFunction<Media, Theme> => {
   return <
     Value extends ResponsiveValueConstraint,
     Props extends PropsConstraint = DefaultProps
   >(
     valueOrValues: ResponsiveValue<Media, Value>,
-    style: MapStyleFunction<Value, Props, Theme>,
+    fn: MapFunctionFunction<Value, Theme, Props>,
   ) => {
-    // TODO: for perf, nest and pass props only for style functions that take two params? (will require adjusting MapFunction typings to use overrides)
-    return (
-      props: PropsWithTheme<Props, Theme>,
-    ): StyleObject | StyleObject[] => {
-      if (typeof valueOrValues !== 'object') {
-        return style(valueOrValues, props);
-      }
-      // TODO: consider ordering???
-      const styles: StyleObject[] = [];
+    // handle a singular value (non-responsive)
+    if (typeof valueOrValues !== 'object') {
+      return fn(valueOrValues);
+    }
+
+    // handle a map of values (responsive)
+    return (props: PropsWithTheme<Props, Theme>) => {
+      const styles: Array<FlatStyle<PropsWithTheme<Props, Theme>>> = [];
       for (const media of Object.keys(valueOrValues) as Media[]) {
+        // ensure the property is not inherited
         if (!Object.prototype.hasOwnProperty.call(valueOrValues, media)) {
           continue;
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const stylesForValue = style(valueOrValues[media] as any, props); // FIXME:
-        const stylesForMedia = match(media)(stylesForValue);
-
-        styles.push(
-          typeof stylesForMedia === 'function'
-            ? stylesForMedia(props)
-            : stylesForMedia,
-        );
+        const value = valueOrValues[media];
+        // Casting should be safe here because .hasOwnProperty should ensure
+        // the value has been set and the types should ensure the value is not
+        // undefined
+        const style = fn(value as Value);
+        if (typeof style === 'object') {
+          styles.push(match(media)(style));
+        } else {
+          styles.push(match(media)(style(props)));
+        }
       }
       return styles;
     };

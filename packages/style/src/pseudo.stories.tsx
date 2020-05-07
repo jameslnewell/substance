@@ -6,7 +6,7 @@ import {pseudo} from './pseudo';
 
 export default {title: 'style/pseudo()'};
 
-const match = createMatch({mediaQueries: defaultMediaQueries});
+const match = createMatch(defaultMediaQueries);
 
 const Device = styled.div(
   {},

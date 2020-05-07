@@ -17,22 +17,25 @@ export interface GetColorsFunction<
 
 export interface GetColorFunction<
   Color extends ColorConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
+  Theme extends ThemeConstraint = DefaultTheme,
+  Props extends PropsConstraint = DefaultProps
 > {
-  <Props extends PropsConstraint = DefaultProps>(
-    color: Color,
-    props: PropsWithTheme<Props, Theme>,
-  ): StyleValue<'color'>;
+  (color: Color):
+    | StyleValue<'color'>
+    | ((props: PropsWithTheme<Props, Theme>) => StyleValue<'color'>);
 }
 
 export const createGetColor = <
   Color extends ColorConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
+  Theme extends ThemeConstraint = DefaultTheme,
+  Props extends PropsConstraint = DefaultProps
 >(
   colorsOrGetColors: Colors | GetColorsFunction<Theme>,
-): GetColorFunction<Color, Theme> => {
+): GetColorFunction<Color, Theme, Props> => {
+  // TODO: warn about unknown colors
   if (typeof colorsOrGetColors === 'function') {
-    return (value, {theme}) => get(value, colorsOrGetColors(theme)) || value;
+    return (value) => ({theme}) =>
+      get(value, colorsOrGetColors(theme)) || value;
   } else {
     return (value) => get(value, colorsOrGetColors) || value;
   }

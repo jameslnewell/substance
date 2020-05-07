@@ -5,6 +5,8 @@ import {
   DefaultTheme,
   ThemeConstraint,
   createMixin,
+  DefaultProps,
+  PropsConstraint,
 } from '@substance/style';
 import {SpaceConstraint} from './types';
 import {GetSpaceFunction} from './createGetSpace';
@@ -13,7 +15,8 @@ const createSpaceFactory = (properties: StyleProperty[]) => {
   return <
     Media extends MediaConstraint,
     Space extends SpaceConstraint,
-    Theme extends ThemeConstraint = DefaultTheme
+    Theme extends ThemeConstraint = DefaultTheme,
+    Props extends PropsConstraint = DefaultProps
   >({
     map,
     getSpace,
@@ -21,7 +24,7 @@ const createSpaceFactory = (properties: StyleProperty[]) => {
     map: MapFunction<Media, Theme>;
     getSpace: GetSpaceFunction<Space, Theme>;
   }) => {
-    return createMixin<Media, Space, Theme>({
+    return createMixin<Media, Space, Theme, Props>({
       map: map,
       properties,
       transform: getSpace,

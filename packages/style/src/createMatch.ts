@@ -6,12 +6,24 @@ import {
   ThemeConstraint,
 } from './types';
 
-export interface GetMediaQueriesFunction<
+export interface GetMediaQueriesFromThemeFunction<
   Media extends MediaConstraint,
   Theme extends ThemeConstraint = DefaultTheme
 > {
   (theme: Theme | undefined): MediaQueries<Media>;
 }
+
+const getQueryFromQueries = <Media extends MediaConstraint>(
+  media: Media,
+  queries: MediaQueries<Media>,
+): string => {
+  if (process.env.NODE_ENV !== 'production') {
+    if (!Object.prototype.hasOwnProperty.call(queries, media)) {
+      console.warn(`Media "${media}" not found in queries.`);
+    }
+  }
+  return queries[media];
+};
 
 /**
  * Create a mixin that applies styles when a media query is matched
@@ -20,11 +32,9 @@ export interface GetMediaQueriesFunction<
  *
  * @example
  * const match = createMatch({
- *   mediaQueries: {
- *     mobile: '0em',
- *     tablet: '30em',
- *     desktop: '40em'
- *   }
+ *   mobile: '0em',
+ *   tablet: '10em',
+ *   desktop: '20em'
  * });
  *
  * const Box = styled.div(
@@ -43,32 +53,19 @@ export interface GetMediaQueriesFunction<
 export const createMatch = <
   Media extends MediaConstraint,
   Theme extends ThemeConstraint = DefaultTheme
->({
-  mediaQueries,
-}: {
-  mediaQueries: MediaQueries<Media> | GetMediaQueriesFunction<Media, Theme>;
-}): MatchFunction<Media, Theme> => {
-  const getMediaValue = (
-    queries: MediaQueries<Media>,
-    media: Media,
-  ): string => {
-    if (process.env.NODE_ENV !== 'production') {
-      if (!Object.prototype.hasOwnProperty.call(queries, media)) {
-        console.warn(`Media "${media}" not found in queries.`);
-      }
-    }
-    return queries[media];
-  };
-  if (typeof mediaQueries === 'function') {
+>(
+  queries: MediaQueries<Media> | GetMediaQueriesFromThemeFunction<Media, Theme>,
+): MatchFunction<Media, Theme> => {
+  if (typeof queries === 'function') {
     return (media) => (style) => (props) => {
       return {
-        [`@media ${getMediaValue(mediaQueries(props.theme), media)}`]: style,
+        [`@media ${getQueryFromQueries(media, queries(props.theme))}`]: style,
       };
     };
   } else {
     return (media) => (style) => {
       return {
-        [`@media ${getMediaValue(mediaQueries, media)}`]: style,
+        [`@media ${getQueryFromQueries(media, queries)}`]: style,
       };
     };
   }

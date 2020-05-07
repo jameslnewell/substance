@@ -6,7 +6,7 @@ module.exports = withMDX({
   experimental: {
     jsconfigPaths: true,
   },
-  pageExtensions: ['mdx'],
+  pageExtensions: ['mdx', 'tsx'],
   webpack: (config, options) => {
     // compile monorepo packages
     config.module.rules.push({

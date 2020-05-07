@@ -1,0 +1,23 @@
+{
+  "name": "@substance/test-utilities",
+  "private": true,
+  "version": "0.1.0-preview.1",
+  "repository": "jameslnewell/substance",
+  "website": "https://jameslnewell.github.io/substance",
+  "source": "src/index.ts",
+  "main": "dist/test-utilities.cjs.js",
+  "module": "dist/test-utilities.esm.js",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@babel/runtime": "^7.9.6",
+    "@substance/build": "^0.1.0-preview.1"
+  },
+  "scripts": {
+    "setup": "substance-setup",
+    "build": "substance-build"
+  },
+  "license": "MIT"
+}

@@ -14,7 +14,7 @@ interface StyleOptions<
   Space extends SpaceConstraint,
   Theme extends ThemeConstraint = DefaultTheme
 > {
-  map: MapFunction<Media, Theme>;
+  map: MapFunction<Media>;
   getSpace: GetSpaceFunction<Space, Theme>;
 }
 
@@ -46,12 +46,12 @@ export const createSpaceStyles = <
           marginTop: '-1px',
         },
       },
-      ({space, theme}: StyleProps<Media, Space, Theme>) => {
+      ({space}: StyleProps<Media, Space, Theme>) => {
         if (space === undefined) {
           return;
         }
         return map(space, (s) => {
-          const value = getSpace(s, {theme});
+          const value = getSpace(s);
           return {
             ':before': {
               marginTop: `calc(-${value} - 1px)`,
@@ -62,12 +62,12 @@ export const createSpaceStyles = <
     ],
 
     container: [
-      ({space, theme}: StyleProps<Media, Space, Theme>) => {
+      ({space}: StyleProps<Media, Space, Theme>) => {
         if (space === undefined) {
           return;
         }
         return map(space, (s) => {
-          const value = getSpace(s, {theme});
+          const value = getSpace(s);
           return {
             marginLeft: `-${value}`,
           };
@@ -79,12 +79,12 @@ export const createSpaceStyles = <
       {
         boxSizing: 'border-box',
       },
-      ({space, theme}: StyleProps<Media, Space, Theme>) => {
+      ({space}: StyleProps<Media, Space, Theme>) => {
         if (space === undefined) {
           return;
         }
         return map(space, (s) => {
-          const value = getSpace(s, {theme});
+          const value = getSpace(s);
           return {
             paddingTop: value,
             paddingLeft: value,

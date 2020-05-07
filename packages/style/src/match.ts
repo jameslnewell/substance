@@ -8,13 +8,13 @@ export type DefaultThemeMedia = DefaultTheme extends {
   ? MediaName
   : DefaultMedia;
 
-export const match = createMatch<DefaultThemeMedia, DefaultTheme>({
-  mediaQueries: (theme) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const media = (theme as any)?.media;
-    if (media) {
-      return media;
-    }
-    return defaultMediaQueries;
-  },
+export const match = createMatch<DefaultThemeMedia, DefaultTheme>((theme) => {
+  // using any because unless the consumer defines the `media` property on the
+  // theme the property will not exist and will result in compilation errors
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const media = (theme as any)?.media;
+  if (media) {
+    return media;
+  }
+  return defaultMediaQueries;
 });

@@ -3,26 +3,26 @@ import {
   createMixin,
   StyleProperty,
   MediaConstraint,
-  ValueConstraint,
   ThemeConstraint,
   DefaultTheme,
   MapFunction,
   StyleValue,
   map,
+  DefaultProps,
+  PropsConstraint,
 } from '@substance/style';
 
-const factory = <Value extends ValueConstraint>(
-  properties: StyleProperty[],
-) => {
+const factory = <Value extends StyleValue>(properties: StyleProperty[]) => {
   return <
     Media extends MediaConstraint,
-    Theme extends ThemeConstraint = DefaultTheme
+    Theme extends ThemeConstraint = DefaultTheme,
+    Props extends PropsConstraint = DefaultProps
   >({
     map,
   }: {
     map: MapFunction<Media, Theme>;
   }) => {
-    return createMixin<Media, Value, Theme>({
+    return createMixin<Media, Value, Theme, Props>({
       map: map,
       properties,
       transform: (value) => value,

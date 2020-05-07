@@ -22,9 +22,7 @@ const defaultColors = {
   },
 };
 
-const map = createMap({
-  match: createMatch({mediaQueries: defaultMediaQueries}),
-});
+const map = createMap(createMatch(defaultMediaQueries));
 const getColor = createGetColor(defaultColors);
 const color = createColor({map, getColor});
 const backgroundColor = createBackgroundColor({map, getColor});

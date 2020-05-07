@@ -46,10 +46,9 @@ export type Style<Props extends PropsConstraint> =
 
 export type FlatStyleFunction<Props extends PropsConstraint> = (
   props: Props,
-) => undefined | StyleObject;
+) => StyleObject;
 
 export type FlatStyle<Props extends PropsConstraint> =
-  | undefined
   | StyleObject
   | FlatStyleFunction<Props>;
 
@@ -63,7 +62,7 @@ export type MediaQueries<Media extends MediaConstraint> = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ValueConstraint = any;
-export type ResponsiveValueConstraint = string | number | boolean;
+export type ResponsiveValueConstraint = string | number | boolean | undefined;
 export type ResponsiveValue<
   Media extends MediaConstraint,
   Value extends ResponsiveValueConstraint
@@ -73,27 +72,31 @@ export type ResponsiveValue<
 
 export interface MatchFunction<
   Media extends MediaConstraint,
-  Theme extends ThemeConstraint
+  Theme extends ThemeConstraint = DefaultTheme
 > {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (media: Media): (
+  <Props extends PropsConstraint = DefaultProps>(media: Media): (
     style: StyleObject,
-  ) =>
-    | StyleObject
-    | (<Props extends PropsConstraint = DefaultProps>(
-        props: PropsWithTheme<Props, Theme>,
-      ) => StyleObject);
+  ) => FlatStyle<PropsWithTheme<Props, Theme>>;
 }
 
 // ========== MAP MEDIA ==========
 
-export interface MapStyleFunction<
+export interface MapFunctionFunction<
   Value extends ResponsiveValueConstraint,
-  Props extends PropsConstraint = DefaultProps,
-  Theme extends ThemeConstraint = DefaultTheme
+  Theme extends ThemeConstraint = DefaultTheme,
+  Props extends PropsConstraint = DefaultProps
 > {
-  (value: Value, props: PropsWithTheme<Props, Theme>): StyleObject;
+  (value: Value): FlatStyle<PropsWithTheme<Props, Theme>>;
 }
+
+type MapFunctionReturnValue<
+  Theme extends ThemeConstraint = DefaultTheme,
+  Props extends PropsConstraint = DefaultProps
+> =
+  | FlatStyle<PropsWithTheme<Props, Theme>>
+  | ((
+      props: PropsWithTheme<Props, Theme>,
+    ) => Array<FlatStyle<PropsWithTheme<Props, Theme>>>);
 
 export interface MapFunction<
   Media extends MediaConstraint,
@@ -103,12 +106,9 @@ export interface MapFunction<
     Value extends ResponsiveValueConstraint,
     Props extends PropsConstraint = DefaultProps
   >(
-    valueOrValues: Value | ResponsiveValue<Media, Value>,
-    style: MapStyleFunction<Value, Props, Theme>,
-  ):
-    | StyleObject
-    | StyleObject[]
-    | ((props: PropsWithTheme<Props, Theme>) => StyleObject | StyleObject[]);
+    valueOrValues: ResponsiveValue<Media, Value>,
+    fn: MapFunctionFunction<Value, Theme, Props>,
+  ): MapFunctionReturnValue<Theme, Props>;
 }
 
 // ========== MIXIN ==========
@@ -120,9 +120,11 @@ export interface MixinFunction<Value extends ValueConstraint> {
 export interface ResponsiveMixinFunction<
   Media extends MediaConstraint,
   Value extends ResponsiveValueConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
+  Theme extends ThemeConstraint = DefaultTheme,
+  Props extends PropsConstraint = DefaultProps
 > {
-  <Props extends PropsConstraint = DefaultProps>(
-    valueOrValues: Value | ResponsiveValue<Media, Value>,
-  ): Style<PropsWithTheme<Props, Theme>>;
+  (valueOrValues: ResponsiveValue<Media, Value>): MapFunctionReturnValue<
+    Theme,
+    Props
+  >;
 }

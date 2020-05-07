@@ -11,9 +11,7 @@ import {createPadding, createPaddingX, createGetSpace, defaultSpaces} from '.';
 
 export default {title: 'style/spacing'};
 
-const map = createMap({
-  match: createMatch({mediaQueries: defaultMediaQueries}),
-});
+const map = createMap(createMatch(defaultMediaQueries));
 
 const getSpace = createGetSpace(defaultSpaces);
 const padding = createPadding({map, getSpace});

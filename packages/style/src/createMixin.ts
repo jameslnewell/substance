@@ -8,16 +8,15 @@ import {
   MediaConstraint,
   ResponsiveValueConstraint,
   PropsConstraint,
-  ResponsiveValue,
   ThemeConstraint,
   DefaultProps,
-  Style,
+  ResponsiveMixinFunction,
 } from './types';
 
 const createStylesFromTransformedValue = (
   properties: StyleProperty[],
   value: StyleValue,
-) => {
+): StyleObject => {
   const style: Partial<StyleObject> = {};
   for (const property of properties) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -29,12 +28,12 @@ const createStylesFromTransformedValue = (
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface CreateMixinTransformFunction<
   Value extends ResponsiveValueConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
+  Theme extends ThemeConstraint = DefaultTheme,
+  Props extends PropsConstraint = DefaultProps
 > {
-  <Props extends PropsConstraint = DefaultProps>(
-    value: Value,
-    props: PropsWithTheme<Props, Theme>,
-  ): StyleValue;
+  (value: Value):
+    | StyleValue
+    | ((props: PropsWithTheme<Props, Theme>) => StyleValue);
 }
 
 /**
@@ -52,7 +51,8 @@ export interface CreateMixinTransformFunction<
 export const createMixin = <
   Media extends MediaConstraint,
   Value extends ResponsiveValueConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
+  Theme extends ThemeConstraint = DefaultTheme,
+  Props extends PropsConstraint = DefaultProps
 >({
   map,
   properties,
@@ -60,16 +60,20 @@ export const createMixin = <
 }: {
   map: MapFunction<Media, Theme>;
   properties: StyleProperty[];
-  transform: CreateMixinTransformFunction<Value, Theme>;
-}) => {
-  return <Props extends PropsWithTheme<PropsConstraint, Theme>>(
-    valueOrValues: ResponsiveValue<Media, Value>,
-  ): Style<Props> => {
-    return map(valueOrValues, (value, props) => {
-      return createStylesFromTransformedValue(
-        properties,
-        transform(value, props),
-      );
+  transform: CreateMixinTransformFunction<Value, Theme, Props>;
+}): ResponsiveMixinFunction<Media, Value, Theme, Props> => {
+  return (valueOrValues) => {
+    return map<Value, Props>(valueOrValues, (value) => {
+      const transformedValue = transform(value);
+      if (typeof transformedValue === 'function') {
+        return (props) => {
+          return createStylesFromTransformedValue(
+            properties,
+            transformedValue(props),
+          );
+        };
+      }
+      return createStylesFromTransformedValue(properties, transformedValue);
     });
   };
 };
