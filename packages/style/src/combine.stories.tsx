@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import {combine} from './combine';
+import {match} from './match';
 
 export default {title: 'style/combine()'};
 
@@ -17,9 +18,26 @@ const Square = styled.div(
 );
 
 export const Default = () => <Square size={123} />;
-
-// TODO: test combining two responsive objects
-// TODO: test combining responsive pseudo prop
-
-// fontSize({mobile: '22px'}),
-// lineHeight({mobile: '16px'}),
+export const Responsive = () => {
+  const Component = styled.div(
+    {},
+    combine([
+      match('sm')({
+        ':after': {
+          content: '"📱"',
+        },
+      }),
+      match('md')({
+        ':after': {
+          content: '"💻"',
+        },
+      }),
+      match('lg')({
+        ':after': {
+          content: '"🖥"',
+        },
+      }),
+    ]),
+  );
+  return <Component />;
+};

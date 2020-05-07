@@ -9,4 +9,4 @@ export * from './createVariant';
 export * from './defaultMediaQueries';
 export * from './map';
 export * from './get';
-export * from './pseudo';
+// export * from './pseudo';

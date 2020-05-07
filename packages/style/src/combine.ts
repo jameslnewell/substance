@@ -6,63 +6,96 @@ import {
   StyleObject,
 } from './types';
 
-function mergeInto(
-  srcStyle: StyleObject | undefined,
-  destStyle: StyleObject,
+function mergeObjectIntoObject(
+  srcStyleObject: StyleObject | undefined,
+  destStyleObject: StyleObject,
 ): void {
-  if (srcStyle === undefined) {
+  if (srcStyleObject === undefined) {
     return;
   }
-  for (const key of Object.keys(srcStyle)) {
-    if (!Object.prototype.hasOwnProperty.call(destStyle, key)) {
-      destStyle[key] = srcStyle[key];
+  for (const srcStyleProperty of Object.keys(srcStyleObject)) {
+    if (
+      !Object.prototype.hasOwnProperty.call(srcStyleObject, srcStyleProperty)
+    ) {
+      continue;
     }
-    // TODO: handle key collision
-  }
-}
-
-function flatten<Props>(
-  styles: Style<Props>,
-  props: Props,
-): StyleObject | undefined {
-  if (Array.isArray(styles)) {
-    let count = 0;
-    const combinedStyle: StyleObject = {};
-    for (const style of styles) {
-      if (style !== undefined) ++count;
-      mergeInto(flatten(style, props), combinedStyle);
+    if (
+      !Object.prototype.hasOwnProperty.call(destStyleObject, srcStyleProperty)
+    ) {
+      destStyleObject[srcStyleProperty] = srcStyleObject[srcStyleProperty];
+      continue;
     }
-    if (count > 0) {
-      return combinedStyle;
-    } else {
-      return undefined;
+    const srcStyleValue = srcStyleObject[srcStyleProperty];
+    const destStyleValue = destStyleObject[srcStyleProperty];
+    if (
+      typeof srcStyleValue !== 'object' ||
+      typeof destStyleValue !== 'object'
+    ) {
+      destStyleObject[srcStyleProperty] = srcStyleObject[srcStyleProperty];
+      continue;
     }
+    const newStyleValue: StyleObject = {};
+    mergeObjectIntoObject(destStyleValue, newStyleValue);
+    mergeObjectIntoObject(srcStyleValue, newStyleValue);
+    destStyleObject[srcStyleProperty] = newStyleValue;
   }
-
-  if (typeof styles === 'function') {
-    return flatten(styles(props), props);
-  }
-
-  return styles;
 }
 
 export function combine<Props extends PropsConstraint = DefaultProps>(
   ...styles: Style<Props>[]
 ): FlatStyle<Props> {
   if (styles.length === 0) {
-    return undefined;
+    return {};
   }
 
   if (styles.length === 1) {
-    const style = styles[0];
-    if (!Array.isArray(style)) {
-      if (typeof style === 'function') {
-        return (props) => flatten<Props>(style(props), props);
+    const firstStyle = styles[0];
+    if (!Array.isArray(firstStyle)) {
+      if (typeof firstStyle === 'function') {
+        return (props) => {
+          const result = combine(firstStyle(props));
+          if (typeof result === 'function') {
+            return result(props);
+          }
+          return result || {};
+        };
+      } else if (typeof firstStyle === 'undefined') {
+        return {};
       } else {
-        return style;
+        return firstStyle;
       }
     }
   }
 
-  return (props) => flatten<Props>(styles, props);
+  return (props) => {
+    const styleObject: StyleObject = {};
+    styles.forEach((style) => {
+      if (typeof style === 'undefined') {
+        return;
+      }
+
+      if (typeof style === 'function') {
+        const result = combine(style(props));
+        if (typeof result === 'function') {
+          mergeObjectIntoObject(result(props), styleObject);
+        } else {
+          mergeObjectIntoObject(result, styleObject);
+        }
+        return;
+      }
+
+      if (Array.isArray(style)) {
+        const result = combine(...style);
+        if (typeof result === 'function') {
+          mergeObjectIntoObject(result(props), styleObject);
+        } else {
+          mergeObjectIntoObject(result, styleObject);
+        }
+        return;
+      }
+
+      mergeObjectIntoObject(style, styleObject);
+    });
+    return styleObject;
+  };
 }

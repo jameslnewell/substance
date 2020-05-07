@@ -2,64 +2,109 @@ import {combine} from './combine';
 import {
   PropsWithTheme,
   DefaultTheme,
-  FlatStyle,
   PropsConstraint,
   StyleObject,
+  Style,
 } from './types';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const props: PropsWithTheme<{}, DefaultTheme> = {theme: {} as any};
 
-const callIfCallable = <Props extends PropsConstraint>(
-  style: FlatStyle<Props>,
+function combineAndCallWithProps<Props extends PropsConstraint>(
   props: Props,
-): StyleObject | undefined => {
-  if (typeof style === 'function') {
-    return style(props);
+  ...args: Style<Props>[]
+): StyleObject | undefined {
+  const result = combine(...args);
+  if (typeof result === 'function') {
+    return result(props);
   }
-  return style;
-};
+  return result;
+}
 
-describe('combine', () => {
-  test('returns undefined when no parameters are passed', () => {
-    expect(combine()).toBeUndefined();
+describe('combine()', () => {
+  test('returns an empty object when no parameters are passed', () => {
+    expect(combineAndCallWithProps(props)).toEqual({});
   });
 
-  test('returns undefined when undefined is passed', () => {
-    expect(combine(undefined)).toBeUndefined();
+  test('returns an empty object when undefined is passed', () => {
+    expect(combineAndCallWithProps(props, undefined)).toEqual({});
   });
 
-  test('returns undefined when an empty array is passed', () => {
-    expect(combine(undefined)).toBeUndefined();
+  test('returns an empty object when an empty array is passed', () => {
+    expect(combineAndCallWithProps(props, [])).toEqual({});
+  });
+
+  test('returns an empty object when an empty function is passed', () => {
+    expect(combineAndCallWithProps(props, () => undefined)).toEqual({});
+    expect(combineAndCallWithProps(props, () => [])).toEqual({});
   });
 
   test('returns an object when an object is passed', () => {
-    expect(combine({color: 'red'})).toEqual({color: 'red'});
-  });
-
-  test('returns an object when a function is passed', () => {
-    expect(
-      callIfCallable(
-        combine(() => ({color: 'red'})),
-        props,
-      ),
-    ).toEqual({color: 'red'});
-  });
-
-  test('returns an object when an array is passed', () => {
-    expect(callIfCallable(combine([{color: 'red'}]), props)).toEqual({
+    expect(combineAndCallWithProps(props, {color: 'red'})).toEqual({
       color: 'red',
     });
   });
 
-  test('returns an object when an array is passed with nested object, function and array', () => {
+  test('returns an object when a function is passed', () => {
+    expect(combineAndCallWithProps(props, () => ({color: 'red'}))).toEqual({
+      color: 'red',
+    });
+  });
+
+  test('returns an object when an array is passed', () => {
+    expect(combineAndCallWithProps(props, [{color: 'red'}])).toEqual({
+      color: 'red',
+    });
+  });
+
+  test('returns an object when an array is passed with a nested object, function and array', () => {
     expect(
-      callIfCallable(
-        combine([{color: 'red'}, () => ({backgroundColor: 'green'}), [{}]]),
+      combineAndCallWithProps(props, [
+        undefined,
+        {color: 'red'},
+        () => ({backgroundColor: 'green'}),
+        [{}],
+      ]),
+    ).toEqual({
+      color: 'red',
+      backgroundColor: 'green',
+    });
+  });
+
+  test('combines discrete properties on an object', () => {
+    expect(
+      combineAndCallWithProps(
         props,
+        {color: 'red'},
+        {backgroundColor: 'green'},
       ),
     ).toEqual({
       color: 'red',
       backgroundColor: 'green',
+    });
+  });
+
+  test('replaces common properties on an object', () => {
+    expect(
+      combineAndCallWithProps(props, {color: 'red'}, {color: 'green'}),
+    ).toEqual({
+      color: 'green',
+    });
+  });
+
+  test.only('merges common properties on an object', () => {
+    expect(
+      combineAndCallWithProps(
+        props,
+        {':hover': {color: 'red', backgroundColor: 'orange'}},
+        {':hover': {color: 'green', borderColor: 'purple'}},
+      ),
+    ).toEqual({
+      ':hover': {
+        color: 'green',
+        backgroundColor: 'orange',
+        borderColor: 'purple',
+      },
     });
   });
 

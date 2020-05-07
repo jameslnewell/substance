@@ -48,6 +48,8 @@ export type FlatStyleFunction<Props extends PropsConstraint> = (
   props: Props,
 ) => StyleObject;
 
+// TODO: Should FlatStyle support undefined for easier conditionals?? Have to make
+// match() support it too.
 export type FlatStyle<Props extends PropsConstraint> =
   | StyleObject
   | FlatStyleFunction<Props>;

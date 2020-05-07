@@ -21,6 +21,7 @@ function applyStyleForEachMedia<Media extends MediaConstraint>(
   return map(
     keysOf<MediaQueries<Media>>(queries).reduce<{[m in Media]: Media}>(
       (v, media) => ({...v, [media]: media}),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       {} as any,
     ),
     (media) => ({content: `"${media}"`}),
