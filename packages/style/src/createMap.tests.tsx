@@ -42,6 +42,47 @@ function expectStyleForEachMedia<Media extends MediaConstraint>(
 }
 
 describe('createMap()', () => {
+  test('no style is applied when media query is matched but style is undefined', () => {
+    const map = createMap(createMatch(defaultMediaQueries));
+    const Component = styled.div(
+      {},
+      map('red', () => undefined),
+      map({mobile: 'red', desktop: 'green'}, () => undefined),
+    );
+    const {container} = render(<Component />);
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  test('no style is applied when media query is matched but style is a function returning undefined', () => {
+    const map = createMap(createMatch(defaultMediaQueries));
+    const Component = styled.div(
+      {},
+      map('red', () => undefined),
+      map({mobile: 'red', desktop: 'green'}, () => undefined),
+    );
+    const {container} = render(<Component />);
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  test('style is applied when media query is matched and style is an object', () => {
+    const map = createMap(createMatch(defaultMediaQueries));
+    const Component = styled.div(
+      {},
+      map('red', (color) => ({color})),
+      map({mobile: 'red', desktop: 'green'}, (color) => ({
+        backgroundColor: color,
+      })),
+    );
+    const {container} = render(<Component />);
+    expect(container.firstChild).toHaveStyleRule('color', 'red');
+    expect(container.firstChild).toHaveStyleRule('background-color', 'red', {
+      media: defaultMediaQueries['mobile'],
+    });
+    expect(container.firstChild).toHaveStyleRule('background-color', 'green', {
+      media: defaultMediaQueries['desktop'],
+    });
+  });
+
   describe('when using a queries object', () => {
     const match: MatchFunction<DefaultMedia> = createMatch(defaultMediaQueries);
     const map: MapFunction<DefaultMedia> = createMap(match);

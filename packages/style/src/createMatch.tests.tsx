@@ -32,6 +32,44 @@ function expectStyleForEachMedia<Media extends MediaConstraint>(
 }
 
 describe('createMatch()', () => {
+  test('no style is applied when media query is matched but style is undefined', () => {
+    const match = createMatch(defaultMediaQueries);
+    const Component = styled.div({}, match('mobile')(undefined));
+    const {container} = render(<Component />);
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  test('no style is applied when media query is matched but style is a function returning undefined', () => {
+    const match = createMatch(defaultMediaQueries);
+    const Component = styled.div(
+      {},
+      match('mobile')(() => undefined),
+    );
+    const {container} = render(<Component />);
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  test('style is applied when media query is matched and style is an object', () => {
+    const match = createMatch(defaultMediaQueries);
+    const Component = styled.div({}, match('mobile')({color: 'red'}));
+    const {container} = render(<Component />);
+    expect(container.firstChild).toHaveStyleRule('color', 'red', {
+      media: defaultMediaQueries['mobile'],
+    });
+  });
+
+  test('style is applied when media query is matched and style is a function returning an object', () => {
+    const match = createMatch(defaultMediaQueries);
+    const Component = styled.div(
+      {},
+      match('mobile')(() => ({color: 'red'})),
+    );
+    const {container} = render(<Component />);
+    expect(container.firstChild).toHaveStyleRule('color', 'red', {
+      media: defaultMediaQueries['mobile'],
+    });
+  });
+
   describe('when using a queries object', () => {
     const match = createMatch(defaultMediaQueries);
     const Component = styled.div(

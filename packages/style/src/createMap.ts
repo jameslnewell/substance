@@ -50,11 +50,17 @@ export const createMap = <
         // the value has been set and the types should ensure the value is not
         // undefined
         const style = fn(value as Value);
+        if (typeof style === 'function') {
+          const result = style(props);
+          if (result) {
+            styles.push(match(media)(result));
+          }
+        }
         if (typeof style === 'object') {
           styles.push(match(media)(style));
-        } else {
-          styles.push(match(media)(style(props)));
+          continue;
         }
+        continue;
       }
       return styles;
     };

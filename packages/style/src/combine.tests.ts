@@ -23,11 +23,11 @@ function combineAndCallWithProps<Props extends PropsConstraint>(
 
 describe('combine()', () => {
   test('returns an empty object when no parameters are passed', () => {
-    expect(combineAndCallWithProps(props)).toEqual({});
+    expect(combineAndCallWithProps(props)).toBeUndefined();
   });
 
   test('returns an empty object when undefined is passed', () => {
-    expect(combineAndCallWithProps(props, undefined)).toEqual({});
+    expect(combineAndCallWithProps(props, undefined)).toBeUndefined();
   });
 
   test('returns an empty object when an empty array is passed', () => {
@@ -35,7 +35,7 @@ describe('combine()', () => {
   });
 
   test('returns an empty object when an empty function is passed', () => {
-    expect(combineAndCallWithProps(props, () => undefined)).toEqual({});
+    expect(combineAndCallWithProps(props, () => undefined)).toBeUndefined();
     expect(combineAndCallWithProps(props, () => [])).toEqual({});
   });
 
@@ -92,7 +92,7 @@ describe('combine()', () => {
     });
   });
 
-  test.only('merges common properties on an object', () => {
+  test('merges common properties on an object', () => {
     expect(
       combineAndCallWithProps(
         props,
@@ -108,5 +108,19 @@ describe('combine()', () => {
     });
   });
 
-  // TODO: test when conflicts occur while merging objects
+  // test('', () => {
+  //   expect(
+  //     combineAndCallWithProps(
+  //       props,
+  //       {':hover': {color: () => 'red', backgroundColor: 'orange'}},
+  //       {':hover': {color: 'green', borderColor: 'purple'}},
+  //     ),
+  //   ).toEqual({
+  //     ':hover': {
+  //       color: 'green',
+  //       backgroundColor: 'orange',
+  //       borderColor: 'purple',
+  //     },
+  //   });
+  // })
 });

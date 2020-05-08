@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createMap() no style is applied when media query is matched but style is a function returning undefined 1`] = `
+<div
+  class=""
+/>
+`;
+
+exports[`createMap() no style is applied when media query is matched but style is undefined 1`] = `
+<div
+  class=""
+/>
+`;

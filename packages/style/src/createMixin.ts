@@ -32,6 +32,7 @@ export interface CreateMixinTransformFunction<
   Props extends PropsConstraint = DefaultProps
 > {
   (value: Value):
+    | undefined
     | StyleValue
     | ((props: PropsWithTheme<Props, Theme>) => StyleValue);
 }

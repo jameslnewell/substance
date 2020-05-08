@@ -4,6 +4,9 @@ import {
   MediaQueries,
   MatchFunction,
   ThemeConstraint,
+  StyleObject,
+  FlatStyleFunction,
+  FlatStyle,
 } from './types';
 
 export interface GetMediaQueriesFromThemeFunction<
@@ -13,17 +16,24 @@ export interface GetMediaQueriesFromThemeFunction<
   (theme: Theme | undefined): MediaQueries<Media>;
 }
 
-const getQueryFromQueries = <Media extends MediaConstraint>(
+function createStyleObject<Media extends MediaConstraint>(
   media: Media,
   queries: MediaQueries<Media>,
-): string => {
+  style: undefined | StyleObject,
+): StyleObject {
   if (process.env.NODE_ENV !== 'production') {
     if (!Object.prototype.hasOwnProperty.call(queries, media)) {
       console.warn(`Media "${media}" not found in queries.`);
     }
   }
-  return queries[media];
-};
+  if (typeof style === 'undefined') {
+    return {};
+  }
+  const query = queries[media];
+  return {
+    [`@media ${query}`]: style,
+  };
+}
 
 /**
  * Create a mixin that applies styles when a media query is matched
@@ -54,19 +64,25 @@ export const createMatch = <
   Media extends MediaConstraint,
   Theme extends ThemeConstraint = DefaultTheme
 >(
-  queries: MediaQueries<Media> | GetMediaQueriesFromThemeFunction<Media, Theme>,
+  queriesOrGetQueries:
+    | MediaQueries<Media>
+    | GetMediaQueriesFromThemeFunction<Media, Theme>,
 ): MatchFunction<Media, Theme> => {
-  if (typeof queries === 'function') {
+  if (typeof queriesOrGetQueries === 'function') {
     return (media) => (style) => (props) => {
-      return {
-        [`@media ${getQueryFromQueries(media, queries(props.theme))}`]: style,
-      };
+      const queries = queriesOrGetQueries(props.theme);
+      if (typeof style === 'function') {
+        return createStyleObject(media, queries, style(props));
+      }
+      return createStyleObject(media, queries, style);
     };
   } else {
     return (media) => (style) => {
-      return {
-        [`@media ${getQueryFromQueries(media, queries)}`]: style,
-      };
+      if (typeof style === 'function') {
+        return (props) =>
+          createStyleObject(media, queriesOrGetQueries, style(props));
+      }
+      return createStyleObject(media, queriesOrGetQueries, style);
     };
   }
 };

@@ -45,7 +45,7 @@ export function combine<Props extends PropsConstraint = DefaultProps>(
   ...styles: Style<Props>[]
 ): FlatStyle<Props> {
   if (styles.length === 0) {
-    return {};
+    return undefined;
   }
 
   if (styles.length === 1) {
@@ -57,10 +57,8 @@ export function combine<Props extends PropsConstraint = DefaultProps>(
           if (typeof result === 'function') {
             return result(props);
           }
-          return result || {};
+          return result;
         };
-      } else if (typeof firstStyle === 'undefined') {
-        return {};
       } else {
         return firstStyle;
       }
@@ -70,10 +68,6 @@ export function combine<Props extends PropsConstraint = DefaultProps>(
   return (props) => {
     const styleObject: StyleObject = {};
     styles.forEach((style) => {
-      if (typeof style === 'undefined') {
-        return;
-      }
-
       if (typeof style === 'function') {
         const result = combine(style(props));
         if (typeof result === 'function') {
