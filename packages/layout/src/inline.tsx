@@ -8,8 +8,17 @@ import {
   MapFunction,
   ThemeConstraint,
   DefaultTheme,
+  createProps,
 } from '@substance/style';
-import {SpaceConstraint, getSpace, GetSpaceFunction} from '@substance/mixin';
+import {
+  SpaceConstraint,
+  getSpace,
+  GetSpaceFunction,
+  ThemedGetSpaceFunction,
+  SpaceMixinFunction,
+  paddingTop,
+  paddingLeft,
+} from '@substance/mixin';
 import {createSpaceStyles} from './styles';
 
 export type InlineLayoutAlignment = 'left' | 'center' | 'right';
@@ -29,7 +38,9 @@ export interface CreateInlineLayoutOptions<
   Theme extends ThemeConstraint = DefaultTheme
 > {
   map: MapFunction<Media>;
-  getSpace: GetSpaceFunction<Space, Theme>;
+  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Theme>;
+  paddingTop: SpaceMixinFunction<Media, Space, Theme>;
+  paddingLeft: SpaceMixinFunction<Media, Space, Theme>;
 }
 
 export const createInlineLayout = <
@@ -38,10 +49,14 @@ export const createInlineLayout = <
 >({
   map,
   getSpace,
+  paddingTop,
+  paddingLeft,
 }: CreateInlineLayoutOptions<Media, Space>) => {
   const styles = createSpaceStyles<Media, Space>({
     map,
     getSpace,
+    paddingTop,
+    paddingLeft,
   });
 
   const Wrapper = styled.div<InlineLayoutProps<Media, Space>>(
@@ -76,18 +91,12 @@ export const createInlineLayout = <
     styles.container,
   );
 
-  const Item = styled.div<InlineLayoutProps<Media, Space>>({}, ({space}) => {
-    if (space === undefined) {
-      return;
-    }
-    return map(space, (s) => {
-      const value = getSpace(s);
-      return {
-        paddingTop: value,
-        paddingLeft: value,
-      };
-    });
-  });
+  const Item = styled.div<InlineLayoutProps<Media, Space>>(
+    {},
+    createProps({
+      space: [paddingTop, paddingLeft],
+    }),
+  );
 
   const InlineLayout: React.FC<InlineLayoutProps<Media, Space>> = ({
     space,
@@ -117,4 +126,6 @@ export const createInlineLayout = <
 export const InlineLayout = createInlineLayout({
   map,
   getSpace,
+  paddingTop,
+  paddingLeft,
 });

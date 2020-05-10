@@ -1,5 +1,4 @@
-import {DefaultTheme} from 'styled-components';
-import {map} from '@substance/style';
+import {map, DefaultTheme, DefaultProps} from '@substance/style';
 import {Spaces} from './types';
 import {defaultSpaces, DefaultSpace} from './defaultSpaces';
 import {GetSpacesFunction, createGetSpace} from './createGetSpace';
@@ -37,7 +36,11 @@ const getSpaces: GetSpacesFunction<DefaultThemeSpace, DefaultTheme> = (
   return defaultSpaces;
 };
 
-export const getSpace = createGetSpace(getSpaces);
+export const getSpace = createGetSpace<
+  DefaultThemeSpace,
+  DefaultTheme,
+  DefaultProps
+>(getSpaces);
 
 export const margin = createMargin({map, getSpace});
 export const marginX = createMarginX({map, getSpace});

@@ -5,8 +5,6 @@ import {
   MatchFunction,
   ThemeConstraint,
   StyleObject,
-  FlatStyleFunction,
-  FlatStyle,
 } from './types';
 
 export interface GetMediaQueriesFromThemeFunction<

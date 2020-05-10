@@ -9,7 +9,7 @@ import {
   PropsConstraint,
 } from '@substance/style';
 import {SpaceConstraint} from './types';
-import {GetSpaceFunction} from './createGetSpace';
+import {GetSpaceFunction, ThemedGetSpaceFunction} from './createGetSpace';
 
 const createSpaceFactory = (properties: StyleProperty[]) => {
   return <
@@ -22,7 +22,9 @@ const createSpaceFactory = (properties: StyleProperty[]) => {
     getSpace,
   }: {
     map: MapFunction<Media, Theme>;
-    getSpace: GetSpaceFunction<Space, Theme>;
+    getSpace:
+      | GetSpaceFunction<Space>
+      | ThemedGetSpaceFunction<Space, Theme, Props>;
   }) => {
     return createMixin<Media, Space, Theme, Props>({
       map: map,

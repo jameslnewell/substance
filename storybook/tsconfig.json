@@ -1,11 +1,12 @@
 {
   "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    // "baseUrl": ".",
+    // "paths": {
+    //   "@substance/*": [ "../packages/*/src" ]
+    // }
+  },
   "files": ["types/@substance/style.d.ts", "types/styled-components.d.ts"],
-  "include": [
-    "types",
-    ".storybook",
-    "src",
-    "../packages/*/src/**/*.stories.tsx"
-  ],
+  "include": ["types", ".storybook", "../packages/*/src"],
   "exclude": ["node_modules"]
 }

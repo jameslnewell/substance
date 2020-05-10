@@ -7,13 +7,13 @@ export default {title: 'style/match()'};
 
 const Square = styled.div(
   square,
-  match('sm')({
+  match('mobile')({
     backgroundColor: 'red',
   }),
-  match('md')({
+  match('tablet')({
     backgroundColor: 'green',
   }),
-  match('lg')({
+  match('desktop')({
     backgroundColor: 'blue',
   }),
 );

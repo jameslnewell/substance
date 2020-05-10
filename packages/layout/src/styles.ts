@@ -6,8 +6,14 @@ import {
   ResponsiveValue,
   PropsWithTheme,
   Style,
+  createProps,
 } from '@substance/style';
-import {SpaceConstraint, GetSpaceFunction} from '@substance/mixin';
+import {
+  SpaceConstraint,
+  GetSpaceFunction,
+  ThemedGetSpaceFunction,
+  SpaceMixinFunction,
+} from '@substance/mixin';
 
 interface StyleOptions<
   Media extends MediaConstraint,
@@ -15,7 +21,9 @@ interface StyleOptions<
   Theme extends ThemeConstraint = DefaultTheme
 > {
   map: MapFunction<Media>;
-  getSpace: GetSpaceFunction<Space, Theme>;
+  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Theme>;
+  paddingTop: SpaceMixinFunction<Media, Space, Theme>;
+  paddingLeft: SpaceMixinFunction<Media, Space, Theme>;
 }
 
 export interface StyleProps<
@@ -33,6 +41,8 @@ export const createSpaceStyles = <
 >({
   map,
   getSpace,
+  paddingTop,
+  paddingLeft,
 }: StyleOptions<Media, Space, Theme>): {
   [name: string]: Style<StyleProps<Media, Space, Theme>>;
 } => {
@@ -79,18 +89,9 @@ export const createSpaceStyles = <
       {
         boxSizing: 'border-box',
       },
-      ({space}: StyleProps<Media, Space, Theme>) => {
-        if (space === undefined) {
-          return;
-        }
-        return map(space, (s) => {
-          const value = getSpace(s);
-          return {
-            paddingTop: value,
-            paddingLeft: value,
-          };
-        });
-      },
+      createProps({
+        space: [paddingLeft, paddingTop],
+      }),
     ],
   };
 };

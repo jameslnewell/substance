@@ -1,4 +1,4 @@
-import {DefaultTheme, MediaQueries} from './types';
+import {DefaultTheme, MediaQueries, MatchFunction} from './types';
 import {defaultMediaQueries, DefaultMedia} from './defaultMediaQueries';
 import {createMatch} from './createMatch';
 
@@ -8,7 +8,10 @@ export type DefaultThemeMedia = DefaultTheme extends {
   ? MediaName
   : DefaultMedia;
 
-export const match = createMatch<DefaultThemeMedia, DefaultTheme>((theme) => {
+export const match: MatchFunction<
+  DefaultThemeMedia,
+  DefaultTheme
+> = createMatch<DefaultThemeMedia, DefaultTheme>((theme) => {
   // using any because unless the consumer defines the `media` property on the
   // theme the property will not exist and will result in compilation errors
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

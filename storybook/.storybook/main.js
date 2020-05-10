@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   stories: [
-    '../../packages/**/src/**/*.stories.tsx',
+    // '../../packages/**/src/**/*.stories.tsx',
     '../src/**/*.stories.tsx',
   ],
   webpackFinal: (config) => {

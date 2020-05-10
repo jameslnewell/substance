@@ -26,6 +26,7 @@
     "styled-components": "^5.0.1"
   },
   "scripts": {
+    "typing": "tsc --noEmit",
     "setup": "substance-setup",
     "build": "substance-build"
   },

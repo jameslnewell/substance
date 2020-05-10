@@ -9,7 +9,15 @@ import {
   DefaultTheme,
   StyleObject,
 } from '@substance/style';
-import {getSpace, SpaceConstraint, GetSpaceFunction} from '@substance/mixin';
+import {
+  getSpace,
+  SpaceConstraint,
+  GetSpaceFunction,
+  ThemedGetSpaceFunction,
+  SpaceMixinFunction,
+  paddingTop,
+  paddingLeft,
+} from '@substance/mixin';
 import {createSpaceStyles} from './styles';
 
 export type ColumnsLayoutColumnWidth = number | 'content';
@@ -54,7 +62,9 @@ export interface CreateColumnsLayoutOptions<
   Theme extends ThemeConstraint = DefaultTheme
 > {
   map: MapFunction<Media>;
-  getSpace: GetSpaceFunction<Space, Theme>;
+  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Theme>;
+  paddingTop: SpaceMixinFunction<Media, Space, Theme>;
+  paddingLeft: SpaceMixinFunction<Media, Space, Theme>;
 }
 
 export type ColumnsLayout<
@@ -108,6 +118,8 @@ export const createColumnsLayout = <
 >({
   map,
   getSpace,
+  paddingTop,
+  paddingLeft,
 }: CreateColumnsLayoutOptions<Media, Space>): ColumnsLayout<Media, Space> => {
   const SpaceContext = React.createContext<
     ResponsiveValue<Media, Space> | undefined
@@ -116,6 +128,8 @@ export const createColumnsLayout = <
   const styles = createSpaceStyles<Media, Space>({
     map,
     getSpace,
+    paddingTop,
+    paddingLeft,
   });
 
   const Wrapper = styled.div<WrapperProps<Media, Space>>({}, styles.wrapper);
@@ -184,4 +198,9 @@ export const createColumnsLayout = <
   return ColumnsLayout;
 };
 
-export const ColumnsLayout = createColumnsLayout({map, getSpace});
+export const ColumnsLayout = createColumnsLayout({
+  map,
+  getSpace,
+  paddingTop,
+  paddingLeft,
+});

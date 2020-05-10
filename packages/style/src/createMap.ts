@@ -23,7 +23,7 @@ export const createMap = <
   Media extends MediaConstraint,
   Theme extends ThemeConstraint = DefaultTheme
 >(
-  match: MatchFunction<Media>,
+  match: MatchFunction<Media, Theme>,
 ): MapFunction<Media, Theme> => {
   return <
     Value extends ResponsiveValueConstraint,

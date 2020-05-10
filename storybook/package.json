@@ -27,9 +27,9 @@
     "webpack": "^4.42.0"
   },
   "scripts": {
-    "typing": "tsc --noEmit",
+    "_typing": "tsc --noEmit",
     "start": "start-storybook",
-    "build": "build-storybook"
+    "_build": "build-storybook"
   },
   "license": "MIT"
 }

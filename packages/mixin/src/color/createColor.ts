@@ -9,7 +9,7 @@ import {
   PropsConstraint,
 } from '@substance/style';
 import {ColorConstraint} from './types';
-import {GetColorFunction} from './createGetColor';
+import {GetColorFunction, ThemedGetColorFunction} from './createGetColor';
 
 const createColorFactory = (properties: StyleProperty[]) => {
   return <
@@ -22,7 +22,9 @@ const createColorFactory = (properties: StyleProperty[]) => {
     getColor,
   }: {
     map: MapFunction<Media, Theme>;
-    getColor: GetColorFunction<Color, Theme, Props>;
+    getColor:
+      | GetColorFunction<Color>
+      | ThemedGetColorFunction<Color, Theme, Props>;
   }) => {
     return createMixin<Media, Color, Theme, Props>({
       map: map,

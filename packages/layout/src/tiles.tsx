@@ -9,7 +9,15 @@ import {
   DefaultTheme,
   map,
 } from '@substance/style';
-import {SpaceConstraint, GetSpaceFunction, getSpace} from '@substance/mixin';
+import {
+  SpaceConstraint,
+  GetSpaceFunction,
+  getSpace,
+  ThemedGetSpaceFunction,
+  SpaceMixinFunction,
+  paddingTop,
+  paddingLeft,
+} from '@substance/mixin';
 import {createSpaceStyles} from './styles';
 
 export type TilesLayoutAlignment = 'left' | 'center' | 'right';
@@ -43,7 +51,9 @@ export interface CreateTilesLayoutOptions<
   Theme extends ThemeConstraint = DefaultTheme
 > {
   map: MapFunction<Media>;
-  getSpace: GetSpaceFunction<Space, Theme>;
+  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Theme>;
+  paddingTop: SpaceMixinFunction<Media, Space, Theme>;
+  paddingLeft: SpaceMixinFunction<Media, Space, Theme>;
 }
 
 export const createTilesLayout = <
@@ -52,10 +62,14 @@ export const createTilesLayout = <
 >({
   map,
   getSpace,
+  paddingTop,
+  paddingLeft,
 }: CreateTilesLayoutOptions<Media, Space>) => {
   const styles = createSpaceStyles<Media, Space>({
     map,
     getSpace,
+    paddingTop,
+    paddingLeft,
   });
 
   const Wrapper = styled.div<WrapperProps<Media, Space>>({}, styles.wrapper);
@@ -139,4 +153,9 @@ export const createTilesLayout = <
   return TilesLayout;
 };
 
-export const TilesLayout = createTilesLayout({map, getSpace});
+export const TilesLayout = createTilesLayout({
+  map,
+  getSpace,
+  paddingTop,
+  paddingLeft,
+});

@@ -25,6 +25,7 @@
     "@substance/test-utilities": "0.1.0-preview.1"
   },
   "scripts": {
+    "typing": "tsc --noEmit",
     "setup": "substance-setup",
     "build": "substance-build"
   },

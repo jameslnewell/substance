@@ -44,12 +44,12 @@ export type Style<Props extends PropsConstraint> =
   | StyleFunction<Props>
   | Array<Style<Props>>;
 
+// ========== FLAT STYLE =========
+
 export type FlatStyleFunction<Props extends PropsConstraint> = (
   props: Props,
 ) => undefined | StyleObject;
 
-// TODO: Should FlatStyle support undefined for easier conditionals?? Have to make
-// match() support it too.
 export type FlatStyle<Props extends PropsConstraint> =
   | undefined
   | StyleObject
@@ -92,6 +92,15 @@ export interface MapFunctionFunction<
   (value: Value): FlatStyle<PropsWithTheme<Props, Theme>>;
 }
 
+type MapFunctionReturnValue<
+  Theme extends ThemeConstraint = DefaultTheme,
+  Props extends PropsConstraint = DefaultProps
+> =
+  | FlatStyle<PropsWithTheme<Props, Theme>>
+  | ((
+      props: PropsWithTheme<Props, Theme>,
+    ) => FlatStyle<PropsWithTheme<Props, Theme>>[]);
+
 export interface MapFunction<
   Media extends MediaConstraint,
   Theme extends ThemeConstraint = DefaultTheme
@@ -102,9 +111,7 @@ export interface MapFunction<
   >(
     valueOrValues: ResponsiveValue<Media, Value>,
     fn: MapFunctionFunction<Value, Theme, Props>,
-  ):
-    | FlatStyle<PropsWithTheme<Props, Theme>>
-    | FlatStyle<PropsWithTheme<Props, Theme>>[];
+  ): MapFunctionReturnValue<Theme, Props>;
 }
 
 // ========== MIXIN ==========
@@ -119,7 +126,8 @@ export interface ResponsiveMixinFunction<
   Theme extends ThemeConstraint = DefaultTheme,
   Props extends PropsConstraint = DefaultProps
 > {
-  (valueOrValues: ResponsiveValue<Media, Value>):
-    | FlatStyle<PropsWithTheme<Props, Theme>>
-    | FlatStyle<PropsWithTheme<Props, Theme>>[];
+  (valueOrValues: ResponsiveValue<Media, Value>): MapFunctionReturnValue<
+    Theme,
+    Props
+  >;
 }

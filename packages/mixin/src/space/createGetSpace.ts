@@ -16,29 +16,44 @@ export interface GetSpacesFunction<
   (theme: Theme | undefined): Spaces<Space>;
 }
 
-export interface GetSpaceFunction<
+export interface GetSpaceFunction<Space extends SpaceConstraint> {
+  (space: Space): StyleValue<'paddingTop'>;
+}
+
+export interface ThemedGetSpaceFunction<
   Space extends SpaceConstraint,
   Theme extends ThemeConstraint = DefaultTheme,
   Props extends PropsConstraint = DefaultProps
 > {
-  (space: Space):
-    | StyleValue<'paddingTop'>
-    | ((props: PropsWithTheme<Props, Theme>) => StyleValue<'paddingTop'>);
+  (space: Space): (
+    props: PropsWithTheme<Props, Theme>,
+  ) => StyleValue<'paddingTop'>;
 }
 
-// TODO: support negative spacings
-export const createGetSpace = <
+export function createGetSpace<Space extends SpaceConstraint>(
+  spaces: Spaces<Space>,
+): GetSpaceFunction<Space>;
+export function createGetSpace<
+  Space extends SpaceConstraint,
+  Theme extends ThemeConstraint = DefaultTheme,
+  Props extends PropsConstraint = DefaultProps
+>(
+  getSpaces: GetSpacesFunction<Space, Theme>,
+): ThemedGetSpaceFunction<Space, Theme, Props>;
+export function createGetSpace<
   Space extends SpaceConstraint,
   Theme extends ThemeConstraint = DefaultTheme,
   Props extends PropsConstraint = DefaultProps
 >(
   spacesOrGetSpaces: Spaces<Space> | GetSpacesFunction<Space, Theme>,
-): GetSpaceFunction<Space, Theme, Props> => {
+): GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Theme, Props> {
   // TODO: warn about unknown spaces
+  // TODO: support negative spacings
   if (typeof spacesOrGetSpaces === 'function') {
-    return (value) => ({theme}) =>
+    return (value) => ({theme}): StyleValue<'paddingTop'> =>
       get(String(value), spacesOrGetSpaces(theme)) || value;
   } else {
-    return (value) => get(String(value), spacesOrGetSpaces) || value;
+    return (value): StyleValue<'paddingTop'> =>
+      get(String(value), spacesOrGetSpaces) || value;
   }
-};
+}

@@ -9,7 +9,7 @@ const Outer = styled.footer`
 `;
 
 const Inner = styled.footer`
-  ${paddingY(2)}
+  ${paddingY(3)}
   ${backgroundColor('shades.dark')};
 `;
 

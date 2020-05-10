@@ -45,16 +45,16 @@ export const WithWidth: React.FC = () => (
 
 export const WithResponsiveWidth: React.FC = () => (
   <ColumnsLayout space={4}>
-    <ColumnsLayout.Column width={{sm: 1, md: 1 / 2, lg: 1 / 4}}>
+    <ColumnsLayout.Column width={{mobile: 1, tablet: 1 / 2, desktop: 1 / 4}}>
       <Placeholder>Feature</Placeholder>
     </ColumnsLayout.Column>
-    <ColumnsLayout.Column width={{sm: 1, md: 1 / 2, lg: 1 / 4}}>
+    <ColumnsLayout.Column width={{mobile: 1, tablet: 1 / 2, desktop: 1 / 4}}>
       <Placeholder>Feature</Placeholder>
     </ColumnsLayout.Column>
-    <ColumnsLayout.Column width={{sm: 1, md: 1 / 2, lg: 1 / 4}}>
+    <ColumnsLayout.Column width={{mobile: 1, tablet: 1 / 2, desktop: 1 / 4}}>
       <Placeholder>Feature</Placeholder>
     </ColumnsLayout.Column>
-    <ColumnsLayout.Column width={{sm: 1, md: 1 / 2, lg: 1 / 4}}>
+    <ColumnsLayout.Column width={{mobile: 1, tablet: 1 / 2, desktop: 1 / 4}}>
       <Placeholder>Feature</Placeholder>
     </ColumnsLayout.Column>
   </ColumnsLayout>

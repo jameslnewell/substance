@@ -15,28 +15,41 @@ export interface GetColorsFunction<
   (theme: Theme | undefined): Colors;
 }
 
-export interface GetColorFunction<
+export interface GetColorFunction<Color extends ColorConstraint> {
+  (color: Color): StyleValue<'color'>;
+}
+
+export interface ThemedGetColorFunction<
   Color extends ColorConstraint,
   Theme extends ThemeConstraint = DefaultTheme,
   Props extends PropsConstraint = DefaultProps
 > {
-  (color: Color):
-    | StyleValue<'color'>
-    | ((props: PropsWithTheme<Props, Theme>) => StyleValue<'color'>);
+  (color: Color): (props: PropsWithTheme<Props, Theme>) => StyleValue<'color'>;
 }
 
-export const createGetColor = <
+export function createGetColor<Color extends ColorConstraint>(
+  colors: Colors,
+): GetColorFunction<Color>;
+export function createGetColor<
+  Color extends ColorConstraint,
+  Theme extends ThemeConstraint = DefaultTheme,
+  Props extends PropsConstraint = DefaultProps
+>(
+  getColors: GetColorsFunction<Theme>,
+): ThemedGetColorFunction<Color, Theme, Props>;
+export function createGetColor<
   Color extends ColorConstraint,
   Theme extends ThemeConstraint = DefaultTheme,
   Props extends PropsConstraint = DefaultProps
 >(
   colorsOrGetColors: Colors | GetColorsFunction<Theme>,
-): GetColorFunction<Color, Theme, Props> => {
+): GetColorFunction<Color> | ThemedGetColorFunction<Color, Theme, Props> {
   // TODO: warn about unknown colors
   if (typeof colorsOrGetColors === 'function') {
-    return (value) => ({theme}) =>
+    return (value) => ({theme}): StyleValue<'color'> =>
       get(value, colorsOrGetColors(theme)) || value;
   } else {
-    return (value) => get(value, colorsOrGetColors) || value;
+    return (value): StyleValue<'color'> =>
+      get(value, colorsOrGetColors) || value;
   }
-};
+}
