@@ -1,6 +1,6 @@
 {
   "name": "@substance/mixin",
-  "version": "0.1.0-preview.4",
+  "version": "0.1.0-preview.5",
   "author": "James Newell",
   "repository": "jameslnewell/substance",
   "website": "https://jameslnewell.github.io/substance",
@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.9.6",
-    "@substance/style": "^0.1.0-preview.13"
+    "@substance/style": "^0.1.0-preview.19"
   },
   "devDependencies": {
     "@substance/build": "^0.1.0-preview.1",
