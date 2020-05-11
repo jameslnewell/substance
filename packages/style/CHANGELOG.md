@@ -1,5 +1,11 @@
 # @substance/style
 
+## 0.1.0-preview.23
+
+### Patch Changes
+
+- 2c6ccc2: Improved color typings
+
 ## 0.1.0-preview.22
 
 ### Patch Changes

@@ -1,11 +1,11 @@
 {
   "name": "@substance/website",
-  "version": "1.0.0-preview.1",
+  "version": "1.0.0-preview.2",
   "private": true,
   "dependencies": {
-    "@substance/layout": "^0.1.0-preview.2",
-    "@substance/mixin": "^0.1.0-preview.1",
-    "@substance/style": "^0.1.0-preview.13",
+    "@substance/layout": "^0.1.0-preview.12",
+    "@substance/mixin": "^0.1.0-preview.9",
+    "@substance/style": "^0.1.0-preview.23",
     "@types/react": "^16.9.25",
     "@types/react-dom": "^16.9.5",
     "react": "^16.13.1",
