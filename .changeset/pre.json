@@ -9,7 +9,8 @@
     "@substance/storybook": "1.0.0",
     "@substance/website": "1.0.0-preview.1",
     "@substance/build": "0.1.0-preview.1",
-    "@substance/mixin": "0.1.0-preview.1"
+    "@substance/mixin": "0.1.0-preview.1",
+    "@substance/test-utilities": "0.1.0-preview.1"
   },
   "changesets": [
     "nervous-bats-fly",
