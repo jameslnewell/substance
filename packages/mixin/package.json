@@ -1,6 +1,6 @@
 {
   "name": "@substance/mixin",
-  "version": "0.1.0-preview.5",
+  "version": "0.1.0-preview.6",
   "author": "James Newell",
   "repository": "jameslnewell/substance",
   "website": "https://jameslnewell.github.io/substance",
@@ -8,15 +8,13 @@
   "main": "dist/mixin.cjs.js",
   "module": "dist/mixin.esm.js",
   "sideEffects": false,
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "peerDependencies": {
     "styled-components": ">=5.0.1"
   },
   "dependencies": {
     "@babel/runtime": "^7.9.6",
-    "@substance/style": "^0.1.0-preview.19"
+    "@substance/style": "^0.1.0-preview.20"
   },
   "devDependencies": {
     "@substance/build": "^0.1.0-preview.1",

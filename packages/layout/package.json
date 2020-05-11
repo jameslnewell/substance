@@ -1,6 +1,6 @@
 {
   "name": "@substance/layout",
-  "version": "0.1.0-preview.8",
+  "version": "0.1.0-preview.9",
   "author": "James Newell",
   "repository": "jameslnewell/substance",
   "website": "https://jameslnewell.github.io/substance",
@@ -8,17 +8,15 @@
   "main": "dist/layout.cjs.js",
   "module": "dist/layout.esm.js",
   "sideEffects": false,
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "peerDependencies": {
     "react": ">=16.13.1",
     "styled-components": ">=5.0.1"
   },
   "dependencies": {
     "@babel/runtime": "^7.9.6",
-    "@substance/style": "^0.1.0-preview.19",
-    "@substance/mixin": "^0.1.0-preview.5",
+    "@substance/style": "^0.1.0-preview.20",
+    "@substance/mixin": "^0.1.0-preview.6",
     "react-keyed-flatten-children": "^1.2.0"
   },
   "devDependencies": {

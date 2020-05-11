@@ -1,5 +1,11 @@
 # @substance/style
 
+## 0.1.0-preview.20
+
+### Minor Changes
+
+- 5b269bb: Added text mixins
+
 ## 0.1.0-preview.14
 
 ### Patch Changes
