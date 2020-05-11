@@ -22,8 +22,8 @@
     "react-keyed-flatten-children": "^1.2.0"
   },
   "devDependencies": {
-    "@substance/build": "^0.1.0-preview.1",
     "@substance/box": "^0.1.0-preview.2",
+    "@substance/build": "^0.1.0-preview.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-is": "^16.13.1",
