@@ -1,12 +1,16 @@
 import {map} from '@substance/style';
-import {createMixinForCSSProperty} from './createMixinForCSSProperty';
+import {createFactoryForCSSPropertyMixin} from './createFactoryForCSSPropertyMixin';
 
-export const createFlexBasis = createMixinForCSSProperty('flexBasis');
-export const createFlexDirection = createMixinForCSSProperty('flexDirection');
-export const createFlexGrow = createMixinForCSSProperty('flexGrow');
-export const createFlexShrink = createMixinForCSSProperty('flexShrink');
-export const createAlignItems = createMixinForCSSProperty('alignItems');
-export const createJustifyContent = createMixinForCSSProperty('justifyContent');
+export const createFlexBasis = createFactoryForCSSPropertyMixin('flexBasis');
+export const createFlexDirection = createFactoryForCSSPropertyMixin(
+  'flexDirection',
+);
+export const createFlexGrow = createFactoryForCSSPropertyMixin('flexGrow');
+export const createFlexShrink = createFactoryForCSSPropertyMixin('flexShrink');
+export const createAlignItems = createFactoryForCSSPropertyMixin('alignItems');
+export const createJustifyContent = createFactoryForCSSPropertyMixin(
+  'justifyContent',
+);
 
 export const flexBasis = createFlexBasis({map});
 export const flexDirection = createFlexBasis({map});

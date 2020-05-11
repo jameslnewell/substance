@@ -11,7 +11,9 @@ import {
   PropsConstraint,
 } from '@substance/style';
 
-export const createMixinForCSSProperty = <Property extends StyleProperty>(
+export const createFactoryForCSSPropertyMixin = <
+  Property extends StyleProperty
+>(
   property: Property,
 ) => {
   return <
