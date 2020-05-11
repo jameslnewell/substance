@@ -1,5 +1,4 @@
-import {map} from '@substance/style/src/map';
-import {DefaultTheme} from '@substance/style';
+import {map, DefaultTheme} from '@substance/style';
 import {
   createColor,
   createBackgroundColor,
