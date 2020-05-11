@@ -15,8 +15,8 @@
     "styled-components": ">=5.0.1"
   },
   "dependencies": {
-    "@substance/style": "^0.1.0-preview.13",
-    "@substance/mixin": "^0.1.0-preview.1"
+    "@substance/mixin": "^0.1.0-preview.1",
+    "@substance/style": "^0.1.0-preview.13"
   },
   "devDependencies": {
     "@babel/runtime": "^7.9.6",

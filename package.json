@@ -2,6 +2,7 @@
   "name": "substance",
   "version": "1.0.0",
   "private": true,
+  "website": "https://jameslnewell.github.io/substance",
   "workspaces": {
     "packages": [
       "build",
@@ -19,6 +20,7 @@
     "@jameslnewell/jest-preset-test": "^5.1.0",
     "@jameslnewell/prettier-config": "^1.0.1",
     "@jameslnewell/typescript-config": "^3.0.0",
+    "@manypkg/cli": "^0.13.0",
     "@preconstruct/cli": "^1.1.14",
     "@testing-library/react": "^10.0.4",
     "@types/jest": "^25.2.1",
