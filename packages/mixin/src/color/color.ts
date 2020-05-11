@@ -1,4 +1,5 @@
 import {map, DefaultTheme} from '@substance/style';
+import {Colors} from './types';
 import {
   createColor,
   createBackgroundColor,
@@ -7,7 +8,15 @@ import {
 } from './createColor';
 import {GetColorsFunction, createGetColor} from './createGetColor';
 
-const getColors: GetColorsFunction<DefaultTheme> = (theme) => {
+export type DefaultThemeColor = DefaultTheme extends {
+  space: Colors<infer Color>;
+}
+  ? Color
+  : string;
+
+const getColors: GetColorsFunction<DefaultThemeColor, DefaultTheme> = (
+  theme,
+) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const color = (theme as any)?.color;
   if (color) {
@@ -16,7 +25,7 @@ const getColors: GetColorsFunction<DefaultTheme> = (theme) => {
   return {};
 };
 
-const getColor = createGetColor(getColors);
+const getColor = createGetColor<DefaultThemeColor>(getColors);
 
 export const color = createColor({map, getColor});
 export const backgroundColor = createBackgroundColor({

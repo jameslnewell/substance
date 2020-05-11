@@ -10,9 +10,10 @@ import {
 import {ColorConstraint, Colors} from './types';
 
 export interface GetColorsFunction<
+  Color extends ColorConstraint,
   Theme extends ThemeConstraint = DefaultTheme
 > {
-  (theme: Theme | undefined): Colors;
+  (theme: Theme | undefined): Colors<Color>;
 }
 
 export interface GetColorFunction<Color extends ColorConstraint> {
@@ -28,21 +29,21 @@ export interface ThemedGetColorFunction<
 }
 
 export function createGetColor<Color extends ColorConstraint>(
-  colors: Colors,
+  colors: Colors<Color>,
 ): GetColorFunction<Color>;
 export function createGetColor<
   Color extends ColorConstraint,
   Theme extends ThemeConstraint = DefaultTheme,
   Props extends PropsConstraint = DefaultProps
 >(
-  getColors: GetColorsFunction<Theme>,
+  getColors: GetColorsFunction<Color, Theme>,
 ): ThemedGetColorFunction<Color, Theme, Props>;
 export function createGetColor<
   Color extends ColorConstraint,
   Theme extends ThemeConstraint = DefaultTheme,
   Props extends PropsConstraint = DefaultProps
 >(
-  colorsOrGetColors: Colors | GetColorsFunction<Theme>,
+  colorsOrGetColors: Colors<Color> | GetColorsFunction<Color, Theme>,
 ): GetColorFunction<Color> | ThemedGetColorFunction<Color, Theme, Props> {
   // TODO: warn about unknown colors
   if (typeof colorsOrGetColors === 'function') {
