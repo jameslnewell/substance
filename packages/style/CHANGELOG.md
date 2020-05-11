@@ -1,5 +1,11 @@
 # @substance/style
 
+## 0.1.0-preview.22
+
+### Patch Changes
+
+- 049a00a: exported text mixins
+
 ## 0.1.0-preview.21
 
 ### Minor Changes
