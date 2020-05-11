@@ -1,5 +1,11 @@
 # @substance/style
 
+## 0.1.0-preview.21
+
+### Minor Changes
+
+- a1582fb: fixed formatting when versioning
+
 ## 0.1.0-preview.20
 
 ### Minor Changes
