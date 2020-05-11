@@ -138,6 +138,7 @@ jobs:
             ${{ runner.os }}-yarn--
       - run: yarn install --frozen-lockfile
       - run: yarn changeset version
+      - run: yarn run format
       - run: git config --global user.email "bot@jameslnewell.dev"
       - run: git config --global user.name jameslnewell[bot]
       - run: git commit -am "bumped package versions 📦" || echo "Versions not updated. Nothing to commit."
@@ -147,7 +148,7 @@ jobs:
         with:
           name: packages
           path: ./packages
-      - name: Authenticate NPM
+      - name: Authenticate with NPM
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
