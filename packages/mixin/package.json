@@ -8,7 +8,9 @@
   "main": "dist/mixin.cjs.js",
   "module": "dist/mixin.esm.js",
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "peerDependencies": {
     "styled-components": ">=5.0.1"
   },

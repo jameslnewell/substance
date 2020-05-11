@@ -8,7 +8,9 @@
   "main": "dist/layout.cjs.js",
   "module": "dist/layout.esm.js",
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "peerDependencies": {
     "react": ">=16.13.1",
     "styled-components": ">=5.0.1"

@@ -16,7 +16,9 @@
   "main": "dist/style.cjs.js",
   "module": "dist/style.esm.js",
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@babel/runtime": "^7.9.6",
     "@substance/build": "^0.1.0-preview.1",
