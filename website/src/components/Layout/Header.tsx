@@ -1,14 +1,22 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import {GitHub} from 'react-feather';
 import {color, backgroundColor, paddingY} from '@substance/mixin';
-import {ContainerLayout} from '@substance/layout';
+import {ContainerLayout, ColumnLayout} from '@substance/layout';
+import {Logo} from '../Logo';
 
 // ${/*copy()*/}
 const Outer = styled.header`
+  border-bottom: 1px solid ${color('shades.dark')};
+  ${backgroundColor('onSurface')};
+`;
+
+const Text = styled.p`
+  display: inline-flex;
+  margin: 0;
+  ${color('surface')};
   font-weight: bold;
   line-height: 2.5em;
-  border-bottom: 1px solid ${color('shades.dark')};
-  ${backgroundColor('alert.warning')};
 `;
 
 const Inner = styled.div`
@@ -18,7 +26,25 @@ const Inner = styled.div`
 export const Header = () => (
   <Outer>
     <ContainerLayout>
-      <Inner>@substance</Inner>
+      <Inner>
+        <ColumnLayout valign="center">
+          <ColumnLayout.Column>
+            <Text>
+              <Logo />
+            </Text>
+          </ColumnLayout.Column>
+          <ColumnLayout.Column width="content">
+            <Text
+              href="https://github.com/jameslnewell/substance"
+              rel="noopener noreferrer"
+              target="_blank"
+              as="a"
+            >
+              <GitHub />
+            </Text>
+          </ColumnLayout.Column>
+        </ColumnLayout>
+      </Inner>
     </ContainerLayout>
   </Outer>
 );
