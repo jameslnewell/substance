@@ -1,6 +1,7 @@
 import {map} from '@substance/style';
 import {createFactoryForCSSPropertyMixin} from './createFactoryForCSSPropertyMixin';
 
+export const createFlex = createFactoryForCSSPropertyMixin('flex');
 export const createFlexBasis = createFactoryForCSSPropertyMixin('flexBasis');
 export const createFlexDirection = createFactoryForCSSPropertyMixin(
   'flexDirection',
@@ -12,6 +13,7 @@ export const createJustifyContent = createFactoryForCSSPropertyMixin(
   'justifyContent',
 );
 
+export const flex = createFlex({map});
 export const flexBasis = createFlexBasis({map});
 export const flexDirection = createFlexBasis({map});
 export const flexGrow = createFlexBasis({map});
