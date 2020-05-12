@@ -13,6 +13,7 @@
     "@substance/test-utilities": "0.1.0-preview.1"
   },
   "changesets": [
+    "curly-candles-poke",
     "eleven-toys-end",
     "nervous-bats-fly",
     "odd-hotels-join",
@@ -20,7 +21,6 @@
     "silver-glasses-marry",
     "silver-mice-unite",
     "sweet-boats-refuse",
-    "warm-zebras-shave",
     "wild-donkeys-tan"
   ]
 }
