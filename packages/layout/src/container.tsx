@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import {StyleValue, ThemeConstraint, DefaultTheme} from '@substance/style';
+import {StyleValue, Theme} from '@substance/style';
 
-export interface GetContainerWidth<
-  Theme extends ThemeConstraint = DefaultTheme
-> {
+export interface GetContainerWidth<> {
   (theme: Theme): StyleValue<'width'>;
 }
 
-export function createContainerLayout<
-  Theme extends ThemeConstraint = DefaultTheme
->({width}: {width: number | GetContainerWidth<Theme>}) {
+export function createContainerLayout({
+  width,
+}: {
+  width: number | GetContainerWidth;
+}) {
   const Wrapper = styled.div(
     {
       margin: 'auto',

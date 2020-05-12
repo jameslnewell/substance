@@ -1,36 +1,23 @@
-import {
-  DefaultTheme,
-  MediaConstraint,
-  MediaQueries,
-  MatchFunction,
-  ThemeConstraint,
-  StyleObject,
-} from './types';
+import {css} from './styled/fns';
+import {Theme} from './styled/types';
+import {MediaConstraint, MediaQueries, MatchFunction} from './types';
 
 export interface GetMediaQueriesFromThemeFunction<
-  Media extends MediaConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
+  Media extends MediaConstraint
 > {
   (theme: Theme | undefined): MediaQueries<Media>;
 }
 
-function createStyleObject<Media extends MediaConstraint>(
+function getQuery<Media extends MediaConstraint>(
   media: Media,
   queries: MediaQueries<Media>,
-  style: undefined | StyleObject,
-): StyleObject {
+): string {
   if (process.env.NODE_ENV !== 'production') {
     if (!Object.prototype.hasOwnProperty.call(queries, media)) {
       console.warn(`Media "${media}" not found in queries.`);
     }
   }
-  if (typeof style === 'undefined') {
-    return {};
-  }
-  const query = queries[media];
-  return {
-    [`@media ${query}`]: style,
-  };
+  return queries[media] || '';
 }
 
 /**
@@ -45,42 +32,31 @@ function createStyleObject<Media extends MediaConstraint>(
  *   desktop: '20em'
  * });
  *
- * const Box = styled.div(
- *   {},
- *   match('mobile')({
- *     color: 'red'
- *   }),
- *   match('tablet')({
- *     color: 'gren'
- *   }),
- *   match('desktop')({
- *     color: 'blue'
- *   })
- * }
+ * const Box = styled.div`
+ *   ${match('mobile')`
+ *     color: red;
+ *   `}
+ *   ${match('tablet')`
+ *     color: red;
+ *   `}
+ *   ${match('desktop')`
+ *     color: red;
+ *   `}
+ * `;
  */
-export const createMatch = <
-  Media extends MediaConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
->(
+export const createMatch = <Media extends MediaConstraint>(
   queriesOrGetQueries:
     | MediaQueries<Media>
-    | GetMediaQueriesFromThemeFunction<Media, Theme>,
-): MatchFunction<Media, Theme> => {
-  if (typeof queriesOrGetQueries === 'function') {
-    return (media) => (style) => (props) => {
-      const queries = queriesOrGetQueries(props.theme);
-      if (typeof style === 'function') {
-        return createStyleObject(media, queries, style(props));
+    | GetMediaQueriesFromThemeFunction<Media>,
+): MatchFunction<Media> => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (media) => (first: any, ...interpolations: any[]): any => {
+    return css`
+      @media ${typeof queriesOrGetQueries === 'function'
+          ? ({theme}) => getQuery(media, queriesOrGetQueries(theme))
+          : getQuery(media, queriesOrGetQueries)} {
+        ${css(first, interpolations)}
       }
-      return createStyleObject(media, queries, style);
-    };
-  } else {
-    return (media) => (style) => {
-      if (typeof style === 'function') {
-        return (props) =>
-          createStyleObject(media, queriesOrGetQueries, style(props));
-      }
-      return createStyleObject(media, queriesOrGetQueries, style);
-    };
-  }
+    `;
+  };
 };

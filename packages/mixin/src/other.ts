@@ -18,5 +18,9 @@ export const maxHeight = createMaxHeight({map});
 export const minHeight = createMinHeight({map});
 
 export const createOpacity = createFactoryForCSSPropertyMixin('opacity');
-
 export const opacity = createOpacity({map});
+
+export const createBorderRadius = createFactoryForCSSPropertyMixin(
+  'borderRadius',
+);
+export const borderRadius = createBorderRadius({map});

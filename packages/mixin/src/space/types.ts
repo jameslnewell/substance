@@ -1,8 +1,6 @@
 import {
   ResponsiveMixinFunction,
   MediaConstraint,
-  ThemeConstraint,
-  DefaultTheme,
   StyleValue,
 } from '@substance/style';
 
@@ -13,5 +11,5 @@ export type Spaces<Space extends SpaceConstraint> = {
 export type SpaceMixinFunction<
   Media extends MediaConstraint,
   Space extends SpaceConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
-> = ResponsiveMixinFunction<Media, Space, Theme>;
+  Props
+> = ResponsiveMixinFunction<Media, Space, Props>;

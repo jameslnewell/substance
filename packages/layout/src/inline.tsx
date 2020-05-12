@@ -6,8 +6,6 @@ import {
   ResponsiveValue,
   MediaConstraint,
   MapFunction,
-  ThemeConstraint,
-  DefaultTheme,
   createProps,
 } from '@substance/style';
 import {
@@ -35,24 +33,25 @@ export interface InlineLayoutProps<
 export interface CreateInlineLayoutOptions<
   Media extends MediaConstraint,
   Space extends SpaceConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
+  Props
 > {
   map: MapFunction<Media>;
-  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Theme>;
-  paddingTop: SpaceMixinFunction<Media, Space, Theme>;
-  paddingLeft: SpaceMixinFunction<Media, Space, Theme>;
+  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Props>;
+  paddingTop: SpaceMixinFunction<Media, Space, Props>;
+  paddingLeft: SpaceMixinFunction<Media, Space, Props>;
 }
 
 export const createInlineLayout = <
   Media extends MediaConstraint,
-  Space extends SpaceConstraint
+  Space extends SpaceConstraint,
+  Props
 >({
   map,
   getSpace,
   paddingTop,
   paddingLeft,
-}: CreateInlineLayoutOptions<Media, Space>) => {
-  const styles = createSpaceStyles<Media, Space>({
+}: CreateInlineLayoutOptions<Media, Space, Props>) => {
+  const styles = createSpaceStyles<Media, Space, Props>({
     map,
     getSpace,
     paddingTop,

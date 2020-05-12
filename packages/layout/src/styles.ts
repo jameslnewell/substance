@@ -1,12 +1,10 @@
 import {
-  ThemeConstraint,
-  DefaultTheme,
   MediaConstraint,
   MapFunction,
   ResponsiveValue,
-  PropsWithTheme,
-  Style,
   createProps,
+  ThemeProps,
+  Interpolation,
 } from '@substance/style';
 import {
   SpaceConstraint,
@@ -18,33 +16,32 @@ import {
 interface StyleOptions<
   Media extends MediaConstraint,
   Space extends SpaceConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
+  Props
 > {
   map: MapFunction<Media>;
-  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Theme>;
-  paddingTop: SpaceMixinFunction<Media, Space, Theme>;
-  paddingLeft: SpaceMixinFunction<Media, Space, Theme>;
+  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Props>;
+  paddingTop: SpaceMixinFunction<Media, Space, Props>;
+  paddingLeft: SpaceMixinFunction<Media, Space, Props>;
 }
 
 export interface StyleProps<
   Media extends MediaConstraint,
-  Space extends SpaceConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
-> extends PropsWithTheme<{}, Theme> {
+  Space extends SpaceConstraint
+> extends ThemeProps {
   space?: ResponsiveValue<Media, Space>;
 }
 
 export const createSpaceStyles = <
   Media extends MediaConstraint,
   Space extends SpaceConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
+  Props
 >({
   map,
   getSpace,
   paddingTop,
   paddingLeft,
-}: StyleOptions<Media, Space, Theme>): {
-  [name: string]: Style<StyleProps<Media, Space, Theme>>;
+}: StyleOptions<Media, Space, Props>): {
+  [name: string]: Interpolation<StyleProps<Media, Space>>;
 } => {
   return {
     wrapper: [
@@ -56,7 +53,7 @@ export const createSpaceStyles = <
           marginTop: '-1px',
         },
       },
-      ({space}: StyleProps<Media, Space, Theme>) => {
+      ({space}: StyleProps<Media, Space>) => {
         if (space === undefined) {
           return;
         }
@@ -72,7 +69,7 @@ export const createSpaceStyles = <
     ],
 
     container: [
-      ({space}: StyleProps<Media, Space, Theme>) => {
+      ({space}: StyleProps<Media, Space>) => {
         if (space === undefined) {
           return;
         }

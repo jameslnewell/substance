@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {createProps} from '@substance/style';
 import {color, backgroundColor} from '.';
 
-export default {title: 'style/themed color'};
+export default {title: 'mixin/themed color'};
 
 const paddingProps = createProps({
   color,

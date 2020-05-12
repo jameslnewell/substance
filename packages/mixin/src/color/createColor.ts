@@ -1,32 +1,21 @@
 import {
   MediaConstraint,
-  DefaultTheme,
   MapFunction,
   StyleProperty,
-  ThemeConstraint,
   createMixin,
-  DefaultProps,
-  PropsConstraint,
 } from '@substance/style';
 import {ColorConstraint} from './types';
 import {GetColorFunction, ThemedGetColorFunction} from './createGetColor';
 
 const createColorFactory = (properties: StyleProperty[]) => {
-  return <
-    Media extends MediaConstraint,
-    Color extends ColorConstraint,
-    Theme extends ThemeConstraint = DefaultTheme,
-    Props extends PropsConstraint = DefaultProps
-  >({
+  return <Media extends MediaConstraint, Color extends ColorConstraint, Props>({
     map,
     getColor,
   }: {
-    map: MapFunction<Media, Theme>;
-    getColor:
-      | GetColorFunction<Color>
-      | ThemedGetColorFunction<Color, Theme, Props>;
+    map: MapFunction<Media>;
+    getColor: GetColorFunction<Color> | ThemedGetColorFunction<Color, Props>;
   }) => {
-    return createMixin<Media, Color, Theme, Props>({
+    return createMixin<Media, Color, Props>({
       map: map,
       properties,
       transform: getColor,

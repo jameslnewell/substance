@@ -1,3 +1,4 @@
+export * from './styled/types';
 export * from './createMatch';
 export * from './types';
 export * from './match';
@@ -6,7 +7,6 @@ export * from './createMap';
 export * from './createMixin';
 export * from './createProps';
 export * from './createVariant';
-export * from './defaultMediaQueries';
+export * from './queries';
 export * from './map';
 export * from './get';
-export * from './pseudo';

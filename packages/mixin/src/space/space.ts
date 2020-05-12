@@ -1,4 +1,4 @@
-import {map, DefaultTheme, DefaultProps} from '@substance/style';
+import {map, Theme} from '@substance/style';
 import {Spaces} from './types';
 import {defaultSpaces, DefaultSpace} from './defaultSpaces';
 import {GetSpacesFunction, createGetSpace} from './createGetSpace';
@@ -19,15 +19,13 @@ import {
   createPaddingLeft,
 } from './createSpace';
 
-export type DefaultThemeSpace = DefaultTheme extends {
+export type ThemedSpace = Theme extends {
   space: Spaces<infer Space>;
 }
   ? Space
   : DefaultSpace;
 
-const getSpaces: GetSpacesFunction<DefaultThemeSpace, DefaultTheme> = (
-  theme,
-) => {
+const getSpaces: GetSpacesFunction<ThemedSpace> = (theme) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const space = (theme as any)?.space;
   if (space) {
@@ -36,11 +34,7 @@ const getSpaces: GetSpacesFunction<DefaultThemeSpace, DefaultTheme> = (
   return defaultSpaces;
 };
 
-export const getSpace = createGetSpace<
-  DefaultThemeSpace,
-  DefaultTheme,
-  DefaultProps
->(getSpaces);
+export const getSpace = createGetSpace<ThemedSpace, {}>(getSpaces);
 
 export const margin = createMargin({map, getSpace});
 export const marginX = createMarginX({map, getSpace});

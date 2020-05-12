@@ -5,8 +5,6 @@ import {
   ResponsiveValue,
   MediaConstraint,
   MapFunction,
-  ThemeConstraint,
-  DefaultTheme,
   map,
 } from '@substance/style';
 import {
@@ -45,27 +43,28 @@ type ItemProps<
   Space extends SpaceConstraint
 > = Pick<TilesLayoutProps<Media, Space>, 'columns' | 'space'>;
 
-export interface CreateTilesLayoutOptions<
+export interface CreateTileLayoutOptions<
   Media extends MediaConstraint,
   Space extends SpaceConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
+  Props
 > {
   map: MapFunction<Media>;
-  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Theme>;
-  paddingTop: SpaceMixinFunction<Media, Space, Theme>;
-  paddingLeft: SpaceMixinFunction<Media, Space, Theme>;
+  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Props>;
+  paddingTop: SpaceMixinFunction<Media, Space, Props>;
+  paddingLeft: SpaceMixinFunction<Media, Space, Props>;
 }
 
-export const createTilesLayout = <
+export const createTileLayout = <
   Media extends MediaConstraint,
-  Space extends SpaceConstraint
+  Space extends SpaceConstraint,
+  Props
 >({
   map,
   getSpace,
   paddingTop,
   paddingLeft,
-}: CreateTilesLayoutOptions<Media, Space>) => {
-  const styles = createSpaceStyles<Media, Space>({
+}: CreateTileLayoutOptions<Media, Space, Props>) => {
+  const styles = createSpaceStyles<Media, Space, Props>({
     map,
     getSpace,
     paddingTop,
@@ -127,7 +126,7 @@ export const createTilesLayout = <
     },
   );
 
-  const TilesLayout: React.FC<TilesLayoutProps<Media, Space>> = ({
+  const TileLayout: React.FC<TilesLayoutProps<Media, Space>> = ({
     columns,
     space,
     align,
@@ -150,10 +149,10 @@ export const createTilesLayout = <
     </Wrapper>
   );
 
-  return TilesLayout;
+  return TileLayout;
 };
 
-export const TilesLayout = createTilesLayout({
+export const TileLayout = createTileLayout({
   map,
   getSpace,
   paddingTop,

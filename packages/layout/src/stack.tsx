@@ -5,8 +5,7 @@ import {
   createProps,
   ResponsiveValue,
   MediaConstraint,
-  ThemeConstraint,
-  DefaultTheme,
+  Theme,
 } from '@substance/style';
 import {
   marginBottom,
@@ -24,8 +23,7 @@ export interface StackLayoutProps<
 
 export interface CreateStackLayoutOptions<
   Media extends MediaConstraint,
-  Space extends SpaceConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
+  Space extends SpaceConstraint
 > {
   marginBottom: SpaceMixinFunction<Media, Space, Theme>;
 }

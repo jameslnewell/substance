@@ -2,31 +2,20 @@ import {
   MediaConstraint,
   MapFunction,
   StyleProperty,
-  DefaultTheme,
-  ThemeConstraint,
   createMixin,
-  DefaultProps,
-  PropsConstraint,
 } from '@substance/style';
 import {SpaceConstraint} from './types';
 import {GetSpaceFunction, ThemedGetSpaceFunction} from './createGetSpace';
 
 const createSpaceFactory = (properties: StyleProperty[]) => {
-  return <
-    Media extends MediaConstraint,
-    Space extends SpaceConstraint,
-    Theme extends ThemeConstraint = DefaultTheme,
-    Props extends PropsConstraint = DefaultProps
-  >({
+  return <Media extends MediaConstraint, Space extends SpaceConstraint, Props>({
     map,
     getSpace,
   }: {
-    map: MapFunction<Media, Theme>;
-    getSpace:
-      | GetSpaceFunction<Space>
-      | ThemedGetSpaceFunction<Space, Theme, Props>;
+    map: MapFunction<Media>;
+    getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Props>;
   }) => {
-    return createMixin<Media, Space, Theme, Props>({
+    return createMixin<Media, Space, Props>({
       map: map,
       properties,
       transform: getSpace,

@@ -5,55 +5,55 @@ import {createProps} from './createProps';
 
 export default {title: 'style/createVariant()'};
 
-export const Button: React.FC = () => {
-  const Button = styled.button(
-    {
-      cursor: 'pointer',
-      margin: 0,
-      padding: '0.75em 2em',
-      borderWidth: 1,
-      borderRadius: 4,
-      borderStyle: 'solid',
-      ':hover': {
-        color: 'white',
-        borderColor: '#222',
-        backgroundColor: '#222',
-      },
+const props = createProps({
+  variant: createVariant({
+    primary: {
+      color: 'white',
+      borderColor: 'blue',
+      backgroundColor: 'blue',
     },
-    createProps({
-      variant: createVariant({
-        primary: {
-          color: 'white',
-          borderColor: 'blue',
-          backgroundColor: 'blue',
-        },
-        secondary: {
-          color: 'blue',
-          borderColor: 'blue',
-          backgroundColor: 'white',
-        },
-        tertiary: {
-          color: 'blue',
-          borderColor: 'transparent',
-        },
-      }),
-      size: createVariant({
-        small: {
-          fontSize: '12px',
-          padding: '0.75em 2em',
-        },
-        large: {
-          fontSize: '16px',
-          padding: '1em 3em',
-        },
-      }),
-    }),
-  );
+    secondary: {
+      color: 'blue',
+      borderColor: 'blue',
+      backgroundColor: 'white',
+    },
+    tertiary: {
+      color: 'blue',
+      borderColor: 'transparent',
+    },
+  }),
+  size: createVariant({
+    small: {
+      fontSize: '12px',
+      padding: '0.75em 2em',
+    },
+    large: {
+      fontSize: '16px',
+      padding: '1em 3em',
+    },
+  }),
+});
 
-  const Cell = styled.td({
-    padding: 10,
-    textAlign: 'center',
-  });
+export const Button: React.FC = () => {
+  const Button = styled.button`
+    cursor: pointer;
+    margin: 0;
+    padding: 0.75em 2em;
+    border-width: 2px;
+    border-radius: 4px;
+    border-style: solid;
+    :hover {
+      color: white;
+      border-color: #222;
+      background-color: #222;
+    }
+    ${props}
+  `;
+
+  const Cell = styled.td`
+    padding: 1em;
+    text-align: center;
+  `;
 
   return (
     <table>
@@ -128,9 +128,7 @@ export const UsingStyleObjects: React.FC = () => {
   });
 
   const GoldMedal = styled.div(circle, color('gold'));
-
   const SilverMedal = styled.div(circle, color('silver'));
-
   const BronzeMedal = styled.div(circle, color('bronze'));
 
   return (
@@ -150,22 +148,20 @@ export const UsingStyleFunctions = () => {
     borderRadius: '100%',
   };
 
-  const Light = styled.div(
-    circle,
-    createProps({
-      type: createVariant({
-        slow: () => ({
-          backgroundColor: 'orange',
-        }),
-        stop: () => ({
-          backgroundColor: 'red',
-        }),
-        go: () => ({
-          backgroundColor: 'green',
-        }),
+  const props = createProps({
+    type: createVariant({
+      slow: () => ({
+        backgroundColor: 'orange',
+      }),
+      stop: () => ({
+        backgroundColor: 'red',
+      }),
+      go: () => ({
+        backgroundColor: 'green',
       }),
     }),
-  );
+  });
+  const Light = styled.div(circle, props);
 
   return (
     <>
