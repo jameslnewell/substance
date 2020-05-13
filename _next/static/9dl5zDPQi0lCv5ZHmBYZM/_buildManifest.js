@@ -1,0 +1,1 @@
+self.__BUILD_MANIFEST = (function(a){return {"/":[a],"/docs/create-variant":[a],"/index":[a]}}("static\u002Fchunks\u002F5f461f99ba8ee9eb36dbd9f8d3dea13b81995fe0.8a1da5d1483d52a89752.js"));self.__BUILD_MANIFEST_CB && self.__BUILD_MANIFEST_CB()
