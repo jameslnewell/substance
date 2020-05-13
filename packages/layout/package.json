@@ -1,6 +1,6 @@
 {
   "name": "@substance/layout",
-  "version": "0.1.0-preview.12",
+  "version": "0.1.0-preview.13",
   "author": "James Newell",
   "repository": "jameslnewell/substance",
   "website": "https://jameslnewell.github.io/substance",
@@ -17,12 +17,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.9.6",
-    "@substance/style": "^0.1.0-preview.23",
-    "@substance/mixin": "^0.1.0-preview.9",
+    "@substance/style": "^0.1.0-preview.24",
+    "@substance/mixin": "^0.1.0-preview.11",
     "react-keyed-flatten-children": "^1.2.0"
   },
   "devDependencies": {
-    "@substance/box": "^0.1.0-preview.3",
+    "@substance/box": "^0.1.0-preview.4",
     "@substance/build": "^0.1.0-preview.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

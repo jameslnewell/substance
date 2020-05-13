@@ -1,5 +1,11 @@
 # @substance/style
 
+## 0.1.0-preview.24
+
+### Patch Changes
+
+- 6752168: support tagged template literals
+
 ## 0.1.0-preview.23
 
 ### Patch Changes

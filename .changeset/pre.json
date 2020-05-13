@@ -13,6 +13,7 @@
     "@substance/test-utilities": "0.1.0-preview.1"
   },
   "changesets": [
+    "big-steaks-bake",
     "curly-candles-poke",
     "eleven-toys-end",
     "nervous-bats-fly",
