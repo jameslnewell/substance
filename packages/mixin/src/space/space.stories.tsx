@@ -1,10 +1,10 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import {createProps} from '@substance/style';
-import {square} from '@substance/style/src/story-styles';
+import {square} from '@substance/style/src/__stories__';
 import {padding, paddingX} from '.';
 
-export default {title: 'style/themed spacing'};
+export default {title: 'mixin/themed spacing'};
 
 const paddingProps = createProps({
   padding,

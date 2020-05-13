@@ -1,25 +1,55 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {defaultMediaQueries, DefaultMedia} from './defaultMediaQueries';
+import {queries, DefaultMedia} from './queries';
 import {createMatch} from './createMatch';
-import {square} from './story-styles';
+import {colors, square} from './__stories__';
 import {MatchFunction} from './types';
 
 export default {title: 'style/createMatch()'};
 
-const match: MatchFunction<DefaultMedia> = createMatch(defaultMediaQueries);
+const match: MatchFunction<DefaultMedia> = createMatch(queries);
 
-const Square = styled.div(
+const SquareUsingTaggedTemplateLiteral = styled.div`
+  ${square}
+  ${match('mobile')`
+    background-color: ${colors[0]};
+  `}
+  ${match('tablet')`
+    background-color: ${colors[1]};
+  `}
+  ${match('desktop')`
+    background-color: ${colors[2]};
+  `}
+`;
+
+const SquareUsingCSSObject = styled.div(
   square,
   match('mobile')({
-    backgroundColor: 'red',
+    backgroundColor: colors[0],
   }),
   match('tablet')({
-    backgroundColor: 'green',
+    backgroundColor: colors[1],
   }),
   match('desktop')({
-    backgroundColor: 'blue',
+    backgroundColor: colors[2],
   }),
 );
 
-export const Default = () => <Square />;
+const SquareUsingMixed = styled.div`
+  ${square}
+  ${match('mobile')({
+    backgroundColor: colors[0],
+  })}
+  ${match('tablet')`
+    background-color: ${colors[1]};
+  `}
+  ${match('desktop')({
+    backgroundColor: colors[2],
+  })}
+`;
+
+export const UsingTaggedTemplateLiteral = () => (
+  <SquareUsingTaggedTemplateLiteral />
+);
+export const UsingCSSObject = () => <SquareUsingCSSObject />;
+export const UsingMixed = () => <SquareUsingMixed />;

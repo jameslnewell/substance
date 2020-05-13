@@ -1,21 +1,51 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import {match} from './match';
-import {square} from './story-styles';
+import {colors, square} from './__stories__';
 
 export default {title: 'style/match()'};
 
-const Square = styled.div(
+const SquareUsingTaggedTemplateLiteral = styled.div`
+  ${square}
+  ${match('sm')`
+    background-color: ${colors[0]};
+  `}
+  ${match('md')`
+    background-color: ${colors[1]};
+  `}
+  ${match('lg')`
+    background-color: ${colors[2]};
+  `}
+`;
+
+const SquareUsingCSSObject = styled.div(
   square,
-  match('mobile')({
-    backgroundColor: 'red',
+  match('sm')({
+    backgroundColor: colors[0],
   }),
-  match('tablet')({
-    backgroundColor: 'green',
+  match('md')({
+    backgroundColor: colors[1],
   }),
-  match('desktop')({
-    backgroundColor: 'blue',
+  match('lg')({
+    backgroundColor: colors[2],
   }),
 );
 
-export const Default = () => <Square />;
+const SquareUsingMixed = styled.div`
+  ${square}
+  ${match('sm')({
+    backgroundColor: colors[0],
+  })}
+  ${match('md')`
+    background-color: ${colors[1]};
+  `}
+  ${match('lg')({
+    backgroundColor: colors[2],
+  })}
+`;
+
+export const UsingTaggedTemplateLiteral = () => (
+  <SquareUsingTaggedTemplateLiteral />
+);
+export const UsingCSSObject = () => <SquareUsingCSSObject />;
+export const UsingMixed = () => <SquareUsingMixed />;

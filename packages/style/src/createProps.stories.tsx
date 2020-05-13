@@ -77,3 +77,24 @@ export const UsingStyleArrays = () => {
     </>
   );
 };
+
+export const UsingTaggedTemplateLiterals = () => {
+  const Medal = styled.div`
+    ${circle}
+    ${createProps({
+      isGold: (isGold: boolean) =>
+        isGold ? `background-color: gold;` : undefined,
+      isSilver: (isSilver: boolean) =>
+        isSilver ? `background-color: silver;` : undefined,
+      isBronze: (isBronze: boolean) =>
+        isBronze ? `background-color: peru;` : undefined,
+    })}
+  `;
+  return (
+    <>
+      <Medal isGold>Gold</Medal>
+      <Medal isSilver>Silver</Medal>
+      <Medal isBronze>Bronze</Medal>
+    </>
+  );
+};

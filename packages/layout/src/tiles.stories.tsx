@@ -1,14 +1,14 @@
 import React from 'react';
 import {Box} from '@substance/box';
 import styled from 'styled-components';
-import {TilesLayout} from './tiles';
+import {TileLayout} from './tiles';
 
 export default {
-  title: 'layout/TilesLayout',
-  component: TilesLayout,
+  title: 'layout/TileLayout',
+  component: TileLayout,
 };
 
-const CustomTiles = styled(TilesLayout)({
+const CustomTiles = styled(TileLayout)({
   backgroundColor: 'red',
 });
 
@@ -25,47 +25,47 @@ const createTiles = (count: number): React.ReactElement<any>[] =>
   ));
 
 export const Default: React.FC = () => (
-  <TilesLayout>{createTiles(4)}</TilesLayout>
+  <TileLayout>{createTiles(4)}</TileLayout>
 );
 
 export const WithTwoColumns: React.FC = () => (
-  <TilesLayout columns={2}>{createTiles(3)}</TilesLayout>
+  <TileLayout columns={2}>{createTiles(3)}</TileLayout>
 );
 
 export const WithThreeColumns: React.FC = () => (
-  <TilesLayout columns={3}>{createTiles(5)}</TilesLayout>
+  <TileLayout columns={3}>{createTiles(5)}</TileLayout>
 );
 
 export const WithResponsiveColumns: React.FC = () => (
-  <TilesLayout columns={{sm: 1, md: 3, lg: 4}}>{createTiles(5)}</TilesLayout>
+  <TileLayout columns={{sm: 1, md: 3, lg: 4}}>{createTiles(5)}</TileLayout>
 );
 
 export const WithAlign: React.FC = () => (
   <>
-    <TilesLayout columns={2} align="left">
+    <TileLayout columns={2} align="left">
       {createTiles(3)}
-    </TilesLayout>
+    </TileLayout>
     <br />
-    <TilesLayout columns={2} align="center">
+    <TileLayout columns={2} align="center">
       {createTiles(3)}
-    </TilesLayout>
+    </TileLayout>
     <br />
-    <TilesLayout columns={2} align="right">
+    <TileLayout columns={2} align="right">
       {createTiles(3)}
-    </TilesLayout>
+    </TileLayout>
   </>
 );
 
 export const WithSpace: React.FC = () => (
-  <TilesLayout columns={2} space={3}>
+  <TileLayout columns={2} space={3}>
     {createTiles(3)}
-  </TilesLayout>
+  </TileLayout>
 );
 
 export const WithResponsiveSpace: React.FC = () => (
-  <TilesLayout columns={2} space={{sm: 3, md: 4, lg: 5}}>
+  <TileLayout columns={2} space={{sm: 3, md: 4, lg: 5}}>
     {createTiles(5)}
-  </TilesLayout>
+  </TileLayout>
 );
 
 export const WithClassName: React.FC = () => (

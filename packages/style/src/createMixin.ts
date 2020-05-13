@@ -1,23 +1,20 @@
+import {CSSObject} from './styled';
 import {
-  DefaultTheme,
-  PropsWithTheme,
   StyleProperty,
   StyleValue,
-  StyleObject,
   MapFunction,
   MediaConstraint,
   ResponsiveValueConstraint,
-  PropsConstraint,
-  ThemeConstraint,
-  DefaultProps,
   ResponsiveMixinFunction,
+  ThemeProps,
+  ResponsiveValue,
 } from './types';
 
 const createStylesFromTransformedValue = (
   properties: StyleProperty[],
   value: StyleValue,
-): StyleObject => {
-  const style: Partial<StyleObject> = {};
+): CSSObject => {
+  const style: Partial<CSSObject> = {};
   for (const property of properties) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     style[property] = value as any;
@@ -27,14 +24,9 @@ const createStylesFromTransformedValue = (
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface CreateMixinTransformFunction<
-  Value extends ResponsiveValueConstraint,
-  Theme extends ThemeConstraint = DefaultTheme,
-  Props extends PropsConstraint = DefaultProps
+  Value extends ResponsiveValueConstraint
 > {
-  (value: Value):
-    | undefined
-    | StyleValue
-    | ((props: PropsWithTheme<Props, Theme>) => StyleValue);
+  (value: Value): undefined | StyleValue | ((props: ThemeProps) => StyleValue);
 }
 
 /**
@@ -51,23 +43,23 @@ export interface CreateMixinTransformFunction<
  */
 export const createMixin = <
   Media extends MediaConstraint,
-  Value extends ResponsiveValueConstraint,
-  Theme extends ThemeConstraint = DefaultTheme,
-  Props extends PropsConstraint = DefaultProps
+  Value extends ResponsiveValueConstraint
 >({
   map,
   properties,
   transform,
 }: {
-  map: MapFunction<Media, Theme>;
+  map: MapFunction<Media>;
   properties: StyleProperty[];
-  transform: CreateMixinTransformFunction<Value, Theme, Props>;
-}): ResponsiveMixinFunction<Media, Value, Theme, Props> => {
-  return (valueOrValues) => {
+  transform: CreateMixinTransformFunction<Value>;
+}): ResponsiveMixinFunction<Media, Value> => {
+  return <Props extends ThemeProps>(
+    valueOrValues: ResponsiveValue<Media, Value>,
+  ) => {
     return map<Value, Props>(valueOrValues, (value) => {
       const transformedValue = transform(value);
       if (typeof transformedValue === 'function') {
-        return (props) => {
+        return (props: Props) => {
           return createStylesFromTransformedValue(
             properties,
             transformedValue(props),

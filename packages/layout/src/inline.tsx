@@ -1,14 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
 import flattenChildren from 'react-keyed-flatten-children';
 import {
   map,
   ResponsiveValue,
   MediaConstraint,
   MapFunction,
-  ThemeConstraint,
-  DefaultTheme,
   createProps,
+  styled,
 } from '@substance/style';
 import {
   SpaceConstraint,
@@ -34,13 +32,12 @@ export interface InlineLayoutProps<
 
 export interface CreateInlineLayoutOptions<
   Media extends MediaConstraint,
-  Space extends SpaceConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
+  Space extends SpaceConstraint
 > {
   map: MapFunction<Media>;
-  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Theme>;
-  paddingTop: SpaceMixinFunction<Media, Space, Theme>;
-  paddingLeft: SpaceMixinFunction<Media, Space, Theme>;
+  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space>;
+  paddingTop: SpaceMixinFunction<Media, Space>;
+  paddingLeft: SpaceMixinFunction<Media, Space>;
 }
 
 export const createInlineLayout = <
@@ -93,7 +90,8 @@ export const createInlineLayout = <
 
   const Item = styled.div<InlineLayoutProps<Media, Space>>(
     {},
-    createProps({
+    createProps<{space: ResponsiveValue<Media, Space>}>({
+      // FIXME: mixin should be allowed to be optional
       space: [paddingTop, paddingLeft],
     }),
   );

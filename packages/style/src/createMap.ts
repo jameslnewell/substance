@@ -1,16 +1,12 @@
+import {Interpolation} from './styled';
 import {
   MediaConstraint,
   MatchFunction,
   ResponsiveValueConstraint,
   ResponsiveValue,
   MapFunctionFunction,
-  PropsConstraint,
-  ThemeConstraint,
-  FlatStyle,
-  PropsWithTheme,
-  DefaultTheme,
-  DefaultProps,
   MapFunction,
+  PropsConstraint,
 } from './types';
 
 /**
@@ -19,18 +15,15 @@ import {
  *
  * @param match
  */
-export const createMap = <
-  Media extends MediaConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
->(
-  match: MatchFunction<Media, Theme>,
-): MapFunction<Media, Theme> => {
+export const createMap = <Media extends MediaConstraint>(
+  match: MatchFunction<Media>,
+): MapFunction<Media> => {
   return <
     Value extends ResponsiveValueConstraint,
-    Props extends PropsConstraint = DefaultProps
+    Props extends PropsConstraint
   >(
     valueOrValues: ResponsiveValue<Media, Value>,
-    fn: MapFunctionFunction<Value, Theme, Props>,
+    fn: MapFunctionFunction<Value, Props>,
   ) => {
     // handle a singular value (non-responsive)
     if (typeof valueOrValues !== 'object') {
@@ -38,31 +31,20 @@ export const createMap = <
     }
 
     // handle a map of values (responsive)
-    return (props: PropsWithTheme<Props, Theme>) => {
-      const styles: Array<FlatStyle<PropsWithTheme<Props, Theme>>> = [];
-      for (const media of Object.keys(valueOrValues) as Media[]) {
-        // ensure the property is not inherited
-        if (!Object.prototype.hasOwnProperty.call(valueOrValues, media)) {
-          continue;
-        }
-        const value = valueOrValues[media];
-        // Casting should be safe here because .hasOwnProperty should ensure
-        // the value has been set and the types should ensure the value is not
-        // undefined
-        const style = fn(value as Value);
-        if (typeof style === 'function') {
-          const result = style(props);
-          if (result) {
-            styles.push(match(media)(result));
-          }
-        }
-        if (typeof style === 'object') {
-          styles.push(match(media)(style));
-          continue;
-        }
+    const styles: Array<Interpolation<Props>> = [];
+    for (const media of Object.keys(valueOrValues) as Media[]) {
+      // ensure the property is not inherited
+      if (!Object.prototype.hasOwnProperty.call(valueOrValues, media)) {
         continue;
       }
-      return styles;
-    };
+      const value = valueOrValues[media];
+      // Casting `value` should be safe here because .hasOwnProperty should ensure
+      // the value has been set and the types should ensure the value is not
+      // undefined
+      const style = fn(value as Value);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      styles.push(match(media)({}, style as any)); // FIXME: remove casting
+    }
+    return styles;
   };
 };

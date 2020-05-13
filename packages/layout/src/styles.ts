@@ -1,11 +1,8 @@
 import {
-  ThemeConstraint,
-  DefaultTheme,
+  css,
   MediaConstraint,
   MapFunction,
   ResponsiveValue,
-  PropsWithTheme,
-  Style,
   createProps,
 } from '@substance/style';
 import {
@@ -17,81 +14,70 @@ import {
 
 interface StyleOptions<
   Media extends MediaConstraint,
-  Space extends SpaceConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
+  Space extends SpaceConstraint
 > {
   map: MapFunction<Media>;
-  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Theme>;
-  paddingTop: SpaceMixinFunction<Media, Space, Theme>;
-  paddingLeft: SpaceMixinFunction<Media, Space, Theme>;
+  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space>;
+  paddingTop: SpaceMixinFunction<Media, Space>;
+  paddingLeft: SpaceMixinFunction<Media, Space>;
 }
 
 export interface StyleProps<
   Media extends MediaConstraint,
-  Space extends SpaceConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
-> extends PropsWithTheme<{}, Theme> {
+  Space extends SpaceConstraint
+> {
   space?: ResponsiveValue<Media, Space>;
 }
 
 export const createSpaceStyles = <
   Media extends MediaConstraint,
-  Space extends SpaceConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
+  Space extends SpaceConstraint
 >({
   map,
   getSpace,
   paddingTop,
   paddingLeft,
-}: StyleOptions<Media, Space, Theme>): {
-  [name: string]: Style<StyleProps<Media, Space, Theme>>;
-} => {
+}: StyleOptions<Media, Space>) => {
+  // TODO: return types
   return {
-    wrapper: [
-      {
-        paddingTop: 1,
-        ':before': {
-          display: 'block',
-          content: '""',
-          marginTop: '-1px',
-        },
-      },
-      ({space}: StyleProps<Media, Space, Theme>) => {
-        if (space === undefined) {
-          return;
-        }
-        return map(space, (s) => {
-          const value = getSpace(s);
-          return {
-            ':before': {
-              marginTop: `calc(-${value} - 1px)`,
-            },
-          };
-        });
-      },
-    ],
+    wrapper: css<StyleProps<Media, Space>>`
+      padding-top: 1;
+      :before {
+        display: block;
+        content: '';
+        margin-top: '-1px';
+        ${({space}) => {
+          if (space === undefined) {
+            return;
+          }
+          return map(
+            space,
+            (s) => css`
+              margin-top: calc(-${getSpace(s)} - 1px);
+            `,
+          );
+        }}
+      }
+    `,
 
-    container: [
-      ({space}: StyleProps<Media, Space, Theme>) => {
-        if (space === undefined) {
-          return;
-        }
-        return map(space, (s) => {
-          const value = getSpace(s);
-          return {
-            marginLeft: `-${value}`,
-          };
-        });
-      },
-    ],
+    container: ({space}: StyleProps<Media, Space>) => {
+      if (space === undefined) {
+        return;
+      }
+      return map(
+        space,
+        (s) =>
+          css`
+            margin-left: -${getSpace(s)};
+          `,
+      );
+    },
 
-    item: [
-      {
-        boxSizing: 'border-box',
-      },
-      createProps({
+    item: css`
+      box-sizing: border-box;
+      ${createProps({
         space: [paddingLeft, paddingTop],
-      }),
-    ],
+      })}
+    `,
   };
 };

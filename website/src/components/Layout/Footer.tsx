@@ -16,7 +16,11 @@ const Inner = styled.footer`
 export const Footer = () => (
   <Outer>
     <ContainerLayout>
-      <Inner>Copyright &copy; {new Date().getFullYear()}.</Inner>
+      <Inner>
+        <p style={{margin: 0, fontSize: 'small'}}>
+          Copyright &copy; {new Date().getFullYear()}.
+        </p>
+      </Inner>
     </ContainerLayout>
   </Outer>
 );

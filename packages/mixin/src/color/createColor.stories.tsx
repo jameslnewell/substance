@@ -1,11 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {
-  defaultMediaQueries,
-  createMatch,
-  createMap,
-  createProps,
-} from '@substance/style';
+import {queries, createMatch, createMap, createProps} from '@substance/style';
 import {
   createColor,
   createBackgroundColor,
@@ -13,7 +8,7 @@ import {
   createGetColor,
 } from '.';
 
-export default {title: 'style/createColor'};
+export default {title: 'mixin/createColor'};
 
 const defaultColors = {
   green: {
@@ -22,7 +17,7 @@ const defaultColors = {
   },
 };
 
-const map = createMap(createMatch(defaultMediaQueries));
+const map = createMap(createMatch(queries));
 const getColor = createGetColor(defaultColors);
 const color = createColor({map, getColor});
 const backgroundColor = createBackgroundColor({map, getColor});

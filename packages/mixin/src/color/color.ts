@@ -1,4 +1,4 @@
-import {map, DefaultTheme} from '@substance/style';
+import {map} from '@substance/style';
 import {
   createColor,
   createBackgroundColor,
@@ -11,7 +11,7 @@ import {
 } from './createColor';
 import {GetColorsFunction, createGetColor} from './createGetColor';
 
-const getColors: GetColorsFunction<DefaultTheme> = (theme) => {
+const getColors: GetColorsFunction = (theme) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const color = (theme as any)?.color;
   if (color) {

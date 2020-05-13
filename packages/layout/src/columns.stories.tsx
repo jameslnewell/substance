@@ -1,11 +1,11 @@
 import React from 'react';
 import {Box} from '@substance/box';
 import styled from 'styled-components';
-import {ColumnsLayout} from './columns';
+import {ColumnLayout} from './columns';
 
 export default {
-  title: 'layout/ColumnsLayout',
-  component: ColumnsLayout,
+  title: 'layout/ColumnLayout',
+  component: ColumnLayout,
 };
 
 interface PlaceholderProps {
@@ -18,151 +18,151 @@ const Placeholder: React.FC<PlaceholderProps> = ({children, ...otherProps}) => (
   </Box>
 );
 
-const CustomColumns = styled(ColumnsLayout)({
+const CustomColumns = styled(ColumnLayout)({
   backgroundColor: 'purple',
 });
 
-const CustomColumn = styled(ColumnsLayout.Column)({
+const CustomColumn = styled(ColumnLayout.Column)({
   backgroundColor: 'orange',
 });
 
 export const WithWidth: React.FC = () => (
-  <ColumnsLayout>
-    <ColumnsLayout.Column width={1 / 2}>
+  <ColumnLayout>
+    <ColumnLayout.Column width={1 / 2}>
       <Placeholder>1/2</Placeholder>
-    </ColumnsLayout.Column>
-    <ColumnsLayout.Column width="content">
+    </ColumnLayout.Column>
+    <ColumnLayout.Column width="content">
       <Placeholder>content</Placeholder>
-    </ColumnsLayout.Column>
-    <ColumnsLayout.Column>
+    </ColumnLayout.Column>
+    <ColumnLayout.Column>
       <Placeholder>rest</Placeholder>
-    </ColumnsLayout.Column>
-    <ColumnsLayout.Column width={2 / 3}>
+    </ColumnLayout.Column>
+    <ColumnLayout.Column width={2 / 3}>
       <Placeholder>2/3</Placeholder>
-    </ColumnsLayout.Column>
-  </ColumnsLayout>
+    </ColumnLayout.Column>
+  </ColumnLayout>
 );
 
 export const WithResponsiveWidth: React.FC = () => (
-  <ColumnsLayout space={4}>
-    <ColumnsLayout.Column width={{mobile: 1, tablet: 1 / 2, desktop: 1 / 4}}>
+  <ColumnLayout space={4}>
+    <ColumnLayout.Column width={{mobile: 1, tablet: 1 / 2, desktop: 1 / 4}}>
       <Placeholder>Feature</Placeholder>
-    </ColumnsLayout.Column>
-    <ColumnsLayout.Column width={{mobile: 1, tablet: 1 / 2, desktop: 1 / 4}}>
+    </ColumnLayout.Column>
+    <ColumnLayout.Column width={{mobile: 1, tablet: 1 / 2, desktop: 1 / 4}}>
       <Placeholder>Feature</Placeholder>
-    </ColumnsLayout.Column>
-    <ColumnsLayout.Column width={{mobile: 1, tablet: 1 / 2, desktop: 1 / 4}}>
+    </ColumnLayout.Column>
+    <ColumnLayout.Column width={{mobile: 1, tablet: 1 / 2, desktop: 1 / 4}}>
       <Placeholder>Feature</Placeholder>
-    </ColumnsLayout.Column>
-    <ColumnsLayout.Column width={{mobile: 1, tablet: 1 / 2, desktop: 1 / 4}}>
+    </ColumnLayout.Column>
+    <ColumnLayout.Column width={{mobile: 1, tablet: 1 / 2, desktop: 1 / 4}}>
       <Placeholder>Feature</Placeholder>
-    </ColumnsLayout.Column>
-  </ColumnsLayout>
+    </ColumnLayout.Column>
+  </ColumnLayout>
 );
 
 export const WithHAlign: React.FC = () => (
   <>
-    <ColumnsLayout halign="left">
-      <ColumnsLayout.Column width={1 / 4}>
+    <ColumnLayout halign="left">
+      <ColumnLayout.Column width={1 / 4}>
         <Placeholder>align</Placeholder>
-      </ColumnsLayout.Column>
-      <ColumnsLayout.Column width={1 / 4}>
+      </ColumnLayout.Column>
+      <ColumnLayout.Column width={1 / 4}>
         <Placeholder>left</Placeholder>
-      </ColumnsLayout.Column>
-    </ColumnsLayout>
+      </ColumnLayout.Column>
+    </ColumnLayout>
     <br />
-    <ColumnsLayout halign="center">
-      <ColumnsLayout.Column width={1 / 4}>
+    <ColumnLayout halign="center">
+      <ColumnLayout.Column width={1 / 4}>
         <Placeholder>align</Placeholder>
-      </ColumnsLayout.Column>
-      <ColumnsLayout.Column width={1 / 4}>
+      </ColumnLayout.Column>
+      <ColumnLayout.Column width={1 / 4}>
         <Placeholder>center</Placeholder>
-      </ColumnsLayout.Column>
-    </ColumnsLayout>
+      </ColumnLayout.Column>
+    </ColumnLayout>
     <br />
-    <ColumnsLayout halign="right">
-      <ColumnsLayout.Column width={1 / 4}>
+    <ColumnLayout halign="right">
+      <ColumnLayout.Column width={1 / 4}>
         <Placeholder>align</Placeholder>
-      </ColumnsLayout.Column>
-      <ColumnsLayout.Column width={1 / 4}>
+      </ColumnLayout.Column>
+      <ColumnLayout.Column width={1 / 4}>
         <Placeholder>right</Placeholder>
-      </ColumnsLayout.Column>
-    </ColumnsLayout>
+      </ColumnLayout.Column>
+    </ColumnLayout>
   </>
 );
 
 export const WithVAlign: React.FC = () => (
   <>
-    <ColumnsLayout valign="stretch">
-      <ColumnsLayout.Column width={1 / 4}>
+    <ColumnLayout valign="stretch">
+      <ColumnLayout.Column width={1 / 4}>
         <Placeholder height={64}>align</Placeholder>
-      </ColumnsLayout.Column>
-      <ColumnsLayout.Column width={1 / 4}>
+      </ColumnLayout.Column>
+      <ColumnLayout.Column width={1 / 4}>
         <Placeholder>stretch</Placeholder>
-      </ColumnsLayout.Column>
-    </ColumnsLayout>
+      </ColumnLayout.Column>
+    </ColumnLayout>
     <br />
-    <ColumnsLayout valign="top">
-      <ColumnsLayout.Column width={1 / 4}>
+    <ColumnLayout valign="top">
+      <ColumnLayout.Column width={1 / 4}>
         <Placeholder height={64}>align</Placeholder>
-      </ColumnsLayout.Column>
-      <ColumnsLayout.Column width={1 / 4}>
+      </ColumnLayout.Column>
+      <ColumnLayout.Column width={1 / 4}>
         <Placeholder>top</Placeholder>
-      </ColumnsLayout.Column>
-    </ColumnsLayout>
+      </ColumnLayout.Column>
+    </ColumnLayout>
     <br />
-    <ColumnsLayout valign="center">
-      <ColumnsLayout.Column width={1 / 4}>
+    <ColumnLayout valign="center">
+      <ColumnLayout.Column width={1 / 4}>
         <Placeholder height={64}>align</Placeholder>
-      </ColumnsLayout.Column>
-      <ColumnsLayout.Column width={1 / 4}>
+      </ColumnLayout.Column>
+      <ColumnLayout.Column width={1 / 4}>
         <Placeholder>center</Placeholder>
-      </ColumnsLayout.Column>
-    </ColumnsLayout>
+      </ColumnLayout.Column>
+    </ColumnLayout>
     <br />
-    <ColumnsLayout valign="bottom">
-      <ColumnsLayout.Column width={1 / 4}>
+    <ColumnLayout valign="bottom">
+      <ColumnLayout.Column width={1 / 4}>
         <Placeholder height={64}>align</Placeholder>
-      </ColumnsLayout.Column>
-      <ColumnsLayout.Column width={1 / 4}>
+      </ColumnLayout.Column>
+      <ColumnLayout.Column width={1 / 4}>
         <Placeholder>bottom</Placeholder>
-      </ColumnsLayout.Column>
-    </ColumnsLayout>
+      </ColumnLayout.Column>
+    </ColumnLayout>
   </>
 );
 
 export const WithSpace: React.FC = () => (
-  <ColumnsLayout space={3}>
-    <ColumnsLayout.Column width={1 / 2}>
+  <ColumnLayout space={3}>
+    <ColumnLayout.Column width={1 / 2}>
       <Placeholder>1/2</Placeholder>
-    </ColumnsLayout.Column>
-    <ColumnsLayout.Column width="content">
+    </ColumnLayout.Column>
+    <ColumnLayout.Column width="content">
       <Placeholder>content</Placeholder>
-    </ColumnsLayout.Column>
-    <ColumnsLayout.Column>
+    </ColumnLayout.Column>
+    <ColumnLayout.Column>
       <Placeholder>rest</Placeholder>
-    </ColumnsLayout.Column>
-    <ColumnsLayout.Column width={2 / 3}>
+    </ColumnLayout.Column>
+    <ColumnLayout.Column width={2 / 3}>
       <Placeholder>2/3</Placeholder>
-    </ColumnsLayout.Column>
-  </ColumnsLayout>
+    </ColumnLayout.Column>
+  </ColumnLayout>
 );
 
 export const WithSpaceWrappedColumnAndHAlign: React.FC = () => (
-  <ColumnsLayout space={3} halign="center">
-    <ColumnsLayout.Column width={1 / 2}>
+  <ColumnLayout space={3} halign="center">
+    <ColumnLayout.Column width={1 / 2}>
       <Placeholder>1/2</Placeholder>
-    </ColumnsLayout.Column>
-    <ColumnsLayout.Column width="content">
+    </ColumnLayout.Column>
+    <ColumnLayout.Column width="content">
       <Placeholder>content</Placeholder>
-    </ColumnsLayout.Column>
-    <ColumnsLayout.Column>
+    </ColumnLayout.Column>
+    <ColumnLayout.Column>
       <Placeholder>rest</Placeholder>
-    </ColumnsLayout.Column>
-    <ColumnsLayout.Column width={2 / 3}>
+    </ColumnLayout.Column>
+    <ColumnLayout.Column width={2 / 3}>
       <Placeholder>2/3</Placeholder>
-    </ColumnsLayout.Column>
-  </ColumnsLayout>
+    </ColumnLayout.Column>
+  </ColumnLayout>
 );
 
 export const WithClassName: React.FC = () => (

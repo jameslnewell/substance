@@ -1,13 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
 import {
   map,
   ResponsiveValue,
   MediaConstraint,
   MapFunction,
-  ThemeConstraint,
-  DefaultTheme,
-  StyleObject,
+  CSSObject,
+  styled,
 } from '@substance/style';
 import {
   getSpace,
@@ -56,18 +54,17 @@ type ItemProps<
 > = Pick<ColumnsLayoutProps<Media, Space>, 'space'> &
   Pick<ColumnsLayoutColumnProps<Media>, 'width'>;
 
-export interface CreateColumnsLayoutOptions<
+export interface CreateColumnLayoutOptions<
   Media extends MediaConstraint,
-  Space extends SpaceConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
+  Space extends SpaceConstraint
 > {
   map: MapFunction<Media>;
-  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Theme>;
-  paddingTop: SpaceMixinFunction<Media, Space, Theme>;
-  paddingLeft: SpaceMixinFunction<Media, Space, Theme>;
+  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space>;
+  paddingTop: SpaceMixinFunction<Media, Space>;
+  paddingLeft: SpaceMixinFunction<Media, Space>;
 }
 
-export type ColumnsLayout<
+export type ColumnLayout<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > = React.FC<ColumnsLayoutProps<Media, Space>> & {
@@ -76,7 +73,7 @@ export type ColumnsLayout<
 
 const getHorizontalAlignment = (
   alignment: ColumnsHorizontalAlignment,
-): StyleObject => {
+): CSSObject => {
   switch (alignment) {
     case 'left':
       return {justifyContent: 'flex-start'};
@@ -91,7 +88,7 @@ const getHorizontalAlignment = (
 
 const getVerticalAlignment = (
   alignment: ColumnsVerticalAlignment,
-): StyleObject => {
+): CSSObject => {
   switch (alignment) {
     case 'top':
       return {alignItems: 'flex-start'};
@@ -104,7 +101,7 @@ const getVerticalAlignment = (
   }
 };
 
-const getWidth = (width: ColumnsLayoutColumnWidth): StyleObject => {
+const getWidth = (width: ColumnsLayoutColumnWidth): CSSObject => {
   return {
     flexGrow: width === undefined ? 1 : 0,
     flexShrink: width === 'content' ? 1 : 0,
@@ -112,7 +109,7 @@ const getWidth = (width: ColumnsLayoutColumnWidth): StyleObject => {
   };
 };
 
-export const createColumnsLayout = <
+export const createColumnLayout = <
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 >({
@@ -120,7 +117,7 @@ export const createColumnsLayout = <
   getSpace,
   paddingTop,
   paddingLeft,
-}: CreateColumnsLayoutOptions<Media, Space>): ColumnsLayout<Media, Space> => {
+}: CreateColumnLayoutOptions<Media, Space>): ColumnLayout<Media, Space> => {
   const SpaceContext = React.createContext<
     ResponsiveValue<Media, Space> | undefined
   >(undefined);
@@ -181,7 +178,7 @@ export const createColumnsLayout = <
     </SpaceContext.Consumer>
   );
 
-  const ColumnsLayout: React.FC<ColumnsLayoutProps<Media, Space>> & {
+  const ColumnLayout: React.FC<ColumnsLayoutProps<Media, Space>> & {
     Column: typeof ColumnsLayoutColumn;
   } = ({space, halign, valign, children, ...otherProps}) => (
     <SpaceContext.Provider value={space}>
@@ -193,12 +190,12 @@ export const createColumnsLayout = <
     </SpaceContext.Provider>
   );
 
-  ColumnsLayout.Column = ColumnsLayoutColumn;
+  ColumnLayout.Column = ColumnsLayoutColumn;
 
-  return ColumnsLayout;
+  return ColumnLayout;
 };
 
-export const ColumnsLayout = createColumnsLayout({
+export const ColumnLayout = createColumnLayout({
   map,
   getSpace,
   paddingTop,

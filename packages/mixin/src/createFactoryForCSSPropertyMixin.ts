@@ -3,12 +3,8 @@ import {
   createMixin,
   StyleProperty,
   MediaConstraint,
-  ThemeConstraint,
-  DefaultTheme,
   MapFunction,
   StyleValue,
-  DefaultProps,
-  PropsConstraint,
 } from '@substance/style';
 
 export const createFactoryForCSSPropertyMixin = <
@@ -16,16 +12,8 @@ export const createFactoryForCSSPropertyMixin = <
 >(
   property: Property,
 ) => {
-  return <
-    Media extends MediaConstraint,
-    Theme extends ThemeConstraint = DefaultTheme,
-    Props extends PropsConstraint = DefaultProps
-  >({
-    map,
-  }: {
-    map: MapFunction<Media, Theme>;
-  }) => {
-    return createMixin<Media, StyleValue<Property>, Theme, Props>({
+  return <Media extends MediaConstraint>({map}: {map: MapFunction<Media>}) => {
+    return createMixin<Media, StyleValue<Property>>({
       map: map,
       properties: [property],
       transform: (value) => value,

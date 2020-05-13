@@ -1,13 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import flattenChildren from 'react-keyed-flatten-children';
-import {
-  createProps,
-  ResponsiveValue,
-  MediaConstraint,
-  ThemeConstraint,
-  DefaultTheme,
-} from '@substance/style';
+import {createProps, ResponsiveValue, MediaConstraint} from '@substance/style';
 import {
   marginBottom,
   SpaceConstraint,
@@ -24,10 +18,9 @@ export interface StackLayoutProps<
 
 export interface CreateStackLayoutOptions<
   Media extends MediaConstraint,
-  Space extends SpaceConstraint,
-  Theme extends ThemeConstraint = DefaultTheme
+  Space extends SpaceConstraint
 > {
-  marginBottom: SpaceMixinFunction<Media, Space, Theme>;
+  marginBottom: SpaceMixinFunction<Media, Space>;
 }
 
 export const createStackLayout = <

@@ -1,21 +1,33 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import {map} from './map';
-import {square} from './story-styles';
+import {square} from './__stories__';
 
 export default {title: 'style/map()'};
 
-const Square = styled.div(
+const values = {
+  mobile: 'red',
+  tablet: 'green',
+  desktop: 'blue',
+};
+
+const SquareUsingTaggedTemplateLiteral = styled.div`
+  ${square}
+  ${map(values, (value) => `background-color: ${value};`)}
+`;
+
+const SquareUsingCSSObject = styled.div(
   square,
-  map(
-    {
-      mobile: 'dark',
-      desktop: 'light',
-    },
-    (value) => (props) => ({
-      backgroundColor: props.theme?.color.green?.[value],
-    }),
-  ),
+  map(values, (value) => ({backgroundColor: value})),
 );
 
-export const Default: React.FC = () => <Square />;
+const SquareUsingMixed = styled.div`
+  ${square}
+  ${map(values, (value) => ({backgroundColor: value}))}
+`;
+
+export const UsingTaggedTemplateLiteral = () => (
+  <SquareUsingTaggedTemplateLiteral />
+);
+export const UsingCSSObject = () => <SquareUsingCSSObject />;
+export const UsingMixed = () => <SquareUsingMixed />;
