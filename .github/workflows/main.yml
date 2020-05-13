@@ -88,10 +88,10 @@ jobs:
         with:
           name: website
           path: website/out
-      - uses: actions/upload-artifact@v2
-        with:
-          name: storybook
-          path: storybook/storybook-static
+      # - uses: actions/upload-artifact@v2
+      #   with:
+      #     name: storybook
+      #     path: storybook/storybook-static
       - uses: actions/upload-artifact@v2
         with:
           name: packages
@@ -107,10 +107,10 @@ jobs:
         with:
           name: website
           path: ./gh-pages
-      - uses: actions/download-artifact@v2
-        with:
-          name: storybook
-          path: ./gh-pages/storybook
+      # - uses: actions/download-artifact@v2
+      #   with:
+      #     name: storybook
+      #     path: ./gh-pages/storybook
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
