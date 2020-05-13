@@ -43,17 +43,16 @@ export const createProps = <MixinProps extends MixinPropsConstraint>(
       }
       const mixin = mixins[name];
       const prop = props[name];
+      if (prop === undefined) {
+        continue;
+      }
       if (Array.isArray(mixin)) {
         mixin.forEach((m) => {
-          // we've already checked whether the value exists via .hasOwnProperty above
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const style = m(prop as any);
+          const style = m(prop);
           styles.push(typeof style === 'function' ? style(props) : style);
         });
       } else {
-        // we've already checked whether the value exists via .hasOwnProperty above
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const style = mixin(prop as any);
+        const style = mixin(prop);
         styles.push(typeof style === 'function' ? style(props) : style);
       }
     }
