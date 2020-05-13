@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import flattenChildren from 'react-keyed-flatten-children';
 import {
   map,
@@ -7,6 +6,7 @@ import {
   MediaConstraint,
   MapFunction,
   createProps,
+  styled,
 } from '@substance/style';
 import {
   SpaceConstraint,
@@ -32,26 +32,24 @@ export interface InlineLayoutProps<
 
 export interface CreateInlineLayoutOptions<
   Media extends MediaConstraint,
-  Space extends SpaceConstraint,
-  Props
+  Space extends SpaceConstraint
 > {
   map: MapFunction<Media>;
-  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Props>;
-  paddingTop: SpaceMixinFunction<Media, Space, Props>;
-  paddingLeft: SpaceMixinFunction<Media, Space, Props>;
+  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space>;
+  paddingTop: SpaceMixinFunction<Media, Space>;
+  paddingLeft: SpaceMixinFunction<Media, Space>;
 }
 
 export const createInlineLayout = <
   Media extends MediaConstraint,
-  Space extends SpaceConstraint,
-  Props
+  Space extends SpaceConstraint
 >({
   map,
   getSpace,
   paddingTop,
   paddingLeft,
-}: CreateInlineLayoutOptions<Media, Space, Props>) => {
-  const styles = createSpaceStyles<Media, Space, Props>({
+}: CreateInlineLayoutOptions<Media, Space>) => {
+  const styles = createSpaceStyles<Media, Space>({
     map,
     getSpace,
     paddingTop,
@@ -92,7 +90,8 @@ export const createInlineLayout = <
 
   const Item = styled.div<InlineLayoutProps<Media, Space>>(
     {},
-    createProps({
+    createProps<{space: ResponsiveValue<Media, Space>}>({
+      // FIXME: mixin should be allowed to be optional
       space: [paddingTop, paddingLeft],
     }),
   );

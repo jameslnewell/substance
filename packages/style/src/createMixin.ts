@@ -1,4 +1,4 @@
-import {CSSObject} from './styled/types';
+import {CSSObject} from './styled';
 import {
   StyleProperty,
   StyleValue,
@@ -6,6 +6,8 @@ import {
   MediaConstraint,
   ResponsiveValueConstraint,
   ResponsiveMixinFunction,
+  ThemeProps,
+  ResponsiveValue,
 } from './types';
 
 const createStylesFromTransformedValue = (
@@ -22,10 +24,9 @@ const createStylesFromTransformedValue = (
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface CreateMixinTransformFunction<
-  Value extends ResponsiveValueConstraint,
-  Props
+  Value extends ResponsiveValueConstraint
 > {
-  (value: Value): undefined | StyleValue | ((props: Props) => StyleValue);
+  (value: Value): undefined | StyleValue | ((props: ThemeProps) => StyleValue);
 }
 
 /**
@@ -42,8 +43,7 @@ export interface CreateMixinTransformFunction<
  */
 export const createMixin = <
   Media extends MediaConstraint,
-  Value extends ResponsiveValueConstraint,
-  Props
+  Value extends ResponsiveValueConstraint
 >({
   map,
   properties,
@@ -51,9 +51,11 @@ export const createMixin = <
 }: {
   map: MapFunction<Media>;
   properties: StyleProperty[];
-  transform: CreateMixinTransformFunction<Value, Props>;
-}): ResponsiveMixinFunction<Media, Value, Props> => {
-  return (valueOrValues) => {
+  transform: CreateMixinTransformFunction<Value>;
+}): ResponsiveMixinFunction<Media, Value> => {
+  return <Props extends ThemeProps>(
+    valueOrValues: ResponsiveValue<Media, Value>,
+  ) => {
     return map<Value, Props>(valueOrValues, (value) => {
       const transformedValue = transform(value);
       if (typeof transformedValue === 'function') {

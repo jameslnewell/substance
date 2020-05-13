@@ -9,8 +9,8 @@ export interface GetColorFunction<Color extends ColorConstraint> {
   (color: Color): StyleValue<'color'>;
 }
 
-export interface ThemedGetColorFunction<Color extends ColorConstraint, Props> {
-  (color: Color): (props: Props) => StyleValue<'color'>;
+export interface ThemedGetColorFunction<Color extends ColorConstraint> {
+  (color: Color): (props: ThemeProps) => StyleValue<'color'>;
 }
 
 export function createGetColor<Color extends ColorConstraint>(
@@ -18,16 +18,13 @@ export function createGetColor<Color extends ColorConstraint>(
 ): GetColorFunction<Color>;
 export function createGetColor<Color extends ColorConstraint, Props>(
   getColors: GetColorsFunction,
-): ThemedGetColorFunction<Color, Props>;
-export function createGetColor<
-  Color extends ColorConstraint,
-  Props extends ThemeProps
->(
+): ThemedGetColorFunction<Color>;
+export function createGetColor<Color extends ColorConstraint>(
   colorsOrGetColors: Colors | GetColorsFunction,
-): GetColorFunction<Color> | ThemedGetColorFunction<Color, Props> {
+): GetColorFunction<Color> | ThemedGetColorFunction<Color> {
   // TODO: warn about unknown colors
   if (typeof colorsOrGetColors === 'function') {
-    return (value) => ({theme}): StyleValue<'color'> =>
+    return (value) => ({theme}) =>
       get(value, colorsOrGetColors(theme)) || value;
   } else {
     return (value): StyleValue<'color'> =>

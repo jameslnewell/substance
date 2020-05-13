@@ -8,14 +8,14 @@ import {SpaceConstraint} from './types';
 import {GetSpaceFunction, ThemedGetSpaceFunction} from './createGetSpace';
 
 const createSpaceFactory = (properties: StyleProperty[]) => {
-  return <Media extends MediaConstraint, Space extends SpaceConstraint, Props>({
+  return <Media extends MediaConstraint, Space extends SpaceConstraint>({
     map,
     getSpace,
   }: {
     map: MapFunction<Media>;
-    getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Props>;
+    getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space>;
   }) => {
-    return createMixin<Media, Space, Props>({
+    return createMixin<Media, Space>({
       map: map,
       properties,
       transform: getSpace,

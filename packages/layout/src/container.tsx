@@ -21,8 +21,7 @@ export interface GetContainerSpace<
 
 export function createContainerLayout<
   Media extends MediaConstraint,
-  Space extends SpaceConstraint,
-  Props
+  Space extends SpaceConstraint
 >({
   width,
   space,
@@ -30,15 +29,16 @@ export function createContainerLayout<
 }: {
   width: number | GetContainerWidth;
   space?: ResponsiveValue<Media, Space> | GetContainerSpace<Media, Space>;
-  paddingX: SpaceMixinFunction<Media, Space, Props>;
+  paddingX: SpaceMixinFunction<Media, Space>;
 }) {
-  const Wrapper = styled.div`
+  const Wrapper = styled.div<{foo?: 'bar'}>`
     box-sizing: border-box;
     width: 100%;
     margin: auto;
     ${typeof width === 'function'
       ? ({theme}) => ({maxWidth: width(theme)})
       : {maxWidth: width}}
+
     ${typeof space === 'function'
       ? ({theme}) => paddingX(space(theme))
       : (space && paddingX(space)) || undefined}

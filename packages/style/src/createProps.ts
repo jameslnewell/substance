@@ -1,15 +1,16 @@
-import {Interpolation} from './styled/types';
+import {Interpolation} from './styled';
+import {PropsConstraint} from './types';
 
-type PropsConstraint = {
+type MixinPropsConstraint = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 };
 
-type Mixins<Props extends PropsConstraint> = {
-  [props in keyof Props]:  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | ((value: Props[props]) => Interpolation<any>)
+type MixinFunctions<MixinProps extends MixinPropsConstraint> = {
+  [props in keyof MixinProps]:  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    | ((value: MixinProps[props]) => Interpolation<any>)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | ((value: Props[props]) => Interpolation<any>)[];
+    | ((value: MixinProps[props]) => Interpolation<any>)[];
 };
 
 /**
@@ -26,11 +27,13 @@ type Mixins<Props extends PropsConstraint> = {
  *  })
  * );
  */
-export const createProps = <Props extends PropsConstraint>(
-  mixins: Mixins<Props>,
+export const createProps = <MixinProps extends MixinPropsConstraint>(
+  mixins: MixinFunctions<MixinProps>,
 ) => {
-  return (props: Partial<Props>): Interpolation<Partial<Props>> => {
-    const styles: Interpolation<Partial<Props>>[] = [];
+  return <Props extends PropsConstraint>(
+    props: Partial<MixinProps> & Props,
+  ) => {
+    const styles: Interpolation<Partial<MixinProps> & Props>[] = [];
     for (const name of Object.keys(props)) {
       if (
         !Object.prototype.hasOwnProperty.call(props, name) ||

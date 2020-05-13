@@ -1,10 +1,9 @@
 import {
+  css,
   MediaConstraint,
   MapFunction,
   ResponsiveValue,
   createProps,
-  ThemeProps,
-  Interpolation,
 } from '@substance/style';
 import {
   SpaceConstraint,
@@ -15,80 +14,70 @@ import {
 
 interface StyleOptions<
   Media extends MediaConstraint,
-  Space extends SpaceConstraint,
-  Props
+  Space extends SpaceConstraint
 > {
   map: MapFunction<Media>;
-  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Props>;
-  paddingTop: SpaceMixinFunction<Media, Space, Props>;
-  paddingLeft: SpaceMixinFunction<Media, Space, Props>;
+  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space>;
+  paddingTop: SpaceMixinFunction<Media, Space>;
+  paddingLeft: SpaceMixinFunction<Media, Space>;
 }
 
 export interface StyleProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
-> extends ThemeProps {
+> {
   space?: ResponsiveValue<Media, Space>;
 }
 
 export const createSpaceStyles = <
   Media extends MediaConstraint,
-  Space extends SpaceConstraint,
-  Props
+  Space extends SpaceConstraint
 >({
   map,
   getSpace,
   paddingTop,
   paddingLeft,
-}: StyleOptions<Media, Space, Props>): {
-  [name: string]: Interpolation<StyleProps<Media, Space>>;
-} => {
+}: StyleOptions<Media, Space>) => {
+  // TODO: return types
   return {
-    wrapper: [
-      {
-        paddingTop: 1,
-        ':before': {
-          display: 'block',
-          content: '""',
-          marginTop: '-1px',
-        },
-      },
-      ({space}: StyleProps<Media, Space>) => {
-        if (space === undefined) {
-          return;
-        }
-        return map(space, (s) => {
-          const value = getSpace(s);
-          return {
-            ':before': {
-              marginTop: `calc(-${value} - 1px)`,
-            },
-          };
-        });
-      },
-    ],
+    wrapper: css<StyleProps<Media, Space>>`
+      padding-top: 1;
+      :before {
+        display: block;
+        content: '';
+        margin-top: '-1px';
+        ${({space}) => {
+          if (space === undefined) {
+            return;
+          }
+          return map(
+            space,
+            (s) => css`
+              margin-top: calc(-${getSpace(s)} - 1px);
+            `,
+          );
+        }}
+      }
+    `,
 
-    container: [
-      ({space}: StyleProps<Media, Space>) => {
-        if (space === undefined) {
-          return;
-        }
-        return map(space, (s) => {
-          const value = getSpace(s);
-          return {
-            marginLeft: `-${value}`,
-          };
-        });
-      },
-    ],
+    container: ({space}: StyleProps<Media, Space>) => {
+      if (space === undefined) {
+        return;
+      }
+      return map(
+        space,
+        (s) =>
+          css`
+            margin-left: -${getSpace(s)};
+          `,
+      );
+    },
 
-    item: [
-      {
-        boxSizing: 'border-box',
-      },
-      createProps({
+    item: css`
+      box-sizing: border-box;
+      ${createProps({
         space: [paddingLeft, paddingTop],
-      }),
-    ],
+      })}
+    `,
   };
 };

@@ -10,6 +10,5 @@ export type Spaces<Space extends SpaceConstraint> = {
 };
 export type SpaceMixinFunction<
   Media extends MediaConstraint,
-  Space extends SpaceConstraint,
-  Props
-> = ResponsiveMixinFunction<Media, Space, Props>;
+  Space extends SpaceConstraint
+> = ResponsiveMixinFunction<Media, Space>;

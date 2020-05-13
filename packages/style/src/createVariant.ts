@@ -1,4 +1,4 @@
-import {Interpolation} from './styled/types';
+import {Interpolation} from './styled';
 
 export type VariantConstraint = string | number;
 

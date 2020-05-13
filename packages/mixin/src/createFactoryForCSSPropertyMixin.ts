@@ -12,12 +12,8 @@ export const createFactoryForCSSPropertyMixin = <
 >(
   property: Property,
 ) => {
-  return <Media extends MediaConstraint, Props>({
-    map,
-  }: {
-    map: MapFunction<Media>;
-  }) => {
-    return createMixin<Media, StyleValue<Property>, Props>({
+  return <Media extends MediaConstraint>({map}: {map: MapFunction<Media>}) => {
+    return createMixin<Media, StyleValue<Property>>({
       map: map,
       properties: [property],
       transform: (value) => value,

@@ -9,26 +9,23 @@ export interface GetSpaceFunction<Space extends SpaceConstraint> {
   (space: Space): StyleValue<'paddingTop'>;
 }
 
-export interface ThemedGetSpaceFunction<Space extends SpaceConstraint, Props> {
-  (space: Space): (props: Props) => StyleValue<'paddingTop'>;
+export interface ThemedGetSpaceFunction<Space extends SpaceConstraint> {
+  (space: Space): (props: ThemeProps) => StyleValue<'paddingTop'>;
 }
 
 export function createGetSpace<Space extends SpaceConstraint>(
   spaces: Spaces<Space>,
 ): GetSpaceFunction<Space>;
-export function createGetSpace<Space extends SpaceConstraint, Props>(
+export function createGetSpace<Space extends SpaceConstraint>(
   getSpaces: GetSpacesFunction<Space>,
-): ThemedGetSpaceFunction<Space, Props>;
-export function createGetSpace<
-  Space extends SpaceConstraint,
-  Props extends ThemeProps
->(
+): ThemedGetSpaceFunction<Space>;
+export function createGetSpace<Space extends SpaceConstraint>(
   spacesOrGetSpaces: Spaces<Space> | GetSpacesFunction<Space>,
-): GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Props> {
+): GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space> {
   // TODO: warn about unknown spaces
   // TODO: support negative spacings
   if (typeof spacesOrGetSpaces === 'function') {
-    return (value) => ({theme}: Props): StyleValue<'paddingTop'> =>
+    return (value) => ({theme}) =>
       get(String(value), spacesOrGetSpaces(theme)) || value;
   } else {
     return (value): StyleValue<'paddingTop'> =>

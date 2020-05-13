@@ -8,14 +8,14 @@ import {ColorConstraint} from './types';
 import {GetColorFunction, ThemedGetColorFunction} from './createGetColor';
 
 const createColorFactory = (properties: StyleProperty[]) => {
-  return <Media extends MediaConstraint, Color extends ColorConstraint, Props>({
+  return <Media extends MediaConstraint, Color extends ColorConstraint>({
     map,
     getColor,
   }: {
     map: MapFunction<Media>;
-    getColor: GetColorFunction<Color> | ThemedGetColorFunction<Color, Props>;
+    getColor: GetColorFunction<Color> | ThemedGetColorFunction<Color>;
   }) => {
-    return createMixin<Media, Color, Props>({
+    return createMixin<Media, Color>({
       map: map,
       properties,
       transform: getColor,

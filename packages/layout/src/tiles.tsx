@@ -45,26 +45,24 @@ type ItemProps<
 
 export interface CreateTileLayoutOptions<
   Media extends MediaConstraint,
-  Space extends SpaceConstraint,
-  Props
+  Space extends SpaceConstraint
 > {
   map: MapFunction<Media>;
-  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Props>;
-  paddingTop: SpaceMixinFunction<Media, Space, Props>;
-  paddingLeft: SpaceMixinFunction<Media, Space, Props>;
+  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space>;
+  paddingTop: SpaceMixinFunction<Media, Space>;
+  paddingLeft: SpaceMixinFunction<Media, Space>;
 }
 
 export const createTileLayout = <
   Media extends MediaConstraint,
-  Space extends SpaceConstraint,
-  Props
+  Space extends SpaceConstraint
 >({
   map,
   getSpace,
   paddingTop,
   paddingLeft,
-}: CreateTileLayoutOptions<Media, Space, Props>) => {
-  const styles = createSpaceStyles<Media, Space, Props>({
+}: CreateTileLayoutOptions<Media, Space>) => {
+  const styles = createSpaceStyles<Media, Space>({
     map,
     getSpace,
     paddingTop,

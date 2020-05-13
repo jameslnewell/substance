@@ -1,5 +1,11 @@
 import {Properties} from 'csstype';
-import {CSSFunction, Interpolation} from './styled/types';
+import {CSSFunction, Interpolation, Theme} from './styled';
+
+export type PropsConstraint = {};
+
+export interface ThemeProps {
+  theme: Theme;
+}
 
 // ========== STYLE ==========
 
@@ -36,13 +42,13 @@ export interface MatchFunction<Media extends MediaConstraint> {
 
 export interface MapFunctionFunction<
   Value extends ResponsiveValueConstraint,
-  Props
+  Props extends PropsConstraint
 > {
   (value: Value): Interpolation<Props>;
 }
 
 export interface MapFunction<Media extends MediaConstraint> {
-  <Value extends ResponsiveValueConstraint, Props>(
+  <Value extends ResponsiveValueConstraint, Props extends PropsConstraint>(
     valueOrValues: ResponsiveValue<Media, Value>,
     fn: MapFunctionFunction<Value, Props>,
   ): Interpolation<Props>;
@@ -50,14 +56,15 @@ export interface MapFunction<Media extends MediaConstraint> {
 
 // ========== MIXIN ==========
 
-export interface MixinFunction<Value extends ValueConstraint, Props> {
-  (value: Value): Interpolation<Props>;
+export interface MixinFunction<Value extends ValueConstraint> {
+  <Props extends PropsConstraint>(value: Value): Interpolation<Props>;
 }
 
 export interface ResponsiveMixinFunction<
   Media extends MediaConstraint,
-  Value extends ResponsiveValueConstraint,
-  Props
+  Value extends ResponsiveValueConstraint
 > {
-  (valueOrValues: ResponsiveValue<Media, Value>): Interpolation<Props>;
+  <Props extends ThemeProps>(
+    valueOrValues: ResponsiveValue<Media, Value>,
+  ): Interpolation<Props>;
 }

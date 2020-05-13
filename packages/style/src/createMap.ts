@@ -1,4 +1,4 @@
-import {Interpolation} from './styled/types';
+import {Interpolation} from './styled';
 import {
   MediaConstraint,
   MatchFunction,
@@ -6,6 +6,7 @@ import {
   ResponsiveValue,
   MapFunctionFunction,
   MapFunction,
+  PropsConstraint,
 } from './types';
 
 /**
@@ -17,7 +18,10 @@ import {
 export const createMap = <Media extends MediaConstraint>(
   match: MatchFunction<Media>,
 ): MapFunction<Media> => {
-  return <Value extends ResponsiveValueConstraint, Props>(
+  return <
+    Value extends ResponsiveValueConstraint,
+    Props extends PropsConstraint
+  >(
     valueOrValues: ResponsiveValue<Media, Value>,
     fn: MapFunctionFunction<Value, Props>,
   ) => {

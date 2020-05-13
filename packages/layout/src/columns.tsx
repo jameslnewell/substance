@@ -1,11 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
 import {
   map,
   ResponsiveValue,
   MediaConstraint,
   MapFunction,
   CSSObject,
+  styled,
 } from '@substance/style';
 import {
   getSpace,
@@ -56,13 +56,12 @@ type ItemProps<
 
 export interface CreateColumnLayoutOptions<
   Media extends MediaConstraint,
-  Space extends SpaceConstraint,
-  Props
+  Space extends SpaceConstraint
 > {
   map: MapFunction<Media>;
-  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space, Props>;
-  paddingTop: SpaceMixinFunction<Media, Space, Props>;
-  paddingLeft: SpaceMixinFunction<Media, Space, Props>;
+  getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space>;
+  paddingTop: SpaceMixinFunction<Media, Space>;
+  paddingLeft: SpaceMixinFunction<Media, Space>;
 }
 
 export type ColumnLayout<
@@ -112,22 +111,18 @@ const getWidth = (width: ColumnsLayoutColumnWidth): CSSObject => {
 
 export const createColumnLayout = <
   Media extends MediaConstraint,
-  Space extends SpaceConstraint,
-  Props
+  Space extends SpaceConstraint
 >({
   map,
   getSpace,
   paddingTop,
   paddingLeft,
-}: CreateColumnLayoutOptions<Media, Space, Props>): ColumnLayout<
-  Media,
-  Space
-> => {
+}: CreateColumnLayoutOptions<Media, Space>): ColumnLayout<Media, Space> => {
   const SpaceContext = React.createContext<
     ResponsiveValue<Media, Space> | undefined
   >(undefined);
 
-  const styles = createSpaceStyles<Media, Space, Props>({
+  const styles = createSpaceStyles<Media, Space>({
     map,
     getSpace,
     paddingTop,
