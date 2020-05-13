@@ -1,5 +1,11 @@
 # @substance/style
 
+## 0.1.0-preview.25
+
+### Patch Changes
+
+- 64fd2fe: ignore undefined in createProps
+
 ## 0.1.0-preview.24
 
 ### Patch Changes

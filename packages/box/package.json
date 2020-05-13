@@ -1,7 +1,7 @@
 {
   "name": "@substance/box",
   "private": true,
-  "version": "0.1.0-preview.4",
+  "version": "0.1.0-preview.5",
   "repository": "jameslnewell/substance",
   "website": "https://jameslnewell.github.io/substance",
   "source": "src/index.ts",
@@ -15,8 +15,8 @@
     "styled-components": ">=5.0.1"
   },
   "dependencies": {
-    "@substance/mixin": "^0.1.0-preview.11",
-    "@substance/style": "^0.1.0-preview.24"
+    "@substance/mixin": "^0.1.0-preview.12",
+    "@substance/style": "^0.1.0-preview.25"
   },
   "devDependencies": {
     "@babel/runtime": "^7.9.6",
