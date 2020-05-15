@@ -1,7 +1,11 @@
 import * as React from 'react';
+import {InlineLayout} from '@substance/layout';
 
 export const Logo = () => (
   <>
-    <span aria-hidden="true">⚗️</span> Substance
+    <InlineLayout space={1}>
+      <span aria-hidden="true">⚗️</span>
+      <span>Substance</span>
+    </InlineLayout>
   </>
 );

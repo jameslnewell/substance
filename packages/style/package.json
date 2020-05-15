@@ -4,7 +4,7 @@
   "author": "James Newell",
   "repository": "jameslnewell/substance",
   "website": "https://jameslnewell.github.io/substance",
-  "description": "Primitives for styling.",
+  "description": "Utilities for styling.",
   "keywords": [
     "substance",
     "react",

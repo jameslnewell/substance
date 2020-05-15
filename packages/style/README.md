@@ -1,6 +1,6 @@
-# @substance/style 🧬
+# ⚗️ @substance/style
 
-Primitives for styling.
+Utilities for styling.
 
 ## Installation
 
