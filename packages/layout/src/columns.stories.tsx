@@ -181,3 +181,19 @@ export const WithClassName: React.FC = () => (
     </CustomColumn>
   </CustomColumns>
 );
+
+export const RetainsWidthWhenIsWider: React.FC = () => (
+  <CustomColumns>
+    <CustomColumn width={1 / 2}>
+      <pre>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec arcu
+        sapien, aliquam eget ligula eu, posuere vehicula elit. Morbi sed
+        fringilla ipsum, a euismod metus. Sed ut egestas nibh, eget pellentesque
+        tortor. Nullam ut dolor augue. Quisque venenatis sapien ac finibus
+        consectetur. Praesent sit amet molestie est. Quisque sed faucibus purus,
+        ut posuere nisi. Integer rhoncus purus quis aliquet vestibulum. Quisque
+        pellentesque at ipsum quis faucibus.
+      </pre>
+    </CustomColumn>
+  </CustomColumns>
+);

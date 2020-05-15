@@ -106,6 +106,7 @@ const getWidth = (width: ColumnsLayoutColumnWidth): CSSObject => {
     flexGrow: width === undefined ? 1 : 0,
     flexShrink: width === 'content' ? 1 : 0,
     flexBasis: typeof width === 'number' ? `${width * 100}%` : 'auto',
+    maxWidth: typeof width === 'number' ? `${width * 100}%` : 'auto',
   };
 };
 
