@@ -41,7 +41,7 @@ export const createSpaceStyles = <
   // TODO: return types
   return {
     wrapper: css<StyleProps<Media, Space>>`
-      padding-top: 1;
+      padding-top: 1px;
       :before {
         display: block;
         content: '';
