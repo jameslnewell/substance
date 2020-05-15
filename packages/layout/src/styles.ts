@@ -45,7 +45,7 @@ export const createSpaceStyles = <
       :before {
         display: block;
         content: '';
-        margin-top: '-1px';
+        margin-top: -1px;
         ${({space}) => {
           if (space === undefined) {
             return;
