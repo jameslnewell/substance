@@ -35,7 +35,6 @@ const getSpaces: GetSpacesFunction<ThemedSpace> = (theme) => {
 };
 
 export const getSpace = createGetSpace<ThemedSpace>(getSpaces);
-
 export const margin = createMargin({map, getSpace});
 export const marginX = createMarginX({map, getSpace});
 export const marginY = createMarginY({map, getSpace});

@@ -1,5 +1,5 @@
 import {Interpolation} from './styled';
-import {PropsConstraint} from './types';
+import {PropsConstraint, DefaultProps} from './types';
 
 type MixinPropsConstraint = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -30,7 +30,7 @@ type MixinFunctions<MixinProps extends MixinPropsConstraint> = {
 export const createProps = <MixinProps extends MixinPropsConstraint>(
   mixins: MixinFunctions<MixinProps>,
 ) => {
-  return <Props extends PropsConstraint>(
+  return <Props extends PropsConstraint = DefaultProps>(
     props: Partial<MixinProps> & Props,
   ) => {
     const styles: Interpolation<Partial<MixinProps> & Props>[] = [];

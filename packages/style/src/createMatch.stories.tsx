@@ -1,15 +1,15 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
+import {MatchFunction} from './types';
 import {queries, DefaultMedia} from './queries';
 import {createMatch} from './createMatch';
 import {colors, square} from './__stories__';
-import {MatchFunction} from './types';
 
 export default {title: 'style/createMatch()'};
 
 const match: MatchFunction<DefaultMedia> = createMatch(queries);
 
-const SquareUsingTaggedTemplateLiteral = styled.div`
+const SquareUsingTaggedTemplateLiteralStyle = styled.div`
   ${square}
   ${match('mobile')`
     background-color: ${colors[0]};
@@ -22,7 +22,26 @@ const SquareUsingTaggedTemplateLiteral = styled.div`
   `}
 `;
 
-const SquareUsingCSSObject = styled.div(
+const SquareUsingFunctionStyle = styled.div`
+  ${square}
+  ${match('mobile')(
+    () => css`
+      background-color: ${colors[0]};
+    `,
+  )}
+  ${match('tablet')(
+    () => css`
+      background-color: ${colors[1]};
+    `,
+  )}
+  ${match('desktop')(
+    () => css`
+      background-color: ${colors[2]};
+    `,
+  )}
+`;
+
+const SquareUsingObjectStyle = styled.div(
   square,
   match('mobile')({
     backgroundColor: colors[0],
@@ -35,7 +54,7 @@ const SquareUsingCSSObject = styled.div(
   }),
 );
 
-const SquareUsingMixed = styled.div`
+const SquareUsingMixedStyle = styled.div`
   ${square}
   ${match('mobile')({
     backgroundColor: colors[0],
@@ -48,8 +67,10 @@ const SquareUsingMixed = styled.div`
   })}
 `;
 
-export const UsingTaggedTemplateLiteral = () => (
-  <SquareUsingTaggedTemplateLiteral />
+export const StyleWithTaggedTemplateLiteral = () => (
+  <SquareUsingTaggedTemplateLiteralStyle />
 );
-export const UsingCSSObject = () => <SquareUsingCSSObject />;
-export const UsingMixed = () => <SquareUsingMixed />;
+
+export const StyledWithFunction = () => <SquareUsingFunctionStyle />;
+export const StyledWithObject = () => <SquareUsingObjectStyle />;
+export const StyledWithMixed = () => <SquareUsingMixedStyle />;
