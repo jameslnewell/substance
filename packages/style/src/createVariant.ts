@@ -41,12 +41,12 @@ export const createVariant = <
   },
 ) => {
   return (variant: Variant): Interpolation<Props> => {
-    const styles = variants[variant];
+    const style = variants[variant];
     if (process.env.NODE_ENV !== 'production') {
       if (!Object.prototype.hasOwnProperty.call(variants, variant)) {
         console.warn(`Variant "${variant}" was not found.`);
       }
     }
-    return styles;
+    return style;
   };
 };

@@ -35,25 +35,15 @@ export const createProps = <MixinProps extends MixinPropsConstraint>(
   ) => {
     const styles: Interpolation<Partial<MixinProps> & Props>[] = [];
     for (const name of Object.keys(props)) {
-      if (
-        !Object.prototype.hasOwnProperty.call(props, name) ||
-        !Object.prototype.hasOwnProperty.call(mixins, name)
-      ) {
-        continue;
-      }
       const mixin = mixins[name];
       const prop = props[name];
-      if (prop === undefined) {
+      if (mixin === undefined || prop === undefined) {
         continue;
       }
       if (Array.isArray(mixin)) {
-        mixin.forEach((m) => {
-          const style = m(prop);
-          styles.push(typeof style === 'function' ? style(props) : style);
-        });
+        mixin.forEach((m) => styles.push(m(prop)));
       } else {
-        const style = mixin(prop);
-        styles.push(typeof style === 'function' ? style(props) : style);
+        styles.push(mixin(prop));
       }
     }
     return styles;
