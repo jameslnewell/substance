@@ -1,11 +1,11 @@
 {
   "name": "@substance/storybook",
-  "version": "1.0.1-preview.0",
+  "version": "1.0.1-preview.1",
   "private": true,
   "dependencies": {
-    "@substance/layout": "^0.1.0-preview.12",
-    "@substance/mixin": "^0.1.0-preview.9",
-    "@substance/style": "^0.1.0-preview.23"
+    "@substance/layout": "^0.1.0-preview.17",
+    "@substance/mixin": "^0.1.0-preview.13",
+    "@substance/style": "^0.1.0-preview.26"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

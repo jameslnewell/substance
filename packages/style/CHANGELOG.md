@@ -1,5 +1,11 @@
 # @substance/style
 
+## 0.1.0-preview.26
+
+### Patch Changes
+
+- 793b4ae: Added align to Stack
+
 ## 0.1.0-preview.25
 
 ### Patch Changes
