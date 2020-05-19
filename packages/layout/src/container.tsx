@@ -31,7 +31,7 @@ export function createContainerLayout<
   space?: ResponsiveValue<Media, Space> | GetContainerSpace<Media, Space>;
   paddingX: SpaceMixinFunction<Media, Space>;
 }) {
-  const Wrapper = styled.div<{foo?: 'bar'}>`
+  const Wrapper = styled.div`
     box-sizing: border-box;
     width: 100%;
     margin: auto;
