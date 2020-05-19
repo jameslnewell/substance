@@ -1,11 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import flattenChildren from 'react-keyed-flatten-children';
 import {
   ResponsiveValue,
   MediaConstraint,
   MapFunction,
   map,
+  createProps,
 } from '@substance/style';
 import {
   SpaceConstraint,
@@ -30,18 +31,26 @@ export interface TilesLayoutProps<
   className?: string;
 }
 
-type WrapperProps<
+interface WrapperProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
-> = Pick<TilesLayoutProps<Media, Space>, 'space'>;
-type ContainerProps<
+> {
+  $space?: TilesLayoutProps<Media, Space>['space'];
+}
+interface ContainerProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
-> = Pick<TilesLayoutProps<Media, Space>, 'align' | 'space'>;
-type ItemProps<
+> {
+  $align?: TilesLayoutProps<Media, TilesLayoutAlignment>['align'];
+  $space?: TilesLayoutProps<Media, Space>['space'];
+}
+interface ItemProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
-> = Pick<TilesLayoutProps<Media, Space>, 'columns' | 'space'>;
+> {
+  $columns?: TilesLayoutProps<Media, number>['columns'];
+  $space?: TilesLayoutProps<Media, Space>['space'];
+}
 
 export interface CreateTileLayoutOptions<
   Media extends MediaConstraint,
@@ -52,6 +61,12 @@ export interface CreateTileLayoutOptions<
   paddingTop: SpaceMixinFunction<Media, Space>;
   paddingLeft: SpaceMixinFunction<Media, Space>;
 }
+
+const horizontalAlignment = {
+  left: 'flex-start',
+  center: 'center',
+  right: 'flex-end',
+};
 
 export const createTileLayout = <
   Media extends MediaConstraint,
@@ -69,60 +84,36 @@ export const createTileLayout = <
     paddingLeft,
   });
 
-  const Wrapper = styled.div<WrapperProps<Media, Space>>({}, styles.wrapper);
+  const Wrapper = styled.div<WrapperProps<Media, Space>>`
+    ${styles.wrapper}
+  `;
 
-  const Container = styled.div<ContainerProps<Media, Space>>(
-    {
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
-    styles.container,
-    ({align}) => {
-      if (align === undefined) {
-        return undefined;
-      }
-      return map(align, (a) => {
-        switch (a) {
-          case 'left':
-            return {
-              justifyContent: 'flex-start',
-            };
-          case 'center':
-            return {
-              justifyContent: 'center',
-            };
-          case 'right':
-            return {
-              justifyContent: 'flex-end',
-            };
-          default:
-            return {
-              justifyContent: a,
-            };
-        }
-      });
-    },
-  );
+  const Container = styled.div<ContainerProps<Media, Space>>`
+    display: flex;
+    flex-wrap: wrap;
+    ${styles.container}
+    ${createProps({
+      $align: (align: ResponsiveValue<Media, TilesLayoutAlignment>) =>
+        map(align, (a) => `justify-content: ${horizontalAlignment[a]};`),
+    })}
+  `;
 
-  const Item = styled.div<ItemProps<Media, Space>>(
-    {
-      flexGrow: 1,
-      flexShrink: 1,
-    },
-    styles.item,
-    ({columns}) => {
-      if (columns === undefined) {
-        return undefined;
-      }
-      return map(columns, (c) => {
-        return {
-          flexGrow: 0,
-          flexShrink: 0,
-          flexBasis: c !== undefined ? `${(1 / c) * 100}%` : undefined,
-        };
-      });
-    },
-  );
+  const Item = styled.div<ItemProps<Media, Space>>`
+    flex-grow: 1;
+    flex-shrink: 1;
+    ${styles.item}
+    ${createProps({
+      $columns: (columns: ResponsiveValue<Media, number>) =>
+        map(
+          columns,
+          (c) => css`
+            flex-grow: 0;
+            flex-shrink: 0;
+            flex-basis: ${c !== undefined ? `${(1 / c) * 100}%` : undefined};
+          `,
+        ),
+    })}
+  `;
 
   const TileLayout: React.FC<TilesLayoutProps<Media, Space>> = ({
     columns,
@@ -131,14 +122,14 @@ export const createTileLayout = <
     children,
     ...otherProps
   }) => (
-    <Wrapper {...otherProps} space={space}>
-      <Container align={align} space={space}>
+    <Wrapper {...otherProps} $space={space}>
+      <Container $align={align} $space={space}>
         {flattenChildren(children).map((child, index) => {
           if (!React.isValidElement(child)) {
             return child;
           }
           return (
-            <Item key={child.key || index} columns={columns} space={space}>
+            <Item key={child.key || index} $columns={columns} $space={space}>
               {child}
             </Item>
           );

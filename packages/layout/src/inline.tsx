@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import flattenChildren from 'react-keyed-flatten-children';
 import {
   map,
@@ -6,7 +7,6 @@ import {
   MediaConstraint,
   MapFunction,
   createProps,
-  styled,
 } from '@substance/style';
 import {
   SpaceConstraint,
@@ -30,6 +30,28 @@ export interface InlineLayoutProps<
   className?: string;
 }
 
+interface WrapperProps<
+  Media extends MediaConstraint,
+  Space extends SpaceConstraint
+> {
+  $space?: InlineLayoutProps<Media, Space>['space'];
+}
+
+interface ContainerProps<
+  Media extends MediaConstraint,
+  Space extends SpaceConstraint
+> {
+  $space?: InlineLayoutProps<Media, Space>['space'];
+  $align?: InlineLayoutProps<Media, Space>['align'];
+}
+
+interface ItemProps<
+  Media extends MediaConstraint,
+  Space extends SpaceConstraint
+> {
+  $space?: InlineLayoutProps<Media, Space>['space'];
+}
+
 export interface CreateInlineLayoutOptions<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
@@ -39,6 +61,12 @@ export interface CreateInlineLayoutOptions<
   paddingTop: SpaceMixinFunction<Media, Space>;
   paddingLeft: SpaceMixinFunction<Media, Space>;
 }
+
+const horizontalAlignment = {
+  left: 'flex-start',
+  center: 'center',
+  right: 'flex-end',
+};
 
 export const createInlineLayout = <
   Media extends MediaConstraint,
@@ -56,45 +84,27 @@ export const createInlineLayout = <
     paddingLeft,
   });
 
-  const Wrapper = styled.div<InlineLayoutProps<Media, Space>>(
-    {},
-    styles.wrapper,
-  );
+  const Wrapper = styled.div<WrapperProps<Media, Space>>`
+    ${styles.wrapper}
+  `;
 
-  const Container = styled.div<InlineLayoutProps<Media, Space>>(
-    {
-      display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-    },
-    ({align}) =>
-      align &&
-      map(align, (a) => {
-        switch (a) {
-          case 'left':
-            return {
-              alignItems: 'flex-start',
-            };
-          case 'center':
-            return {
-              alignItems: 'center',
-            };
-          case 'right':
-            return {
-              alignItems: 'flex-end',
-            };
-        }
-      }),
-    styles.container,
-  );
+  const Container = styled.div<ContainerProps<Media, Space>>`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    ${styles.container}
+    ${createProps({
+      $align: (align: ResponsiveValue<Media, InlineLayoutAlignment>) =>
+        map(align, (a) => `justify-content: ${horizontalAlignment[a]}`),
+    })}
+  `;
 
-  const Item = styled.div<InlineLayoutProps<Media, Space>>(
-    {},
-    createProps<{space: ResponsiveValue<Media, Space>}>({
-      // FIXME: mixin should be allowed to be optional
-      space: [paddingTop, paddingLeft],
-    }),
-  );
+  const Item = styled.div<ItemProps<Media, Space>>`
+    ${styles.item}
+    ${createProps({
+      $space: [paddingTop, paddingLeft],
+    })}
+  `;
 
   const InlineLayout: React.FC<InlineLayoutProps<Media, Space>> = ({
     space,
@@ -102,14 +112,14 @@ export const createInlineLayout = <
     children,
     ...otherProps
   }) => (
-    <Wrapper {...otherProps} space={space}>
-      <Container align={align} space={space}>
+    <Wrapper {...otherProps} $space={space}>
+      <Container $align={align} $space={space}>
         {flattenChildren(children).map((child, index) => {
           if (!React.isValidElement(child)) {
             return child;
           }
           return (
-            <Item key={child.key || index} space={space}>
+            <Item key={child.key || index} $space={space}>
               {child}
             </Item>
           );

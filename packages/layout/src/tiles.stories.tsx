@@ -13,7 +13,7 @@ const CustomTiles = styled(TileLayout)({
 });
 
 const Tile: React.FC = () => (
-  <Box backgroundColor="grey" width="300px" padding={2}>
+  <Box backgroundColor="grey" padding={2}>
     Tile
   </Box>
 );

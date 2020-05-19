@@ -1,5 +1,4 @@
 import {
-  css,
   MediaConstraint,
   MapFunction,
   ResponsiveValue,
@@ -11,6 +10,7 @@ import {
   ThemedGetSpaceFunction,
   SpaceMixinFunction,
 } from '@substance/mixin';
+import {css} from 'styled-components';
 
 interface StyleOptions<
   Media extends MediaConstraint,
@@ -26,7 +26,7 @@ export interface StyleProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  space?: ResponsiveValue<Media, Space>;
+  $space?: ResponsiveValue<Media, Space>;
 }
 
 export const createSpaceStyles = <
@@ -38,7 +38,6 @@ export const createSpaceStyles = <
   paddingTop,
   paddingLeft,
 }: StyleOptions<Media, Space>) => {
-  // TODO: return types
   return {
     wrapper: css<StyleProps<Media, Space>>`
       padding-top: 1px;
@@ -46,37 +45,35 @@ export const createSpaceStyles = <
         display: block;
         content: '';
         margin-top: -1px;
-        ${({space}) => {
-          if (space === undefined) {
-            return;
-          }
-          return map(
-            space,
-            (s) => css`
-              margin-top: calc(-${getSpace(s)} - 1px);
-            `,
-          );
-        }}
+        ${createProps({
+          $space: (space: ResponsiveValue<Media, Space>) =>
+            map(
+              space,
+              (s) => css`
+                margin-top: calc(-${getSpace(s)} - 1px);
+              `,
+            ),
+        })}
       }
     `,
 
-    container: ({space}: StyleProps<Media, Space>) => {
-      if (space === undefined) {
-        return;
-      }
-      return map(
-        space,
-        (s) =>
-          css`
-            margin-left: -${getSpace(s)};
-          `,
-      );
-    },
+    container: css<StyleProps<Media, Space>>`
+      ${createProps({
+        $space: (space: ResponsiveValue<Media, Space>) =>
+          map(
+            space,
+            (s) =>
+              css`
+                margin-left: -${getSpace(s)};
+              `,
+          ),
+      })}
+    `,
 
-    item: css`
+    item: css<StyleProps<Media, Space>>`
       box-sizing: border-box;
       ${createProps({
-        space: [paddingLeft, paddingTop],
+        $space: [paddingLeft, paddingTop],
       })}
     `,
   };
