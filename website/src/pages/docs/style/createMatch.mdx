@@ -1,0 +1,57 @@
+import {DocumentationLayout} from '~/components/DocumentationLayout';
+export default DocumentationLayout;
+
+# createMatch()
+
+`createMatch()` creates a mixin which applies a style when a media query is matched.
+
+`createMatch()` is called with either:
+
+- a map of media queries OR
+- a function which receives the theme and returns a map of media queries
+
+## Usage
+
+### Using a map of media queries
+
+```jsx
+import styled from 'styled-components'
+import {createMatch} from '@substance/style';
+
+const queries = {
+  viewport-1: '0em',
+  viewport-2: '30em',
+  viewport-3: '60em',
+}
+
+const match = createMatch(queries);
+
+const Feature = styled.div`
+  flex-basis: 100%;
+  ${match('viewport-2')`
+    flex-basis: 50%;
+  `}
+  ${match('viewport-3')`
+    flex-basis: 25%;
+  `}
+`;
+```
+
+### Using a map of media queries from the theme
+
+```jsx
+import styled from 'styled-components';
+import {createMatch} from '@substance/style';
+
+const match = createMatch((theme) => theme.media);
+
+const Feature = styled.div`
+  flex-basis: 100%;
+  ${match('viewport-2')`
+    flex-basis: 50%;
+  `}
+  ${match('viewport-3')`
+    flex-basis: 25%;
+  `}
+`;
+```

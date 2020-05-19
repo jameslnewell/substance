@@ -143,10 +143,10 @@ export const createColumnLayout = <
         map(
           width,
           (w) => css`
-            flex-grow: ${w === undefined ? 1 : undefined};
-            flex-shrink: ${w === 'content' ? 1 : undefined};
-            flex-basis: ${typeof w === 'number' ? `${w * 100}%` : undefined};
-            max-width: ${typeof w === 'number' ? `${w * 100}%` : undefined};
+            flex-grow: ${w === undefined ? 1 : 'initial'};
+            flex-shrink: ${w === 'content' ? 1 : 'initial'};
+            flex-basis: ${typeof w === 'number' ? `${w * 100}%` : 'initial'};
+            max-width: ${typeof w === 'number' ? `${w * 100}%` : 'initial'};
           `,
         ),
     })}
