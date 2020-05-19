@@ -1,0 +1,42 @@
+import {DocumentationLayout} from '~/components/DocumentationLayout';
+export default DocumentationLayout;
+
+# createMap()
+
+`createMap()` creates a mixin which applies a style across multiple media queries.
+
+`createMap()` is called with a `match` function
+
+## Usage
+
+### Using a map of media queries
+
+```jsx
+import styled from 'styled-components'
+import {createMatch, createMap} from '@substance/style';
+
+const queries = {
+  viewport-1: '0em',
+  viewport-2: '30em',
+  viewport-3: '60em',
+}
+
+const map = createMap(createMatch(queries));
+
+const Feature = styled.div`
+  ${map({viewport-1: '100%', viewport-2: '50%', viewport-3: '25%'}, width => `flex-basis: ${width})}
+`;
+```
+
+### Using a map of media queries from the theme
+
+```jsx
+import styled from 'styled-components';
+import {createMatch} from '@substance/style';
+
+const map = createMap(createMatch(queries));
+
+const Feature = styled.div`
+  ${map({viewport-1: '100%', viewport-2: '50%', viewport-3: '25%'}, width => `flex-basis: ${width})}
+`;
+```
