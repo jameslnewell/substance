@@ -31,7 +31,17 @@ export const WithSpace: React.FC = () => (
 );
 
 export const WithResponsiveSpace: React.FC = () => (
-  <StackLayout space={{sm: 2, md: 4}}>{content}</StackLayout>
+  <StackLayout space={{mobile: 2, tablet: 4}}>{content}</StackLayout>
+);
+
+export const WithAlignment: React.FC = () => (
+  <>
+    <StackLayout align="left">{content}</StackLayout>
+    <br />
+    <StackLayout align="center">{content}</StackLayout>
+    <br />
+    <StackLayout align="right">{content}</StackLayout>
+  </>
 );
 
 export const WithClassName: React.FC = () => (
