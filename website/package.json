@@ -1,9 +1,9 @@
 {
   "name": "@substance/website",
-  "version": "1.0.0-preview.5",
+  "version": "1.0.0-preview.6",
   "private": true,
   "dependencies": {
-    "@substance/layout": "^0.1.0-preview.17",
+    "@substance/layout": "^0.1.0-preview.18",
     "@substance/mixin": "^0.1.0-preview.13",
     "@substance/style": "^0.1.0-preview.26",
     "@types/react": "^16.9.25",
