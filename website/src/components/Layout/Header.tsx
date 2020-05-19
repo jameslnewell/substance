@@ -11,7 +11,7 @@ const Outer = styled.header`
   ${backgroundColor('onSurface')};
 `;
 
-const Text = styled.p`
+const Text = styled.div`
   display: inline-flex;
   margin: 0;
   ${color('surface')};
@@ -29,7 +29,7 @@ export const Header = () => (
       <Inner>
         <ColumnLayout valign="center">
           <ColumnLayout.Column>
-            <Text>
+            <Text as="div">
               <Logo />
             </Text>
           </ColumnLayout.Column>

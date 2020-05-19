@@ -1,6 +1,11 @@
 import {Theme} from './styled';
 import {css} from './styled';
-import {MediaConstraint, MediaQueries, MatchFunction} from './types';
+import {
+  MediaConstraint,
+  MediaQueries,
+  MatchFunction,
+  ThemeProps,
+} from './types';
 
 export interface GetMediaQueriesFromThemeFunction<
   Media extends MediaConstraint
@@ -32,10 +37,12 @@ export const createMatch = <Media extends MediaConstraint>(
   return (media) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (first: any, ...interpolations: any[]): any => {
+      const query =
+        typeof queriesOrGetQueries === 'function'
+          ? ({theme}: ThemeProps) => getQuery(media, queriesOrGetQueries(theme))
+          : getQuery(media, queriesOrGetQueries);
       return css`
-        @media ${typeof queriesOrGetQueries === 'function'
-            ? ({theme}) => getQuery(media, queriesOrGetQueries(theme))
-            : getQuery(media, queriesOrGetQueries)} {
+        @media ${query} {
           ${css(first, ...interpolations)}
         }
       `;

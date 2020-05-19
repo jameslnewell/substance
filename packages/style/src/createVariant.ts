@@ -1,4 +1,5 @@
 import {Interpolation} from './styled';
+import {DefaultProps, PropsConstraint} from './types';
 
 export type VariantConstraint = string | number;
 
@@ -31,7 +32,10 @@ export type VariantConstraint = string | number;
  * )
  *
  */
-export const createVariant = <Variant extends VariantConstraint, Props>(
+export const createVariant = <
+  Variant extends VariantConstraint,
+  Props extends PropsConstraint = DefaultProps
+>(
   variants: {
     [variant in Variant]: Interpolation<Props>;
   },

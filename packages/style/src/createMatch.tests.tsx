@@ -4,12 +4,14 @@ import styled from 'styled-components';
 import {render} from '@testing-library/react';
 import {keysOf} from '@substance/test-utilities';
 import {MediaQueries, MatchFunction, MediaConstraint} from './types';
-import {queries} from './queries';
+import {DefaultMedia, queries} from './queries';
 import {createMatch} from './createMatch';
 import {colors} from './__stories__';
 import {
-  UsingCSSObject,
-  UsingTaggedTemplateLiteral,
+  StyledWithObject,
+  StyledWithFunction,
+  StyleWithTaggedTemplateLiteral,
+  StyledWithMixed,
 } from './createMatch.stories';
 
 function applyStyleForEachMedia<Media extends MediaConstraint>(
@@ -37,19 +39,38 @@ function expectStyleForEachMedia<Media extends MediaConstraint>(
 }
 
 describe('createMatch()', () => {
-  test('style is applied when media query is matched and style is a tagged template literal', () => {
-    const {container} = render(<UsingTaggedTemplateLiteral />);
-    expectStyleForEachMedia(queries, container.firstChild);
-  });
+  [
+    ['tagged template literal', StyleWithTaggedTemplateLiteral],
+    ['function', StyledWithFunction],
+    ['object', StyledWithObject],
+    ['mixed', StyledWithMixed],
+  ].forEach(([type, Component]) => {
+    describe(`when styled with ${type}`, () => {
+      test('style is not applied when media queries are not matched', () => {
+        const {container} = render(<Component />);
+        expect.assertions(colors.length * 2);
+        colors.forEach((color) => {
+          expect(container.firstChild).not.toHaveStyleRule(
+            'background-color',
+            color,
+            {},
+          );
+        });
+      });
 
-  test('style is applied when media query is matched and style is an object', () => {
-    const {container} = render(<UsingCSSObject />);
-    expectStyleForEachMedia(queries, container.firstChild);
-  });
-
-  test('style is applied when media query is matched and style is mixed', () => {
-    const {container} = render(<UsingTaggedTemplateLiteral />);
-    expectStyleForEachMedia(queries, container.firstChild);
+      (Object.keys(queries) as DefaultMedia[]).forEach((media, index) => {
+        test(`style is applied when media query is matched at ${media}`, () => {
+          const {container} = render(<Component />);
+          expect(container.firstChild).toHaveStyleRule(
+            'background-color',
+            colors[index],
+            {
+              media: queries[media],
+            },
+          );
+        });
+      });
+    });
   });
 
   describe('when using a queries object', () => {

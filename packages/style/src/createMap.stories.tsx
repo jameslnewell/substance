@@ -17,23 +17,30 @@ const values = {
   desktop: 'blue',
 };
 
-const SquareUsingTaggedTemplateLiteral = styled.div`
+const SquareUsingTaggedTemplateLiteralStyle = styled.div`
   ${square}
   ${map(values, (value) => `background-color: ${value};`)}
 `;
 
-const SquareUsingCSSObject = styled.div(
+const SquareUsingFunctionStyle = styled.div`
+  ${square}
+  ${map(values, (value) => () => `background-color: ${value};`)}
+`;
+
+const SquareUsingObjectStyle = styled.div(
   square,
   map(values, (value) => ({backgroundColor: value})),
 );
 
-const SquareUsingMixed = styled.div`
+const SquareUsingMixedStyle = styled.div`
   ${square}
   ${map(values, (value) => ({backgroundColor: value}))}
 `;
 
-export const UsingTaggedTemplateLiteral = () => (
-  <SquareUsingTaggedTemplateLiteral />
+export const StyleWithTaggedTemplateLiteral = () => (
+  <SquareUsingTaggedTemplateLiteralStyle />
 );
-export const UsingCSSObject = () => <SquareUsingCSSObject />;
-export const UsingMixed = () => <SquareUsingMixed />;
+
+export const StyledWithFunction = () => <SquareUsingFunctionStyle />;
+export const StyledWithObject = () => <SquareUsingObjectStyle />;
+export const StyledWithMixed = () => <SquareUsingMixedStyle />;

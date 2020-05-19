@@ -7,6 +7,7 @@ import {
   MapFunctionFunction,
   MapFunction,
   PropsConstraint,
+  DefaultProps,
 } from './types';
 
 /**
@@ -20,7 +21,7 @@ export const createMap = <Media extends MediaConstraint>(
 ): MapFunction<Media> => {
   return <
     Value extends ResponsiveValueConstraint,
-    Props extends PropsConstraint
+    Props extends PropsConstraint = DefaultProps
   >(
     valueOrValues: ResponsiveValue<Media, Value>,
     fn: MapFunctionFunction<Value, Props>,

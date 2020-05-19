@@ -1,7 +1,10 @@
 import {Properties} from 'csstype';
 import {CSSFunction, Interpolation, Theme} from './styled';
 
-export type PropsConstraint = {};
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface PropsConstraint {}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface DefaultProps {}
 
 export interface ThemeProps {
   theme: Theme;
@@ -42,13 +45,20 @@ export interface MatchFunction<Media extends MediaConstraint> {
 
 export interface MapFunctionFunction<
   Value extends ResponsiveValueConstraint,
-  Props extends PropsConstraint
+  Props extends PropsConstraint = DefaultProps
 > {
   (value: Value): Interpolation<Props>;
 }
 
 export interface MapFunction<Media extends MediaConstraint> {
-  <Value extends ResponsiveValueConstraint, Props extends PropsConstraint>(
+  <Value extends ResponsiveValueConstraint>(
+    valueOrValues: ResponsiveValue<Media, Value>,
+    fn: MapFunctionFunction<Value, DefaultProps>,
+  ): Interpolation<DefaultProps>;
+  <
+    Value extends ResponsiveValueConstraint,
+    Props extends PropsConstraint = DefaultProps
+  >(
     valueOrValues: ResponsiveValue<Media, Value>,
     fn: MapFunctionFunction<Value, Props>,
   ): Interpolation<Props>;
@@ -57,7 +67,9 @@ export interface MapFunction<Media extends MediaConstraint> {
 // ========== MIXIN ==========
 
 export interface MixinFunction<Value extends ValueConstraint> {
-  <Props extends PropsConstraint>(value: Value): Interpolation<Props>;
+  <Props extends PropsConstraint = DefaultProps>(value: Value): Interpolation<
+    Props
+  >;
 }
 
 export interface ResponsiveMixinFunction<
