@@ -6,9 +6,9 @@ import {
   ResponsiveMixinFunction,
   StyleValue,
   createProps,
+  mapValueToValue,
 } from '@substance/style';
 import {display} from '@substance/mixin';
-import {transformProps} from '../utils';
 
 export interface HiddenProps<Media extends MediaConstraint> {
   hide?: ResponsiveValue<Media, boolean>;
@@ -36,7 +36,7 @@ export function createHidden<Media extends MediaConstraint>({
   }) => (
     <Wrapper
       {...otherProps}
-      $display={transformProps(hide, (isHidden) =>
+      $display={mapValueToValue(hide, (isHidden) =>
         isHidden ? 'none' : inline ? 'inline' : 'block',
       )}
       as={inline ? 'span' : 'div'}
