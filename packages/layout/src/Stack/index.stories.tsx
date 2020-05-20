@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import {StackLayout} from './stack';
+import {Hidden} from '../Hidden';
+import {StackLayout} from '.';
 
 export default {
   title: 'layout/StackLayout',
@@ -46,4 +47,14 @@ export const WithAlignment: React.FC = () => (
 
 export const WithClassName: React.FC = () => (
   <CustomStackLayout space={3}>{content}</CustomStackLayout>
+);
+
+export const DoesNotAddSpaceOnHiddenChildren = () => (
+  <StackLayout space={4}>
+    <span>A</span>
+    <Hidden hide={{sm: true, md: false, lg: true}}>
+      <span>B</span>
+    </Hidden>
+    <span>C</span>
+  </StackLayout>
 );

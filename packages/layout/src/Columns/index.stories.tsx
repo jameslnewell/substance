@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box} from '@substance/box';
 import styled from 'styled-components';
-import {ColumnLayout} from './columns';
+import {ColumnLayout} from '.';
 
 export default {
   title: 'layout/ColumnLayout',

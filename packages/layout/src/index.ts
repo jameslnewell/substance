@@ -1,8 +1,9 @@
-export * from './columns';
+export * from './Columns';
 export * from './container';
 export * from './inline';
-export * from './stack';
+export * from './Stack';
 export * from './tiles';
+export * from './Hidden';
 
 // TODO: make each of the layout component styles usable as mixins
 

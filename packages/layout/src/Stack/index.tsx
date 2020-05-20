@@ -6,12 +6,17 @@ import {
   ResponsiveValue,
   MediaConstraint,
   map,
+  StyleValue,
+  ResponsiveMixinFunction,
 } from '@substance/style';
 import {
   marginBottom,
   SpaceConstraint,
   SpaceMixinFunction,
+  display,
 } from '@substance/mixin';
+import {HiddenProps, Hidden} from '../Hidden';
+import {transformProps} from '../utils';
 
 export type StackLayoutAlignment = 'left' | 'center' | 'right';
 
@@ -34,14 +39,21 @@ export interface CreateStackLayoutOptions<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  marginBottom: SpaceMixinFunction<Media, Space>;
+  mixins: {
+    display: ResponsiveMixinFunction<Media, StyleValue<'display'>>;
+    marginBottom: SpaceMixinFunction<Media, Space>;
+  };
+  components: {
+    Hidden: React.ComponentType<HiddenProps<Media>>;
+  };
 }
 
 export const createStackLayout = <
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 >({
-  marginBottom,
+  mixins: {display, marginBottom},
+  components: {Hidden},
 }: CreateStackLayoutOptions<Media, Space>) => {
   const Wrapper = styled.div`
     display: flex;
@@ -58,10 +70,11 @@ export const createStackLayout = <
   `;
 
   const Item = styled.div`
-    :last-child {
+    :last-of-type {
       margin-bottom: 0;
     }
     ${createProps({
+      $display: display,
       $marginBottom: marginBottom,
     })}
   `;
@@ -77,8 +90,27 @@ export const createStackLayout = <
         if (!React.isValidElement(child)) {
           return child;
         }
+
+        if (process.env.NODE_ENV !== 'production') {
+          if (child.type === Hidden && child.props.inline) {
+            console.error(
+              'Hidden cannot be "inline" when a direct child of Stack.',
+            );
+          }
+        }
+        const display =
+          child.type === Hidden
+            ? transformProps(child.props.hide, (hide) =>
+                hide ? 'none' : 'block',
+              )
+            : undefined;
+
         return (
-          <Item key={child.key || index} $marginBottom={space}>
+          <Item
+            key={child.key || index}
+            $display={display}
+            $marginBottom={space}
+          >
             {child}
           </Item>
         );
@@ -89,4 +121,12 @@ export const createStackLayout = <
   return StackLayout;
 };
 
-export const StackLayout = createStackLayout({marginBottom});
+export const StackLayout = createStackLayout({
+  mixins: {
+    marginBottom,
+    display,
+  },
+  components: {
+    Hidden,
+  },
+});
