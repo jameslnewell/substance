@@ -1,5 +1,11 @@
 # @substance/style
 
+## 0.1.0-preview.27
+
+### Patch Changes
+
+- ea7ff9a: Added mapValueToValue method and made Stack handling of hidden elements more flexible"
+
 ## 0.1.0-preview.26
 
 ### Patch Changes
