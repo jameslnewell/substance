@@ -3,39 +3,29 @@ import styled from 'styled-components';
 import {
   MediaConstraint,
   ResponsiveValue,
-  MapFunction,
-  map,
+  ResponsiveMixinFunction,
+  StyleValue,
+  createProps,
 } from '@substance/style';
+import {display} from '@substance/mixin';
+import {transformProps} from '../utils';
 
 export interface HiddenProps<Media extends MediaConstraint> {
   hide?: ResponsiveValue<Media, boolean>;
   inline?: boolean;
 }
 
-interface WrapperProps<Media extends MediaConstraint> {
-  $hide?: HiddenProps<Media>['hide'];
-  $inline?: HiddenProps<Media>['inline'];
-}
-
 export interface CreateHiddenOptions<Media extends MediaConstraint> {
-  map: MapFunction<Media>;
+  mixins: {
+    display: ResponsiveMixinFunction<Media, StyleValue<'display'>>;
+  };
 }
 
 export function createHidden<Media extends MediaConstraint>({
-  map,
+  mixins: {display},
 }: CreateHiddenOptions<Media>) {
-  // TODO: add support for $inline being responsive
-  const Wrapper = styled.div<WrapperProps<Media>>`
-    ${({$hide, $inline = false}) => {
-      if ($hide === undefined) {
-        return;
-      }
-      return map(
-        $hide,
-        (isHidden) =>
-          `display: ${isHidden ? 'none' : $inline ? 'inline' : 'block'};`,
-      );
-    }}
+  const Wrapper = styled.div`
+    ${createProps({$display: display})}
   `;
 
   const Hidden: React.FC<HiddenProps<Media>> = ({
@@ -46,8 +36,9 @@ export function createHidden<Media extends MediaConstraint>({
   }) => (
     <Wrapper
       {...otherProps}
-      $hide={hide}
-      $inline={inline}
+      $display={transformProps(hide, (isHidden) =>
+        isHidden ? 'none' : inline ? 'inline' : 'block',
+      )}
       as={inline ? 'span' : 'div'}
     >
       {children}
@@ -57,4 +48,4 @@ export function createHidden<Media extends MediaConstraint>({
   return Hidden;
 }
 
-export const Hidden = createHidden({map});
+export const Hidden = createHidden({mixins: {display}});

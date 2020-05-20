@@ -16,7 +16,7 @@ import {
   display,
 } from '@substance/mixin';
 import {HiddenProps, Hidden} from '../Hidden';
-import {mapProps} from '../utils';
+import {transformProps} from '../utils';
 
 export type StackLayoutAlignment = 'left' | 'center' | 'right';
 
@@ -39,18 +39,21 @@ export interface CreateStackLayoutOptions<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  marginBottom: SpaceMixinFunction<Media, Space>;
-  display: ResponsiveMixinFunction<Media, StyleValue<'display'>>;
-  Hidden: React.ComponentType<HiddenProps<Media>>;
+  mixins: {
+    display: ResponsiveMixinFunction<Media, StyleValue<'display'>>;
+    marginBottom: SpaceMixinFunction<Media, Space>;
+  };
+  components: {
+    Hidden: React.ComponentType<HiddenProps<Media>>;
+  };
 }
 
 export const createStackLayout = <
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 >({
-  marginBottom,
-  display,
-  Hidden,
+  mixins: {display, marginBottom},
+  components: {Hidden},
 }: CreateStackLayoutOptions<Media, Space>) => {
   const Wrapper = styled.div`
     display: flex;
@@ -97,7 +100,9 @@ export const createStackLayout = <
         }
         const display =
           child.type === Hidden
-            ? mapProps(child.props.hide, (hide) => (hide ? 'none' : 'block'))
+            ? transformProps(child.props.hide, (hide) =>
+                hide ? 'none' : 'block',
+              )
             : undefined;
 
         return (
@@ -116,4 +121,12 @@ export const createStackLayout = <
   return StackLayout;
 };
 
-export const StackLayout = createStackLayout({marginBottom, display, Hidden});
+export const StackLayout = createStackLayout({
+  mixins: {
+    marginBottom,
+    display,
+  },
+  components: {
+    Hidden,
+  },
+});

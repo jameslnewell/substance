@@ -4,14 +4,19 @@ import {
   ResponsiveValueConstraint,
 } from '@substance/style';
 
-export function mapProps<
+/**
+ * Map a prop to another prop value
+ * @param input
+ * @param fn
+ */
+export function transformProps<
   Media extends MediaConstraint,
   InputValue extends ResponsiveValueConstraint,
   OutputValue extends ResponsiveValueConstraint
 >(
-  input: ResponsiveValue<Media, InputValue>,
+  input: ResponsiveValue<Media, InputValue> | undefined,
   fn: (value: InputValue) => OutputValue,
-): ResponsiveValue<Media, OutputValue> {
+): ResponsiveValue<Media, OutputValue> | undefined {
   if (input === undefined) {
     return undefined;
   }
