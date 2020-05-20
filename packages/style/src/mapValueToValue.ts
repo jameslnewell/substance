@@ -2,14 +2,14 @@ import {
   ResponsiveValue,
   MediaConstraint,
   ResponsiveValueConstraint,
-} from '@substance/style';
+} from './types';
 
 /**
- * Map a prop to another prop value
+ * Map a value to another value
  * @param input
  * @param fn
  */
-export function transformProps<
+export function mapValueToValue<
   Media extends MediaConstraint,
   InputValue extends ResponsiveValueConstraint,
   OutputValue extends ResponsiveValueConstraint

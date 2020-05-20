@@ -8,6 +8,7 @@ import {
   map,
   StyleValue,
   ResponsiveMixinFunction,
+  mapValueToValue,
 } from '@substance/style';
 import {
   marginBottom,
@@ -15,8 +16,7 @@ import {
   SpaceMixinFunction,
   display,
 } from '@substance/mixin';
-import {HiddenProps, Hidden} from '../Hidden';
-import {transformProps} from '../utils';
+import {Hidden} from '../Hidden';
 
 export type StackLayoutAlignment = 'left' | 'center' | 'right';
 
@@ -43,9 +43,9 @@ export interface CreateStackLayoutOptions<
     display: ResponsiveMixinFunction<Media, StyleValue<'display'>>;
     marginBottom: SpaceMixinFunction<Media, Space>;
   };
-  components: {
-    Hidden: React.ComponentType<HiddenProps<Media>>;
-  };
+  getChildDisplayValue: (
+    child: React.ReactElement,
+  ) => ResponsiveValue<Media, 'block' | 'none'> | undefined;
 }
 
 export const createStackLayout = <
@@ -53,7 +53,7 @@ export const createStackLayout = <
   Space extends SpaceConstraint
 >({
   mixins: {display, marginBottom},
-  components: {Hidden},
+  getChildDisplayValue,
 }: CreateStackLayoutOptions<Media, Space>) => {
   const Wrapper = styled.div`
     display: flex;
@@ -90,25 +90,10 @@ export const createStackLayout = <
         if (!React.isValidElement(child)) {
           return child;
         }
-
-        if (process.env.NODE_ENV !== 'production') {
-          if (child.type === Hidden && child.props.inline) {
-            console.error(
-              'Hidden cannot be "inline" when a direct child of Stack.',
-            );
-          }
-        }
-        const display =
-          child.type === Hidden
-            ? transformProps(child.props.hide, (hide) =>
-                hide ? 'none' : 'block',
-              )
-            : undefined;
-
         return (
           <Item
             key={child.key || index}
-            $display={display}
+            $display={getChildDisplayValue(child)}
             $marginBottom={space}
           >
             {child}
@@ -121,12 +106,29 @@ export const createStackLayout = <
   return StackLayout;
 };
 
+function getChildDisplayValue<Media extends MediaConstraint>(
+  child: React.ReactElement,
+): ResponsiveValue<Media, 'block' | 'none'> | undefined {
+  if (child.type === Hidden) {
+    if (process.env.NODE_ENV !== 'production') {
+      if (child.props.inline) {
+        console.error(
+          'Hidden cannot be "inline" when a direct child of Stack.',
+        );
+      }
+    }
+    return mapValueToValue<Media, boolean, 'block' | 'none'>(
+      child.props.hide,
+      (hide) => (hide ? 'none' : 'block'),
+    );
+  }
+  return undefined;
+}
+
 export const StackLayout = createStackLayout({
   mixins: {
     marginBottom,
     display,
   },
-  components: {
-    Hidden,
-  },
+  getChildDisplayValue,
 });
