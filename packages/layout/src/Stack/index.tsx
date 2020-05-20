@@ -6,12 +6,17 @@ import {
   ResponsiveValue,
   MediaConstraint,
   map,
+  StyleValue,
+  ResponsiveMixinFunction,
 } from '@substance/style';
 import {
   marginBottom,
   SpaceConstraint,
   SpaceMixinFunction,
+  display,
 } from '@substance/mixin';
+import {HiddenProps, Hidden} from '../Hidden';
+import {mapProps} from '../utils';
 
 export type StackLayoutAlignment = 'left' | 'center' | 'right';
 
@@ -35,6 +40,8 @@ export interface CreateStackLayoutOptions<
   Space extends SpaceConstraint
 > {
   marginBottom: SpaceMixinFunction<Media, Space>;
+  display: ResponsiveMixinFunction<Media, StyleValue<'display'>>;
+  Hidden: React.ComponentType<HiddenProps<Media>>;
 }
 
 export const createStackLayout = <
@@ -42,6 +49,8 @@ export const createStackLayout = <
   Space extends SpaceConstraint
 >({
   marginBottom,
+  display,
+  Hidden,
 }: CreateStackLayoutOptions<Media, Space>) => {
   const Wrapper = styled.div`
     display: flex;
@@ -58,10 +67,11 @@ export const createStackLayout = <
   `;
 
   const Item = styled.div`
-    :last-child {
+    :last-of-type {
       margin-bottom: 0;
     }
     ${createProps({
+      $display: display,
       $marginBottom: marginBottom,
     })}
   `;
@@ -77,8 +87,25 @@ export const createStackLayout = <
         if (!React.isValidElement(child)) {
           return child;
         }
+
+        if (process.env.NODE_ENV !== 'production') {
+          if (child.type === Hidden && child.props.inline) {
+            console.error(
+              'Hidden cannot be "inline" when a direct child of Stack.',
+            );
+          }
+        }
+        const display =
+          child.type === Hidden
+            ? mapProps(child.props.hide, (hide) => (hide ? 'none' : 'block'))
+            : undefined;
+
         return (
-          <Item key={child.key || index} $marginBottom={space}>
+          <Item
+            key={child.key || index}
+            $display={display}
+            $marginBottom={space}
+          >
             {child}
           </Item>
         );
@@ -89,4 +116,4 @@ export const createStackLayout = <
   return StackLayout;
 };
 
-export const StackLayout = createStackLayout({marginBottom});
+export const StackLayout = createStackLayout({marginBottom, display, Hidden});

@@ -16,7 +16,7 @@ import {
   paddingLeft,
 } from '@substance/mixin';
 import styled, {css} from 'styled-components';
-import {createSpaceStyles} from './styles';
+import {createSpaceStyles} from '../styles';
 
 export type ColumnsLayoutColumnWidth = number | 'content';
 
