@@ -10,4 +10,4 @@ export * from './map';
 export * from './createMixin';
 export * from './createProps';
 export * from './createVariant';
-export * from './mapValueToValue';
+export * from './unstable_mapValueToValue';

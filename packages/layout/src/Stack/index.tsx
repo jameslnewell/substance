@@ -8,7 +8,7 @@ import {
   map,
   StyleValue,
   ResponsiveMixinFunction,
-  mapValueToValue,
+  unstable_mapValueToValue,
 } from '@substance/style';
 import {
   marginBottom,
@@ -117,7 +117,7 @@ function getChildDisplayValue<Media extends MediaConstraint>(
         );
       }
     }
-    return mapValueToValue<Media, boolean, 'block' | 'none'>(
+    return unstable_mapValueToValue<Media, boolean, 'block' | 'none'>(
       child.props.hide,
       (hide) => (hide ? 'none' : 'block'),
     );
