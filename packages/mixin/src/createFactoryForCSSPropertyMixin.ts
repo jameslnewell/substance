@@ -1,4 +1,3 @@
-import {} from 'styled-components';
 import {
   createMixin,
   StyleProperty,
