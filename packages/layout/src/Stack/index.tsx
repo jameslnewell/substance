@@ -8,6 +8,7 @@ import {
   map,
   StyleValue,
   ResponsiveMixinFunction,
+  // eslint-disable-next-line @typescript-eslint/camelcase
   unstable_mapValueToValue,
 } from '@substance/style';
 import {
@@ -117,6 +118,7 @@ function getChildDisplayValue<Media extends MediaConstraint>(
         );
       }
     }
+    // eslint-disble-next-line @typescript-eslint/camelcase
     return unstable_mapValueToValue<Media, boolean, 'block' | 'none'>(
       child.props.hide,
       (hide) => (hide ? 'none' : 'block'),

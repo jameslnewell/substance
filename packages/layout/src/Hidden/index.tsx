@@ -6,6 +6,7 @@ import {
   ResponsiveMixinFunction,
   StyleValue,
   createProps,
+  // eslint-disable-next-line @typescript-eslint/camelcase
   unstable_mapValueToValue,
 } from '@substance/style';
 import {display} from '@substance/mixin';
@@ -36,6 +37,7 @@ export function createHidden<Media extends MediaConstraint>({
   }) => (
     <Wrapper
       {...otherProps}
+      // eslint-disable-next-line @typescript-eslint/camelcase
       $display={unstable_mapValueToValue(hide, (isHidden) =>
         isHidden ? 'none' : inline ? 'inline' : 'block',
       )}

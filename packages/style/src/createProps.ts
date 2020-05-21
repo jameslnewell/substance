@@ -2,9 +2,9 @@ import {Interpolation} from './styled';
 
 type TypeOrTypeOfArray<A> = A extends Array<unknown> ? A[number] : A;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ValueFromMixinFunction<F> = F extends (
   value: infer V,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) => Interpolation<any>
   ? V
   : never;
