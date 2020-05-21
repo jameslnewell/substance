@@ -50,4 +50,6 @@ describe('createProps()', () => {
     expect(container.firstChild).toHaveStyleRule('width', '32px');
     expect(container.firstChild).toHaveStyleRule('height', '32px');
   });
+
+  // TODO: test theme
 });

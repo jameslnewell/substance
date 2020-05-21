@@ -29,4 +29,6 @@ describe('createVariant()', () => {
     const {container} = render(<Component />);
     expect(container.firstChild).toHaveStyleRule('color', 'green');
   });
+
+  // TODO: test theme
 });

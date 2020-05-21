@@ -1,16 +1,18 @@
 import {Theme, StyleValue, get, ThemeProps} from '@substance/style';
 import {ColorConstraint, Colors} from './types';
 
+type ColorStyleValue = StyleValue<'color'>;
+
 export interface GetColorsFunction {
   (theme: Theme | undefined): Colors;
 }
 
 export interface GetColorFunction<Color extends ColorConstraint> {
-  (color: Color): StyleValue<'color'>;
+  (color: Color): ColorStyleValue;
 }
 
 export interface ThemedGetColorFunction<Color extends ColorConstraint> {
-  (color: Color): (props: ThemeProps) => StyleValue<'color'>;
+  (color: Color): (props: ThemeProps) => ColorStyleValue;
 }
 
 export function createGetColor<Color extends ColorConstraint>(
@@ -27,7 +29,6 @@ export function createGetColor<Color extends ColorConstraint>(
     return (value) => ({theme}) =>
       get(value, colorsOrGetColors(theme)) || value;
   } else {
-    return (value): StyleValue<'color'> =>
-      get(value, colorsOrGetColors) || value;
+    return (value): ColorStyleValue => get(value, colorsOrGetColors) || value;
   }
 }

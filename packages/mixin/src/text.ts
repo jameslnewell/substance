@@ -1,19 +1,19 @@
 import {map} from '@substance/style';
 import {createFactoryForCSSPropertyMixin} from './createFactoryForCSSPropertyMixin';
 
-export const createTextAlign = createFactoryForCSSPropertyMixin('textAlign');
+export const createTextAlign = createFactoryForCSSPropertyMixin('text-align');
 export const createTextDecoration = createFactoryForCSSPropertyMixin(
-  'textDecoration',
+  'text-decoration',
 );
 
-export const createFontFamily = createFactoryForCSSPropertyMixin('fontFamily');
-export const createFontSize = createFactoryForCSSPropertyMixin('fontSize');
-export const createFontStyle = createFactoryForCSSPropertyMixin('fontStyle');
-export const createFontWeight = createFactoryForCSSPropertyMixin('fontWeight');
+export const createFontFamily = createFactoryForCSSPropertyMixin('font-family');
+export const createFontSize = createFactoryForCSSPropertyMixin('font-size');
+export const createFontStyle = createFactoryForCSSPropertyMixin('font-style');
+export const createFontWeight = createFactoryForCSSPropertyMixin('font-weight');
 
-export const createLineHeight = createFactoryForCSSPropertyMixin('lineHeight');
+export const createLineHeight = createFactoryForCSSPropertyMixin('line-height');
 export const createLetterSpacing = createFactoryForCSSPropertyMixin(
-  'letterSpacing',
+  'letter-spacing',
 );
 
 export const textAlign = createTextAlign({map});

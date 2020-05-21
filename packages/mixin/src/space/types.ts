@@ -6,7 +6,7 @@ import {
 
 export type SpaceConstraint = string | number;
 export type Spaces<Space extends SpaceConstraint> = {
-  [name in Space]: StyleValue<'marginTop'>;
+  [name in Space]: StyleValue<'margin-top'>;
 };
 export type SpaceMixinFunction<
   Media extends MediaConstraint,

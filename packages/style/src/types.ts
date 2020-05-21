@@ -1,4 +1,4 @@
-import {Properties} from 'csstype';
+import {PropertiesHyphen} from 'csstype';
 import {CSSFunction, Interpolation, Theme} from './styled';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -12,7 +12,7 @@ export interface ThemeProps {
 
 // ========== STYLE ==========
 
-type CSSProperties = Properties<string | number>;
+type CSSProperties = PropertiesHyphen<string | number>;
 
 export type StyleProperty = keyof CSSProperties;
 export type StyleValue<
