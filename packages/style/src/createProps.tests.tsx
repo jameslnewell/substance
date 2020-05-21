@@ -8,11 +8,11 @@ import {createProps} from './createProps';
 describe('createProps()', () => {
   const Component = styled.div`
     ${createProps({
-      fg: (color: StyleValue<'color'>) => ({color}),
-      bg: (color: StyleValue<'color'>) => ({backgroundColor: color}),
-      size: [
-        (size: StyleValue<'width'>) => ({width: size}),
-        (size: StyleValue<'width'>) => ({height: size}),
+      fg: (color: StyleValue<'color'>) => `color: ${color};`,
+      bg: (color: StyleValue<'color'>) => `background-color: ${color};`,
+      $size: [
+        (size: StyleValue<'width'>) => `width: ${size};`,
+        (size: StyleValue<'width'>) => `height: ${size};`,
       ],
     })}
   `;
@@ -27,7 +27,7 @@ describe('createProps()', () => {
 
   test('style is not applied when prop is undefined', () => {
     const {container} = render(
-      <Component fg={undefined} bg={undefined} size={undefined} />,
+      <Component fg={undefined} bg={undefined} $size={undefined} />,
     );
     expect(container.firstChild).not.toHaveStyleRule('color');
     expect(container.firstChild).not.toHaveStyleRule('background-color');
@@ -36,7 +36,7 @@ describe('createProps()', () => {
   });
 
   test('style is applied when prop is not undefined', () => {
-    const {container} = render(<Component fg="green" bg="blue" size="32px" />);
+    const {container} = render(<Component fg="green" bg="blue" $size="32px" />);
     expect(container.firstChild).toHaveStyleRule('color', 'green');
     expect(container.firstChild).toHaveStyleRule('background-color', 'blue');
     expect(container.firstChild).toHaveStyleRule('width', '32px');
@@ -44,7 +44,7 @@ describe('createProps()', () => {
   });
 
   test('partial style is applied when partial props are not undefined', () => {
-    const {container} = render(<Component fg="green" size="32px" />);
+    const {container} = render(<Component fg="green" $size="32px" />);
     expect(container.firstChild).toHaveStyleRule('color', 'green');
     expect(container.firstChild).not.toHaveStyleRule('background-color');
     expect(container.firstChild).toHaveStyleRule('width', '32px');

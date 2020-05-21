@@ -11,9 +11,6 @@
   "files": [
     "dist"
   ],
-  "peerDependencies": {
-    "styled-components": ">=5.0.1"
-  },
   "dependencies": {
     "@babel/runtime": "^7.9.6",
     "@substance/style": "^0.1.0-preview.26"
