@@ -1,4 +1,4 @@
-export * from './styled';
+export * from './framework/types';
 export * from './types';
 
 export * from './get';

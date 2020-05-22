@@ -1,4 +1,4 @@
-import {Interpolation} from './styled';
+import {Interpolation} from './framework/types';
 import {DefaultProps, PropsConstraint} from './types';
 
 export type VariantConstraint = string | number;

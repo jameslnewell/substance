@@ -1,5 +1,5 @@
 import {PropertiesHyphen} from 'csstype';
-import {CSSFunction, Interpolation, Theme} from './styled';
+import {CSSFunction, Interpolation, Theme} from './framework/types';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface PropsConstraint {}

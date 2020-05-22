@@ -1,5 +1,5 @@
 import {css} from 'styled-components';
-import {Interpolation} from './styled';
+import {Interpolation} from './framework/types';
 import {
   StyleProperty,
   MapFunction,

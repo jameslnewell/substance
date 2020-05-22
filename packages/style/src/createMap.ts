@@ -1,4 +1,4 @@
-import {Interpolation} from './styled';
+import {Interpolation} from './framework/types';
 import {
   MediaConstraint,
   MatchFunction,

@@ -1,5 +1,5 @@
-import {Theme} from './styled';
-import {css} from './styled';
+import {Theme} from './framework/types';
+import {css} from './framework/css';
 import {
   MediaConstraint,
   MediaQueries,

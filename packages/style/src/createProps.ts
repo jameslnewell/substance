@@ -1,4 +1,4 @@
-import {Interpolation} from './styled';
+import {Interpolation} from './framework/types';
 
 type TypeOrTypeOfArray<A> = A extends Array<unknown> ? A[number] : A;
 

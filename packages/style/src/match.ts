@@ -1,4 +1,4 @@
-import {Theme} from './styled';
+import {Theme} from './framework/types';
 import {MediaQueries, MatchFunction} from './types';
 import {queries, DefaultMedia} from './queries';
 import {createMatch} from './createMatch';
