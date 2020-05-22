@@ -29,18 +29,34 @@ const tags = (
   </>
 );
 
-export const WithAlign: React.FC = () => (
+export const WithHAlign: React.FC = () => (
   <>
     <Box backgroundColor="deeppink">
-      <InlineLayout align="left">{tags}</InlineLayout>
+      <InlineLayout halign="left">{tags}</InlineLayout>
     </Box>
     <br />
     <Box backgroundColor="deeppink">
-      <InlineLayout align="center">{tags}</InlineLayout>
+      <InlineLayout halign="center">{tags}</InlineLayout>
     </Box>
     <br />
     <Box backgroundColor="deeppink">
-      <InlineLayout align="right">{tags}</InlineLayout>
+      <InlineLayout halign="right">{tags}</InlineLayout>
+    </Box>
+  </>
+);
+
+export const WithVAlign: React.FC = () => (
+  <>
+    <Box backgroundColor="deeppink">
+      <InlineLayout valign="top">{tags}</InlineLayout>
+    </Box>
+    <br />
+    <Box backgroundColor="deeppink">
+      <InlineLayout valign="center">{tags}</InlineLayout>
+    </Box>
+    <br />
+    <Box backgroundColor="deeppink">
+      <InlineLayout valign="bottom">{tags}</InlineLayout>
     </Box>
   </>
 );

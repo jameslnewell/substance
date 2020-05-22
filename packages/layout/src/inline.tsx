@@ -19,13 +19,19 @@ import {
 } from '@substance/mixin';
 import {createSpaceStyles} from './styles';
 
-export type InlineLayoutAlignment = 'left' | 'center' | 'right';
+export type InlineLayoutHorizontalAlignment = 'left' | 'center' | 'right';
+export type InlineLayoutVerticalAlignment =
+  | 'stretch'
+  | 'top'
+  | 'center'
+  | 'bottom';
 
 export interface InlineLayoutProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  align?: ResponsiveValue<Media, InlineLayoutAlignment>;
+  halign?: ResponsiveValue<Media, InlineLayoutHorizontalAlignment>;
+  valign?: ResponsiveValue<Media, InlineLayoutVerticalAlignment>;
   space?: ResponsiveValue<Media, Space>;
   className?: string;
 }
@@ -42,7 +48,8 @@ interface ContainerProps<
   Space extends SpaceConstraint
 > {
   $space?: InlineLayoutProps<Media, Space>['space'];
-  $align?: InlineLayoutProps<Media, Space>['align'];
+  $halign?: InlineLayoutProps<Media, Space>['halign'];
+  $valign?: InlineLayoutProps<Media, Space>['valign'];
 }
 
 interface ItemProps<
@@ -66,6 +73,13 @@ const horizontalAlignment = {
   left: 'flex-start',
   center: 'center',
   right: 'flex-end',
+};
+
+const verticalAlignment = {
+  top: 'flex-start',
+  center: 'center',
+  bottom: 'flex-end',
+  stretch: 'stretch',
 };
 
 export const createInlineLayout = <
@@ -94,26 +108,27 @@ export const createInlineLayout = <
     flex-wrap: wrap;
     ${styles.container}
     ${createProps({
-      $align: (align: ResponsiveValue<Media, InlineLayoutAlignment>) =>
-        map(align, (a) => `justify-content: ${horizontalAlignment[a]}`),
+      $halign: (
+        align: ResponsiveValue<Media, InlineLayoutHorizontalAlignment>,
+      ) => map(align, (a) => `justify-content: ${horizontalAlignment[a]}`),
+      $valign: (align: ResponsiveValue<Media, InlineLayoutVerticalAlignment>) =>
+        map(align, (a) => `justify-content: ${verticalAlignment[a]}`),
     })}
   `;
 
   const Item = styled.div<ItemProps<Media, Space>>`
     ${styles.item}
-    ${createProps({
-      $space: [paddingTop, paddingLeft],
-    })}
   `;
 
   const InlineLayout: React.FC<InlineLayoutProps<Media, Space>> = ({
     space,
-    align,
+    halign,
+    valign,
     children,
     ...otherProps
   }) => (
     <Wrapper {...otherProps} $space={space}>
-      <Container $align={align} $space={space}>
+      <Container $halign={halign} $valign={valign} $space={space}>
         {flattenChildren(children).map((child, index) => {
           if (!React.isValidElement(child)) {
             return child;
