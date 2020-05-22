@@ -2,7 +2,13 @@ import {Interpolation} from './styled';
 
 type TypeOrTypeOfArray<A> = A extends Array<unknown> ? A[number] : A;
 
-type ValueFromMixinFunction<F> = F extends (
+type ValueFromMixinFunction<
+  F extends (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    value: any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ) => Interpolation<any>
+> = F extends (
   value: infer V,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) => Interpolation<any>

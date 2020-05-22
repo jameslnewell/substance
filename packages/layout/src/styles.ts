@@ -38,43 +38,47 @@ export const createSpaceStyles = <
   paddingTop,
   paddingLeft,
 }: StyleOptions<Media, Space>) => {
-  return {
-    wrapper: css<StyleProps<Media, Space>>`
-      padding-top: 1px;
-      :before {
-        display: block;
-        content: '';
-        margin-top: -1px;
-        ${createProps({
-          $space: (space: ResponsiveValue<Media, Space>) =>
-            map(
-              space,
-              (s) => css`
-                margin-top: calc(-${getSpace(s)} - 1px);
-              `,
-            ),
-        })}
-      }
-    `,
-
-    container: css<StyleProps<Media, Space>>`
+  const wrapper = css<StyleProps<Media, Space>>`
+    padding-top: 1px;
+    :before {
+      display: block;
+      content: '';
+      margin-top: -1px;
       ${createProps({
         $space: (space: ResponsiveValue<Media, Space>) =>
           map(
             space,
-            (s) =>
-              css`
-                margin-left: -${getSpace(s)};
-              `,
+            (s) => css`
+              margin-top: calc(-${getSpace(s)} - 1px);
+            `,
           ),
       })}
-    `,
+    }
+  `;
 
-    item: css<StyleProps<Media, Space>>`
-      box-sizing: border-box;
-      ${createProps({
-        $space: [paddingLeft, paddingTop],
-      })}
-    `,
+  const container = css<StyleProps<Media, Space>>`
+    ${createProps({
+      $space: (space: ResponsiveValue<Media, Space>) =>
+        map(
+          space,
+          (s) =>
+            css`
+              margin-left: -${getSpace(s)};
+            `,
+        ),
+    })}
+  `;
+
+  const item = css<StyleProps<Media, Space>>`
+    box-sizing: border-box;
+    ${createProps<{$space: SpaceMixinFunction<Media, Space>[]}>({
+      $space: [paddingTop, paddingLeft],
+    })}
+  `;
+
+  return {
+    wrapper,
+    container,
+    item,
   };
 };
