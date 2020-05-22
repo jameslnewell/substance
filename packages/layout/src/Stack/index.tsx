@@ -10,6 +10,7 @@ import {
   ResponsiveMixinFunction,
   // eslint-disable-next-line @typescript-eslint/camelcase
   unstable_mapValueToValue,
+  MapFunction,
 } from '@substance/style';
 import {
   marginBottom,
@@ -40,10 +41,9 @@ export interface CreateStackLayoutOptions<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  mixins: {
-    display: ResponsiveMixinFunction<Media, StyleValue<'display'>>;
-    marginBottom: SpaceMixinFunction<Media, Space>;
-  };
+  map: MapFunction<Media>;
+  display: ResponsiveMixinFunction<Media, StyleValue<'display'>>;
+  marginBottom: SpaceMixinFunction<Media, Space>;
   getChildDisplayValue: (
     child: React.ReactElement,
   ) => ResponsiveValue<Media, 'block' | 'none'> | undefined;
@@ -53,7 +53,9 @@ export const createStackLayout = <
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 >({
-  mixins: {display, marginBottom},
+  map,
+  display,
+  marginBottom,
   getChildDisplayValue,
 }: CreateStackLayoutOptions<Media, Space>) => {
   const Wrapper = styled.div`
@@ -128,9 +130,8 @@ function getChildDisplayValue<Media extends MediaConstraint>(
 }
 
 export const StackLayout = createStackLayout({
-  mixins: {
-    marginBottom,
-    display,
-  },
+  map,
+  display,
+  marginBottom,
   getChildDisplayValue,
 });

@@ -42,6 +42,10 @@ export const WithAlignment: React.FC = () => (
     <StackLayout align="center">{content}</StackLayout>
     <br />
     <StackLayout align="right">{content}</StackLayout>
+    <br />
+    <StackLayout align={{xs: 'left', md: 'center', lg: 'right'}}>
+      {content}
+    </StackLayout>
   </>
 );
 
