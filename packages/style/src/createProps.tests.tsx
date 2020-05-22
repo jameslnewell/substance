@@ -17,14 +17,6 @@ describe('createProps()', () => {
     })}
   `;
 
-  test('style is not applied when prop has not been set', () => {
-    const {container} = render(<Component />);
-    expect(container.firstChild).not.toHaveStyleRule('color');
-    expect(container.firstChild).not.toHaveStyleRule('background-color');
-    expect(container.firstChild).not.toHaveStyleRule('width');
-    expect(container.firstChild).not.toHaveStyleRule('height');
-  });
-
   test('style is not applied when prop is undefined', () => {
     const {container} = render(
       <Component fg={undefined} bg={undefined} $size={undefined} />,
@@ -35,7 +27,7 @@ describe('createProps()', () => {
     expect(container.firstChild).not.toHaveStyleRule('height');
   });
 
-  test('style is applied when prop is not undefined', () => {
+  test('style is applied when props are defined', () => {
     const {container} = render(<Component fg="green" bg="blue" $size="32px" />);
     expect(container.firstChild).toHaveStyleRule('color', 'green');
     expect(container.firstChild).toHaveStyleRule('background-color', 'blue');
@@ -43,7 +35,7 @@ describe('createProps()', () => {
     expect(container.firstChild).toHaveStyleRule('height', '32px');
   });
 
-  test('partial style is applied when partial props are not undefined', () => {
+  test('partial style is applied when partial props are defined', () => {
     const {container} = render(<Component fg="green" $size="32px" />);
     expect(container.firstChild).toHaveStyleRule('color', 'green');
     expect(container.firstChild).not.toHaveStyleRule('background-color');

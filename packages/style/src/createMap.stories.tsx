@@ -4,7 +4,7 @@ import {MatchFunction, MapFunction} from './types';
 import {queries, DefaultMedia} from './queries';
 import {createMatch} from './createMatch';
 import {createMap} from './createMap';
-import {square} from './__stories__';
+import {square} from '../../../storybook/src/__fixtures__';
 
 export default {title: 'style/createMap()'};
 

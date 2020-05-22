@@ -3,7 +3,7 @@ import styled, {css} from 'styled-components';
 import {MatchFunction} from './types';
 import {queries, DefaultMedia} from './queries';
 import {createMatch} from './createMatch';
-import {colors, square} from './__stories__';
+import {exampleColors, square} from '../../../storybook/src/__fixtures__';
 
 export default {title: 'style/createMatch()'};
 
@@ -12,13 +12,13 @@ const match: MatchFunction<DefaultMedia> = createMatch(queries);
 const SquareUsingTaggedTemplateLiteralStyle = styled.div`
   ${square}
   ${match('mobile')`
-    background-color: ${colors[0]};
+    background-color: ${exampleColors[0]};
   `}
   ${match('tablet')`
-    background-color: ${colors[1]};
+    background-color: ${exampleColors[1]};
   `}
   ${match('desktop')`
-    background-color: ${colors[2]};
+    background-color: ${exampleColors[2]};
   `}
 `;
 
@@ -26,17 +26,17 @@ const SquareUsingFunctionStyle = styled.div`
   ${square}
   ${match('mobile')(
     () => css`
-      background-color: ${colors[0]};
+      background-color: ${exampleColors[0]};
     `,
   )}
   ${match('tablet')(
     () => css`
-      background-color: ${colors[1]};
+      background-color: ${exampleColors[1]};
     `,
   )}
   ${match('desktop')(
     () => css`
-      background-color: ${colors[2]};
+      background-color: ${exampleColors[2]};
     `,
   )}
 `;
@@ -44,26 +44,26 @@ const SquareUsingFunctionStyle = styled.div`
 const SquareUsingObjectStyle = styled.div(
   square,
   match('mobile')({
-    backgroundColor: colors[0],
+    backgroundColor: exampleColors[0],
   }),
   match('tablet')({
-    backgroundColor: colors[1],
+    backgroundColor: exampleColors[1],
   }),
   match('desktop')({
-    backgroundColor: colors[2],
+    backgroundColor: exampleColors[2],
   }),
 );
 
 const SquareUsingMixedStyle = styled.div`
   ${square}
   ${match('mobile')({
-    backgroundColor: colors[0],
+    backgroundColor: exampleColors[0],
   })}
   ${match('tablet')`
-    background-color: ${colors[1]};
+    background-color: ${exampleColors[1]};
   `}
   ${match('desktop')({
-    backgroundColor: colors[2],
+    backgroundColor: exampleColors[2],
   })}
 `;
 
