@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box} from '@substance/box';
 import styled from 'styled-components';
-import {ContainerLayout} from './container';
+import {ContainerLayout} from '.';
 
 export default {
   title: 'layout/Container',

@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import {createProps} from '@substance/style';
 import {
+  display,
+  alignItems,
+  justifyContent,
   width,
   height,
   borderRadius,
@@ -24,6 +27,9 @@ import {
 } from '@substance/mixin';
 
 const props = createProps({
+  display,
+  alignItems,
+  justifyContent,
   width,
   height,
   color,
@@ -47,4 +53,9 @@ const props = createProps({
 });
 
 /* This implementation is for the storybook - if we make a generic one (which I think users should do) it needs a create function */
-export const Box = styled.div({}, props);
+export const Box = styled.div.withConfig({
+  shouldForwardProp: (prop) =>
+    ['className', 'key', 'ref', 'children'].includes(prop),
+})`
+  ${props}
+`;

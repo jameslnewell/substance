@@ -14,9 +14,19 @@ import {
   SpaceMixinFunction,
   paddingTop,
   paddingLeft,
+  justifyContent,
+  alignItems,
+  Mixin,
+  MixinValue,
 } from '@substance/mixin';
 import styled, {css} from 'styled-components';
 import {createSpaceStyles} from '../styles';
+import {
+  ResponsiveAlignX,
+  ResponsiveAlignY,
+  mapAlignX,
+  mapAlignY,
+} from '../utils/alignment';
 
 export type ColumnsLayoutColumnWidth = number | 'content';
 
@@ -25,20 +35,13 @@ export interface ColumnsLayoutColumnProps<Media extends MediaConstraint> {
   className?: string;
 }
 
-export type ColumnsLayoutHorizontalAlignment = 'left' | 'center' | 'right';
-export type ColumnsLayoutVerticalAlignment =
-  | 'stretch'
-  | 'top'
-  | 'center'
-  | 'bottom';
-
 export interface ColumnsLayoutProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
   space?: ResponsiveValue<Media, Space>;
-  halign?: ResponsiveValue<Media, ColumnsLayoutHorizontalAlignment>;
-  valign?: ResponsiveValue<Media, ColumnsLayoutVerticalAlignment>;
+  alignX?: ResponsiveAlignX<Media>;
+  alignY?: ResponsiveAlignY<Media>;
   className?: string;
 }
 
@@ -53,9 +56,9 @@ interface ContainerProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
+  $alignItems?: MixinValue<Media, 'align-items'>;
+  $justifyContent?: MixinValue<Media, 'justify-content'>;
   $space?: ColumnsLayoutProps<Media, Space>['space'];
-  $valign?: ColumnsLayoutProps<Media, Space>['valign'];
-  $halign?: ColumnsLayoutProps<Media, Space>['halign'];
 }
 
 interface ItemProps<
@@ -72,6 +75,8 @@ export interface CreateColumnLayoutOptions<
 > {
   map: MapFunction<Media>;
   getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space>;
+  alignItems: Mixin<Media, 'align-items'>;
+  justifyContent: Mixin<Media, 'justify-content'>;
   paddingTop: SpaceMixinFunction<Media, Space>;
   paddingLeft: SpaceMixinFunction<Media, Space>;
 }
@@ -83,25 +88,14 @@ export type ColumnLayout<
   Column: React.ComponentType<ColumnsLayoutColumnProps<Media>>;
 };
 
-const horizontalAlignment = {
-  left: 'flex-start',
-  center: 'center',
-  right: 'flex-end',
-};
-
-const verticalAlignment = {
-  top: 'flex-start',
-  center: 'center',
-  bottom: 'flex-end',
-  stretch: 'stretch',
-};
-
 export const createColumnLayout = <
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 >({
   map,
   getSpace,
+  alignItems,
+  justifyContent,
   paddingTop,
   paddingLeft,
 }: CreateColumnLayoutOptions<Media, Space>): ColumnLayout<Media, Space> => {
@@ -126,12 +120,8 @@ export const createColumnLayout = <
     flex-wrap: wrap;
     ${styles.container}
     ${createProps({
-      $halign: (
-        halign: ResponsiveValue<Media, ColumnsLayoutHorizontalAlignment>,
-      ) => map(halign, (ha) => `justify-content: ${horizontalAlignment[ha]};`),
-      $valign: (
-        valign: ResponsiveValue<Media, ColumnsLayoutVerticalAlignment>,
-      ) => map(valign, (va) => `align-items: ${verticalAlignment[va]};`),
+      $alignItems: alignItems,
+      $justifyContent: justifyContent,
     })}
   `;
 
@@ -139,8 +129,8 @@ export const createColumnLayout = <
     flex-grow: 1;
     ${styles.item}
     ${createProps({
-      $width: (width: ResponsiveValue<Media, ColumnsLayoutColumnWidth>) =>
-        map(
+      $width: (width: ResponsiveValue<Media, ColumnsLayoutColumnWidth>) => {
+        return map(
           width,
           (w) => css`
             flex-grow: ${w === undefined ? 1 : 'initial'};
@@ -148,7 +138,8 @@ export const createColumnLayout = <
             flex-basis: ${typeof w === 'number' ? `${w * 100}%` : 'initial'};
             max-width: ${typeof w === 'number' ? `${w * 100}%` : 'initial'};
           `,
-        ),
+        );
+      },
     })}
   `;
 
@@ -168,10 +159,14 @@ export const createColumnLayout = <
 
   const ColumnLayout: React.FC<ColumnsLayoutProps<Media, Space>> & {
     Column: typeof ColumnsLayoutColumn;
-  } = ({space, halign, valign, children, ...otherProps}) => (
+  } = ({space, alignX, alignY, children, ...otherProps}) => (
     <SpaceContext.Provider value={space}>
       <Wrapper {...otherProps} $space={space}>
-        <Container $halign={halign} $valign={valign} $space={space}>
+        <Container
+          $alignItems={mapAlignY(alignY)}
+          $justifyContent={mapAlignX(alignX)}
+          $space={space}
+        >
           {children}
         </Container>
       </Wrapper>
@@ -186,6 +181,8 @@ export const createColumnLayout = <
 export const ColumnLayout = createColumnLayout({
   map,
   getSpace,
+  alignItems,
+  justifyContent,
   paddingTop,
   paddingLeft,
 });

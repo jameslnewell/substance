@@ -5,35 +5,28 @@ import {
   createProps,
   ResponsiveValue,
   MediaConstraint,
-  map,
   StyleValue,
   ResponsiveMixinFunction,
   // eslint-disable-next-line @typescript-eslint/camelcase
   unstable_mapValueToValue,
-  MapFunction,
 } from '@substance/style';
 import {
+  alignItems,
   marginBottom,
   SpaceConstraint,
   SpaceMixinFunction,
   display,
+  Mixin,
 } from '@substance/mixin';
 import {Hidden} from '../Hidden';
-
-export type StackLayoutAlignment = 'left' | 'center' | 'right';
-
-const alignment = {
-  left: 'flex-start',
-  center: 'center',
-  right: 'flex-end',
-};
+import {ResponsiveAlignX, mapAlignX} from '../utils/alignment';
 
 export interface StackLayoutProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
   space?: ResponsiveValue<Media, Space>;
-  align?: ResponsiveValue<Media, StackLayoutAlignment>;
+  alignX?: ResponsiveAlignX<Media>;
   className?: string;
 }
 
@@ -41,7 +34,7 @@ export interface CreateStackLayoutOptions<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  map: MapFunction<Media>;
+  alignItems: Mixin<Media, 'align-items'>;
   display: ResponsiveMixinFunction<Media, StyleValue<'display'>>;
   marginBottom: SpaceMixinFunction<Media, Space>;
   getChildDisplayValue: (
@@ -53,8 +46,8 @@ export const createStackLayout = <
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 >({
-  map,
   display,
+  alignItems,
   marginBottom,
   getChildDisplayValue,
 }: CreateStackLayoutOptions<Media, Space>) => {
@@ -62,13 +55,7 @@ export const createStackLayout = <
     display: flex;
     flex-direction: column;
     ${createProps({
-      $align: (align: ResponsiveValue<Media, StackLayoutAlignment>) =>
-        map(
-          align,
-          (a) => `
-        align-items: ${alignment[a]};
-      `,
-        ),
+      $alignItems: alignItems,
     })}
   `;
 
@@ -83,12 +70,12 @@ export const createStackLayout = <
   `;
 
   const StackLayout: React.FC<StackLayoutProps<Media, Space>> = ({
-    align,
+    alignX,
     space,
     children,
     ...otherProps
   }) => (
-    <Wrapper {...otherProps} $align={align}>
+    <Wrapper {...otherProps} $alignItems={mapAlignX(alignX)}>
       {flattenChildren(children).map((child, index) => {
         if (!React.isValidElement(child)) {
           return child;
@@ -130,8 +117,8 @@ function getChildDisplayValue<Media extends MediaConstraint>(
 }
 
 export const StackLayout = createStackLayout({
-  map,
   display,
+  alignItems,
   marginBottom,
   getChildDisplayValue,
 });

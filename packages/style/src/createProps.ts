@@ -2,16 +2,20 @@ import {Interpolation} from './framework/types';
 
 type TypeOrTypeOfArray<A> = A extends Array<unknown> ? A[number] : A;
 
-type ValueFromMixinFunction<
+type FirstParameter<
   F extends (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    value: any,
+    first: any,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ) => Interpolation<any>
+    ...args: any[]
+  ) => // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  any
 > = F extends (
   value: infer V,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-) => Interpolation<any>
+  ...args: any[]
+) => // eslint-disable-next-line @typescript-eslint/no-explicit-any
+any
   ? V
   : never;
 
@@ -27,7 +31,7 @@ export type CreatePropsMixinFunctionsConstraint = {
 export type CreatePropsMixinProps<
   MixinFunctions extends CreatePropsMixinFunctionsConstraint
 > = {
-  [prop in keyof MixinFunctions]?: ValueFromMixinFunction<
+  [prop in keyof MixinFunctions]?: FirstParameter<
     TypeOrTypeOfArray<MixinFunctions[prop]>
   >;
 };

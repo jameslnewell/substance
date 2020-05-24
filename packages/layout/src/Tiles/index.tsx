@@ -1,38 +1,33 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import flattenChildren from 'react-keyed-flatten-children';
 import {
-  map,
   ResponsiveValue,
   MediaConstraint,
   MapFunction,
+  map,
   createProps,
 } from '@substance/style';
 import {
   SpaceConstraint,
-  getSpace,
   GetSpaceFunction,
+  getSpace,
   ThemedGetSpaceFunction,
   SpaceMixinFunction,
   paddingTop,
   paddingLeft,
 } from '@substance/mixin';
-import {createSpaceStyles} from './styles';
+import {createSpaceStyles} from '../styles';
 
-export type InlineLayoutHorizontalAlignment = 'left' | 'center' | 'right';
-export type InlineLayoutVerticalAlignment =
-  | 'stretch'
-  | 'top'
-  | 'center'
-  | 'bottom';
+export type TilesLayoutAlignment = 'left' | 'center' | 'right';
 
-export interface InlineLayoutProps<
+export interface TilesLayoutProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  halign?: ResponsiveValue<Media, InlineLayoutHorizontalAlignment>;
-  valign?: ResponsiveValue<Media, InlineLayoutVerticalAlignment>;
+  columns?: ResponsiveValue<Media, number>;
   space?: ResponsiveValue<Media, Space>;
+  align?: ResponsiveValue<Media, TilesLayoutAlignment>;
   className?: string;
 }
 
@@ -40,26 +35,24 @@ interface WrapperProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $space?: InlineLayoutProps<Media, Space>['space'];
+  $space?: TilesLayoutProps<Media, Space>['space'];
 }
-
 interface ContainerProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $space?: InlineLayoutProps<Media, Space>['space'];
-  $halign?: InlineLayoutProps<Media, Space>['halign'];
-  $valign?: InlineLayoutProps<Media, Space>['valign'];
+  $align?: TilesLayoutProps<Media, TilesLayoutAlignment>['align'];
+  $space?: TilesLayoutProps<Media, Space>['space'];
 }
-
 interface ItemProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $space?: InlineLayoutProps<Media, Space>['space'];
+  $columns?: TilesLayoutProps<Media, number>['columns'];
+  $space?: TilesLayoutProps<Media, Space>['space'];
 }
 
-export interface CreateInlineLayoutOptions<
+export interface CreateTileLayoutOptions<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
@@ -75,14 +68,7 @@ const horizontalAlignment = {
   right: 'flex-end',
 };
 
-const verticalAlignment = {
-  top: 'flex-start',
-  center: 'center',
-  bottom: 'flex-end',
-  stretch: 'stretch',
-};
-
-export const createInlineLayout = <
+export const createTileLayout = <
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 >({
@@ -90,7 +76,7 @@ export const createInlineLayout = <
   getSpace,
   paddingTop,
   paddingLeft,
-}: CreateInlineLayoutOptions<Media, Space>) => {
+}: CreateTileLayoutOptions<Media, Space>) => {
   const styles = createSpaceStyles<Media, Space>({
     map,
     getSpace,
@@ -104,37 +90,46 @@ export const createInlineLayout = <
 
   const Container = styled.div<ContainerProps<Media, Space>>`
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     ${styles.container}
     ${createProps({
-      $halign: (
-        align: ResponsiveValue<Media, InlineLayoutHorizontalAlignment>,
-      ) => map(align, (a) => `justify-content: ${horizontalAlignment[a]}`),
-      $valign: (align: ResponsiveValue<Media, InlineLayoutVerticalAlignment>) =>
-        map(align, (a) => `justify-content: ${verticalAlignment[a]}`),
+      $align: (align: ResponsiveValue<Media, TilesLayoutAlignment>) =>
+        map(align, (a) => `justify-content: ${horizontalAlignment[a]};`),
     })}
   `;
 
   const Item = styled.div<ItemProps<Media, Space>>`
+    flex-grow: 1;
+    flex-shrink: 1;
     ${styles.item}
+    ${createProps({
+      $columns: (columns: ResponsiveValue<Media, number>) =>
+        map(
+          columns,
+          (c) => css`
+            flex-grow: 0;
+            flex-shrink: 0;
+            flex-basis: ${c !== undefined ? `${(1 / c) * 100}%` : undefined};
+          `,
+        ),
+    })}
   `;
 
-  const InlineLayout: React.FC<InlineLayoutProps<Media, Space>> = ({
+  const TileLayout: React.FC<TilesLayoutProps<Media, Space>> = ({
+    columns,
     space,
-    halign,
-    valign,
+    align,
     children,
     ...otherProps
   }) => (
     <Wrapper {...otherProps} $space={space}>
-      <Container $halign={halign} $valign={valign} $space={space}>
+      <Container $align={align} $space={space}>
         {flattenChildren(children).map((child, index) => {
           if (!React.isValidElement(child)) {
             return child;
           }
           return (
-            <Item key={child.key || index} $space={space}>
+            <Item key={child.key || index} $columns={columns} $space={space}>
               {child}
             </Item>
           );
@@ -143,10 +138,10 @@ export const createInlineLayout = <
     </Wrapper>
   );
 
-  return InlineLayout;
+  return TileLayout;
 };
 
-export const InlineLayout = createInlineLayout({
+export const TileLayout = createTileLayout({
   map,
   getSpace,
   paddingTop,

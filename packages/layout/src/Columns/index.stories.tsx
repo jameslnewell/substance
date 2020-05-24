@@ -60,9 +60,9 @@ export const WithResponsiveWidth: React.FC = () => (
   </ColumnLayout>
 );
 
-export const WithHAlign: React.FC = () => (
+export const WithAlignX: React.FC = () => (
   <>
-    <ColumnLayout halign="left">
+    <ColumnLayout alignX="left">
       <ColumnLayout.Column width={1 / 4}>
         <Placeholder>align</Placeholder>
       </ColumnLayout.Column>
@@ -71,7 +71,7 @@ export const WithHAlign: React.FC = () => (
       </ColumnLayout.Column>
     </ColumnLayout>
     <br />
-    <ColumnLayout halign="center">
+    <ColumnLayout alignX="center">
       <ColumnLayout.Column width={1 / 4}>
         <Placeholder>align</Placeholder>
       </ColumnLayout.Column>
@@ -80,7 +80,7 @@ export const WithHAlign: React.FC = () => (
       </ColumnLayout.Column>
     </ColumnLayout>
     <br />
-    <ColumnLayout halign="right">
+    <ColumnLayout alignX="right">
       <ColumnLayout.Column width={1 / 4}>
         <Placeholder>align</Placeholder>
       </ColumnLayout.Column>
@@ -88,12 +88,21 @@ export const WithHAlign: React.FC = () => (
         <Placeholder>right</Placeholder>
       </ColumnLayout.Column>
     </ColumnLayout>
+    <br />
+    <ColumnLayout alignX={{xs: 'left', md: 'center', lg: 'right'}}>
+      <ColumnLayout.Column width={1 / 4}>
+        <Placeholder>align</Placeholder>
+      </ColumnLayout.Column>
+      <ColumnLayout.Column width={1 / 4}>
+        <Placeholder>responsive</Placeholder>
+      </ColumnLayout.Column>
+    </ColumnLayout>
   </>
 );
 
-export const WithVAlign: React.FC = () => (
+export const WithAlignY: React.FC = () => (
   <>
-    <ColumnLayout valign="stretch">
+    <ColumnLayout alignY="stretch">
       <ColumnLayout.Column width={1 / 4}>
         <Placeholder height={64}>align</Placeholder>
       </ColumnLayout.Column>
@@ -102,7 +111,7 @@ export const WithVAlign: React.FC = () => (
       </ColumnLayout.Column>
     </ColumnLayout>
     <br />
-    <ColumnLayout valign="top">
+    <ColumnLayout alignY="top">
       <ColumnLayout.Column width={1 / 4}>
         <Placeholder height={64}>align</Placeholder>
       </ColumnLayout.Column>
@@ -111,7 +120,7 @@ export const WithVAlign: React.FC = () => (
       </ColumnLayout.Column>
     </ColumnLayout>
     <br />
-    <ColumnLayout valign="center">
+    <ColumnLayout alignY="center">
       <ColumnLayout.Column width={1 / 4}>
         <Placeholder height={64}>align</Placeholder>
       </ColumnLayout.Column>
@@ -120,12 +129,21 @@ export const WithVAlign: React.FC = () => (
       </ColumnLayout.Column>
     </ColumnLayout>
     <br />
-    <ColumnLayout valign="bottom">
+    <ColumnLayout alignY="bottom">
       <ColumnLayout.Column width={1 / 4}>
         <Placeholder height={64}>align</Placeholder>
       </ColumnLayout.Column>
       <ColumnLayout.Column width={1 / 4}>
         <Placeholder>bottom</Placeholder>
+      </ColumnLayout.Column>
+    </ColumnLayout>
+    <br />
+    <ColumnLayout alignY={{xs: 'left', md: 'center', lg: 'right'}}>
+      <ColumnLayout.Column width={1 / 4}>
+        <Placeholder height={64}>align</Placeholder>
+      </ColumnLayout.Column>
+      <ColumnLayout.Column width={1 / 4}>
+        <Placeholder>responsive</Placeholder>
       </ColumnLayout.Column>
     </ColumnLayout>
   </>
@@ -149,7 +167,7 @@ export const WithSpace: React.FC = () => (
 );
 
 export const WithSpaceWrappedColumnAndHAlign: React.FC = () => (
-  <ColumnLayout space={3} halign="center">
+  <ColumnLayout space={3} alignX="center">
     <ColumnLayout.Column width={1 / 2}>
       <Placeholder>1/2</Placeholder>
     </ColumnLayout.Column>

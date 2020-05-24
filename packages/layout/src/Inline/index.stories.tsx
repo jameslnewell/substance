@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box} from '@substance/box';
 import styled from 'styled-components';
-import {InlineLayout} from './inline';
+import {InlineLayout} from '.';
 
 export default {
   title: 'layout/InlineLayout',
@@ -13,7 +13,16 @@ const CustomInlineLayout = styled(InlineLayout)({
 });
 
 const Tag: React.FC = ({children}) => (
-  <Box paddingX={2} paddingY={1} borderRadius={4} backgroundColor="skyblue">
+  <Box
+    display="flex"
+    alignItems="center"
+    justifyContent="center"
+    paddingX={2}
+    paddingY={1}
+    borderRadius={4}
+    backgroundColor="skyblue"
+    height={10 + Math.ceil((Math.random() * 100) / 10) * 10}
+  >
     {children}
   </Box>
 );
@@ -29,34 +38,46 @@ const tags = (
   </>
 );
 
-export const WithHAlign: React.FC = () => (
+export const WithAlignX: React.FC = () => (
   <>
     <Box backgroundColor="deeppink">
-      <InlineLayout halign="left">{tags}</InlineLayout>
+      <InlineLayout alignX="left">{tags}</InlineLayout>
     </Box>
     <br />
     <Box backgroundColor="deeppink">
-      <InlineLayout halign="center">{tags}</InlineLayout>
+      <InlineLayout alignX="center">{tags}</InlineLayout>
     </Box>
     <br />
     <Box backgroundColor="deeppink">
-      <InlineLayout halign="right">{tags}</InlineLayout>
+      <InlineLayout alignX="right">{tags}</InlineLayout>
+    </Box>
+    <br />
+    <Box backgroundColor="deeppink">
+      <InlineLayout alignX={{xs: 'left', md: 'center', lg: 'right'}}>
+        {tags}
+      </InlineLayout>
     </Box>
   </>
 );
 
-export const WithVAlign: React.FC = () => (
+export const WithAlignY: React.FC = () => (
   <>
     <Box backgroundColor="deeppink">
-      <InlineLayout valign="top">{tags}</InlineLayout>
+      <InlineLayout alignY="top">{tags}</InlineLayout>
     </Box>
     <br />
     <Box backgroundColor="deeppink">
-      <InlineLayout valign="center">{tags}</InlineLayout>
+      <InlineLayout alignY="center">{tags}</InlineLayout>
     </Box>
     <br />
     <Box backgroundColor="deeppink">
-      <InlineLayout valign="bottom">{tags}</InlineLayout>
+      <InlineLayout alignY="bottom">{tags}</InlineLayout>
+    </Box>
+    <br />
+    <Box backgroundColor="deeppink">
+      <InlineLayout alignY={{xs: 'left', md: 'center', lg: 'right'}}>
+        {tags}
+      </InlineLayout>
     </Box>
   </>
 );
