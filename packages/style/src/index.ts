@@ -1,4 +1,4 @@
-export * from './styled';
+export * from './framework/types';
 export * from './types';
 
 export * from './get';
@@ -10,4 +10,4 @@ export * from './map';
 export * from './createMixin';
 export * from './createProps';
 export * from './createVariant';
-export * from './mapValueToValue';
+export * from './unstable_mapValueToValue';

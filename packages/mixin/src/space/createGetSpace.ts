@@ -1,16 +1,18 @@
 import {StyleValue, get, Theme, ThemeProps} from '@substance/style';
 import {Spaces, SpaceConstraint} from './types';
 
+type SpaceStyleValue = StyleValue<'padding-top'>;
+
 export interface GetSpacesFunction<Space extends SpaceConstraint> {
   (theme: Theme | undefined): Spaces<Space>;
 }
 
 export interface GetSpaceFunction<Space extends SpaceConstraint> {
-  (space: Space): StyleValue<'paddingTop'>;
+  (space: Space): SpaceStyleValue;
 }
 
 export interface ThemedGetSpaceFunction<Space extends SpaceConstraint> {
-  (space: Space): (props: ThemeProps) => StyleValue<'paddingTop'>;
+  (space: Space): (props: ThemeProps) => SpaceStyleValue;
 }
 
 export function createGetSpace<Space extends SpaceConstraint>(
@@ -28,7 +30,7 @@ export function createGetSpace<Space extends SpaceConstraint>(
     return (value) => ({theme}) =>
       get(String(value), spacesOrGetSpaces(theme)) || value;
   } else {
-    return (value): StyleValue<'paddingTop'> =>
+    return (value): SpaceStyleValue =>
       get(String(value), spacesOrGetSpaces) || value;
   }
 }

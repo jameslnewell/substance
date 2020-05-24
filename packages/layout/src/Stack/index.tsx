@@ -5,33 +5,28 @@ import {
   createProps,
   ResponsiveValue,
   MediaConstraint,
-  map,
   StyleValue,
   ResponsiveMixinFunction,
-  mapValueToValue,
+  // eslint-disable-next-line @typescript-eslint/camelcase
+  unstable_mapValueToValue,
 } from '@substance/style';
 import {
+  alignItems,
   marginBottom,
   SpaceConstraint,
   SpaceMixinFunction,
   display,
+  Mixin,
 } from '@substance/mixin';
 import {Hidden} from '../Hidden';
-
-export type StackLayoutAlignment = 'left' | 'center' | 'right';
-
-const alignment = {
-  left: 'flex-start',
-  center: 'center',
-  right: 'flex-end',
-};
+import {ResponsiveAlignX, mapAlignX} from '../utils/alignment';
 
 export interface StackLayoutProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
   space?: ResponsiveValue<Media, Space>;
-  align?: ResponsiveValue<Media, StackLayoutAlignment>;
+  alignX?: ResponsiveAlignX<Media>;
   className?: string;
 }
 
@@ -39,10 +34,9 @@ export interface CreateStackLayoutOptions<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  mixins: {
-    display: ResponsiveMixinFunction<Media, StyleValue<'display'>>;
-    marginBottom: SpaceMixinFunction<Media, Space>;
-  };
+  alignItems: Mixin<Media, 'align-items'>;
+  display: ResponsiveMixinFunction<Media, StyleValue<'display'>>;
+  marginBottom: SpaceMixinFunction<Media, Space>;
   getChildDisplayValue: (
     child: React.ReactElement,
   ) => ResponsiveValue<Media, 'block' | 'none'> | undefined;
@@ -52,20 +46,16 @@ export const createStackLayout = <
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 >({
-  mixins: {display, marginBottom},
+  display,
+  alignItems,
+  marginBottom,
   getChildDisplayValue,
 }: CreateStackLayoutOptions<Media, Space>) => {
   const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     ${createProps({
-      $align: (align: ResponsiveValue<Media, StackLayoutAlignment>) =>
-        map(
-          align,
-          (a) => `
-        align-items: ${alignment[a]};
-      `,
-        ),
+      $alignItems: alignItems,
     })}
   `;
 
@@ -80,12 +70,12 @@ export const createStackLayout = <
   `;
 
   const StackLayout: React.FC<StackLayoutProps<Media, Space>> = ({
-    align,
+    alignX,
     space,
     children,
     ...otherProps
   }) => (
-    <Wrapper {...otherProps} $align={align}>
+    <Wrapper {...otherProps} $alignItems={mapAlignX(alignX)}>
       {flattenChildren(children).map((child, index) => {
         if (!React.isValidElement(child)) {
           return child;
@@ -117,7 +107,8 @@ function getChildDisplayValue<Media extends MediaConstraint>(
         );
       }
     }
-    return mapValueToValue<Media, boolean, 'block' | 'none'>(
+    // eslint-disble-next-line @typescript-eslint/camelcase
+    return unstable_mapValueToValue<Media, boolean, 'block' | 'none'>(
       child.props.hide,
       (hide) => (hide ? 'none' : 'block'),
     );
@@ -126,9 +117,8 @@ function getChildDisplayValue<Media extends MediaConstraint>(
 }
 
 export const StackLayout = createStackLayout({
-  mixins: {
-    marginBottom,
-    display,
-  },
+  display,
+  alignItems,
+  marginBottom,
   getChildDisplayValue,
 });

@@ -1,100 +1,87 @@
 import * as React from 'react';
-import styled from 'styled-components';
-import {StyleObject} from './types';
+import styled, {css} from 'styled-components';
 import {createProps} from './createProps';
 
 export default {title: 'style/createProps()'};
 
-const circle: StyleObject = {
-  display: 'inline-flex',
-  width: 100,
-  height: 100,
-  borderRadius: '100%',
-  fontWeight: 'bold',
-  justifyContent: 'center',
-  alignItems: 'center',
-};
+const circle = css`
+  display: inline-flex;
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+`;
 
-export const UsingStyleObjects: React.FC = () => {
-  const Medal = styled.div(
-    circle,
-    createProps({
-      isGold: (isGold: boolean) =>
-        isGold ? {backgroundColor: 'gold'} : undefined,
-      isSilver: (isSilver: boolean) =>
-        isSilver ? {backgroundColor: 'silver'} : undefined,
-      isBronze: (isBronze: boolean) =>
-        isBronze ? {backgroundColor: 'peru'} : undefined,
-    }),
-  );
+const MedalUsingTaggedTemplateLiteralStyle = styled.div`
+  ${circle}
+  ${createProps({
+    isGold: (isGold: boolean) =>
+      isGold ? `background-color: gold;` : undefined,
+    isSilver: (isSilver: boolean) =>
+      isSilver ? `background-color: silver;` : undefined,
+    isBronze: (isBronze: boolean) =>
+      isBronze ? `background-color: peru;` : undefined,
+  })}
+`;
+
+const MedalUsingObjectStyle = styled.div`
+  ${circle}
+  ${createProps({
+    isGold: (isGold: boolean) =>
+      isGold ? {backgroundColor: 'gold'} : undefined,
+    isSilver: (isSilver: boolean) =>
+      isSilver ? {backgroundColor: 'silver'} : undefined,
+    isBronze: (isBronze: boolean) =>
+      isBronze ? {backgroundColor: 'peru'} : undefined,
+  })}
+`;
+
+const MedalUsingFunctionStyle = styled.div`
+  ${circle}
+  ${createProps({
+    isGold: (isGold: boolean) =>
+      isGold ? () => `background-color: gold;` : undefined,
+    isSilver: (isSilver: boolean) =>
+      isSilver ? () => `background-color: silver;` : undefined,
+    isBronze: (isBronze: boolean) =>
+      isBronze ? () => `background-color: peru;` : undefined,
+  })}
+`;
+
+export const UsingTaggedTemplateLiteralStyle: React.FC = () => {
   return (
     <>
-      <Medal isGold>Gold</Medal>
-      <Medal isSilver>Silver</Medal>
-      <Medal isBronze>Bronze</Medal>
+      <MedalUsingTaggedTemplateLiteralStyle isGold>
+        Gold
+      </MedalUsingTaggedTemplateLiteralStyle>
+      <MedalUsingTaggedTemplateLiteralStyle isSilver>
+        Silver
+      </MedalUsingTaggedTemplateLiteralStyle>
+      <MedalUsingTaggedTemplateLiteralStyle isBronze>
+        Bronze
+      </MedalUsingTaggedTemplateLiteralStyle>
     </>
   );
 };
 
-export const UsingStyleFunctions = () => {
-  const Medal = styled.div(
-    circle,
-    createProps({
-      isGold: (isGold: boolean) =>
-        isGold ? () => ({backgroundColor: 'gold'}) : undefined,
-      isSilver: (isSilver: boolean) =>
-        isSilver ? () => ({backgroundColor: 'silver'}) : undefined,
-      isBronze: (isBronze: boolean) =>
-        isBronze ? () => ({backgroundColor: 'peru'}) : undefined,
-    }),
-  );
+export const UsingObjectStyle: React.FC = () => {
   return (
     <>
-      <Medal isGold>Gold</Medal>
-      <Medal isSilver>Silver</Medal>
-      <Medal isBronze>Bronze</Medal>
+      <MedalUsingObjectStyle isGold>Gold</MedalUsingObjectStyle>
+      <MedalUsingObjectStyle isSilver>Silver</MedalUsingObjectStyle>
+      <MedalUsingObjectStyle isBronze>Bronze</MedalUsingObjectStyle>
     </>
   );
 };
 
-export const UsingStyleArrays = () => {
-  const Medal = styled.div(
-    circle,
-    createProps({
-      isGold: (isGold: boolean) =>
-        isGold ? [() => ({backgroundColor: 'gold'})] : undefined,
-      isSilver: (isSilver: boolean) =>
-        isSilver ? [() => ({backgroundColor: 'silver'})] : undefined,
-      isBronze: (isBronze: boolean) =>
-        isBronze ? [() => ({backgroundColor: 'peru'})] : undefined,
-    }),
-  );
+export const UsingFunctionStyle = () => {
   return (
     <>
-      <Medal isGold>Gold</Medal>
-      <Medal isSilver>Silver</Medal>
-      <Medal isBronze>Bronze</Medal>
-    </>
-  );
-};
-
-export const UsingTaggedTemplateLiterals = () => {
-  const Medal = styled.div`
-    ${circle}
-    ${createProps({
-      isGold: (isGold: boolean) =>
-        isGold ? `background-color: gold;` : undefined,
-      isSilver: (isSilver: boolean) =>
-        isSilver ? `background-color: silver;` : undefined,
-      isBronze: (isBronze: boolean) =>
-        isBronze ? `background-color: peru;` : undefined,
-    })}
-  `;
-  return (
-    <>
-      <Medal isGold>Gold</Medal>
-      <Medal isSilver>Silver</Medal>
-      <Medal isBronze>Bronze</Medal>
+      <MedalUsingFunctionStyle isGold>Gold</MedalUsingFunctionStyle>
+      <MedalUsingFunctionStyle isSilver>Silver</MedalUsingFunctionStyle>
+      <MedalUsingFunctionStyle isBronze>Bronze</MedalUsingFunctionStyle>
     </>
   );
 };

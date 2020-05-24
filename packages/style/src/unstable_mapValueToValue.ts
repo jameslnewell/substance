@@ -6,10 +6,12 @@ import {
 
 /**
  * Map a value to another value
+ * @experimental
  * @param input
  * @param fn
  */
-export function mapValueToValue<
+// eslint-disable-next-line @typescript-eslint/camelcase
+export function unstable_mapValueToValue<
   Media extends MediaConstraint,
   InputValue extends ResponsiveValueConstraint,
   OutputValue extends ResponsiveValueConstraint

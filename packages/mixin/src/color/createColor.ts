@@ -24,12 +24,14 @@ const createColorFactory = (properties: StyleProperty[]) => {
 };
 
 export const createColor = createColorFactory(['color']);
-export const createBackgroundColor = createColorFactory(['backgroundColor']);
-export const createBorderColor = createColorFactory(['borderColor']);
-export const createBorderTopColor = createColorFactory(['borderTopColor']);
-export const createBorderRightColor = createColorFactory(['borderRightColor']);
-export const createBorderBottomColor = createColorFactory([
-  'borderBottomColor',
+export const createBackgroundColor = createColorFactory(['background-color']);
+export const createBorderColor = createColorFactory(['border-color']);
+export const createBorderTopColor = createColorFactory(['border-top-color']);
+export const createBorderRightColor = createColorFactory([
+  'border-right-color',
 ]);
-export const createBorderLeftColor = createColorFactory(['borderLeftColor']);
+export const createBorderBottomColor = createColorFactory([
+  'border-bottom-color',
+]);
+export const createBorderLeftColor = createColorFactory(['border-left-color']);
 export const createFill = createColorFactory(['fill']);

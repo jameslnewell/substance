@@ -1,16 +1,39 @@
-import {Interpolation} from './styled';
-import {PropsConstraint, DefaultProps} from './types';
+import {Interpolation} from './framework/types';
 
-type MixinPropsConstraint = {
+type TypeOrTypeOfArray<A> = A extends Array<unknown> ? A[number] : A;
+
+type FirstParameter<
+  F extends (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    first: any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ...args: any[]
+  ) => // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  any
+> = F extends (
+  value: infer V,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+  ...args: any[]
+) => // eslint-disable-next-line @typescript-eslint/no-explicit-any
+any
+  ? V
+  : never;
+
+export type CreatePropsMixinFunctionsConstraint = {
+  [
+    props: string
+  ]: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  | ((value: any) => Interpolation<any>)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    | ((value: any) => Interpolation<any>)[];
 };
 
-type MixinFunctions<MixinProps extends MixinPropsConstraint> = {
-  [props in keyof MixinProps]:  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | ((value: MixinProps[props]) => Interpolation<any>)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | ((value: MixinProps[props]) => Interpolation<any>)[];
+export type CreatePropsMixinProps<
+  MixinFunctions extends CreatePropsMixinFunctionsConstraint
+> = {
+  [prop in keyof MixinFunctions]?: FirstParameter<
+    TypeOrTypeOfArray<MixinFunctions[prop]>
+  >;
 };
 
 /**
@@ -27,13 +50,15 @@ type MixinFunctions<MixinProps extends MixinPropsConstraint> = {
  *  })
  * );
  */
-export const createProps = <MixinProps extends MixinPropsConstraint>(
-  mixins: MixinFunctions<MixinProps>,
+export const createProps = <
+  MixinFunctions extends CreatePropsMixinFunctionsConstraint
+>(
+  mixins: MixinFunctions,
 ) => {
-  return <Props extends PropsConstraint = DefaultProps>(
-    props: Partial<MixinProps> & Props,
+  return <Props extends CreatePropsMixinProps<MixinFunctions>>(
+    props: Props,
   ) => {
-    const styles: Interpolation<Partial<MixinProps> & Props>[] = [];
+    const styles: Interpolation<Props>[] = [];
     for (const name of Object.keys(props)) {
       const mixin = mixins[name];
       const prop = props[name];

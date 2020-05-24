@@ -35,13 +35,17 @@ export const WithResponsiveSpace: React.FC = () => (
   <StackLayout space={{mobile: 2, tablet: 4}}>{content}</StackLayout>
 );
 
-export const WithAlignment: React.FC = () => (
+export const WithAlignX: React.FC = () => (
   <>
-    <StackLayout align="left">{content}</StackLayout>
+    <StackLayout alignX="left">{content}</StackLayout>
     <br />
-    <StackLayout align="center">{content}</StackLayout>
+    <StackLayout alignX="center">{content}</StackLayout>
     <br />
-    <StackLayout align="right">{content}</StackLayout>
+    <StackLayout alignX="right">{content}</StackLayout>
+    <br />
+    <StackLayout alignX={{xs: 'left', md: 'center', lg: 'right'}}>
+      {content}
+    </StackLayout>
   </>
 );
 

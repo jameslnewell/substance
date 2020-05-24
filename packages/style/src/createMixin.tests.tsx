@@ -13,7 +13,7 @@ describe('createMixin()', () => {
   const mixin = createMixin({
     map,
     properties: ['color'],
-    transform: (c: StyleValue) => c,
+    transform: (c: StyleValue<'color'>) => c,
   });
 
   test('style is applied universally', () => {
@@ -32,4 +32,6 @@ describe('createMixin()', () => {
       media: queries['desktop'],
     });
   });
+
+  // TODO: test theme
 });

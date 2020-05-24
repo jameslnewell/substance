@@ -1,4 +1,4 @@
-import {Interpolation} from './styled';
+import {Interpolation} from './framework/types';
 import {DefaultProps, PropsConstraint} from './types';
 
 export type VariantConstraint = string | number;
@@ -32,15 +32,14 @@ export type VariantConstraint = string | number;
  * )
  *
  */
-export const createVariant = <
-  Variant extends VariantConstraint,
-  Props extends PropsConstraint = DefaultProps
->(
+export const createVariant = <Variant extends VariantConstraint>(
   variants: {
-    [variant in Variant]: Interpolation<Props>;
+    [variant in Variant]: Interpolation<unknown>;
   },
 ) => {
-  return (variant: Variant): Interpolation<Props> => {
+  return <Props extends PropsConstraint = DefaultProps>(
+    variant: Variant,
+  ): Interpolation<Props> => {
     const style = variants[variant];
     if (process.env.NODE_ENV !== 'production') {
       if (!Object.prototype.hasOwnProperty.call(variants, variant)) {

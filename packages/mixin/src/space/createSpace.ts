@@ -24,45 +24,51 @@ const createSpaceFactory = (properties: StyleProperty[]) => {
 };
 
 export const createMargin = createSpaceFactory([
-  'marginTop',
-  'marginRight',
-  'marginBottom',
-  'marginLeft',
+  'margin-top',
+  'margin-right',
+  'margin-bottom',
+  'margin-left',
 ]);
 
-export const createMarginX = createSpaceFactory(['marginRight', 'marginLeft']);
+export const createMarginX = createSpaceFactory([
+  'margin-right',
+  'margin-left',
+]);
 
-export const createMarginY = createSpaceFactory(['marginTop', 'marginBottom']);
+export const createMarginY = createSpaceFactory([
+  'margin-top',
+  'margin-bottom',
+]);
 
-export const createMarginTop = createSpaceFactory(['marginTop']);
+export const createMarginTop = createSpaceFactory(['margin-top']);
 
-export const createMarginRight = createSpaceFactory(['marginRight']);
+export const createMarginRight = createSpaceFactory(['margin-right']);
 
-export const createMarginBottom = createSpaceFactory(['marginBottom']);
+export const createMarginBottom = createSpaceFactory(['margin-bottom']);
 
-export const createMarginLeft = createSpaceFactory(['marginLeft']);
+export const createMarginLeft = createSpaceFactory(['margin-left']);
 
 export const createPadding = createSpaceFactory([
-  'paddingTop',
-  'paddingRight',
-  'paddingBottom',
-  'paddingLeft',
+  'padding-top',
+  'padding-right',
+  'padding-bottom',
+  'padding-left',
 ]);
 
 export const createPaddingX = createSpaceFactory([
-  'paddingRight',
-  'paddingLeft',
+  'padding-right',
+  'padding-left',
 ]);
 
 export const createPaddingY = createSpaceFactory([
-  'paddingTop',
-  'paddingBottom',
+  'padding-top',
+  'padding-bottom',
 ]);
 
-export const createPaddingTop = createSpaceFactory(['paddingTop']);
+export const createPaddingTop = createSpaceFactory(['padding-top']);
 
-export const createPaddingRight = createSpaceFactory(['paddingRight']);
+export const createPaddingRight = createSpaceFactory(['padding-right']);
 
-export const createPaddingBottom = createSpaceFactory(['paddingBottom']);
+export const createPaddingBottom = createSpaceFactory(['padding-bottom']);
 
-export const createPaddingLeft = createSpaceFactory(['paddingLeft']);
+export const createPaddingLeft = createSpaceFactory(['padding-left']);

@@ -2,15 +2,15 @@ import {map} from '@substance/style';
 import {createFactoryForCSSPropertyMixin} from './createFactoryForCSSPropertyMixin';
 
 export const createFlex = createFactoryForCSSPropertyMixin('flex');
-export const createFlexBasis = createFactoryForCSSPropertyMixin('flexBasis');
+export const createFlexBasis = createFactoryForCSSPropertyMixin('flex-basis');
 export const createFlexDirection = createFactoryForCSSPropertyMixin(
-  'flexDirection',
+  'flex-direction',
 );
-export const createFlexGrow = createFactoryForCSSPropertyMixin('flexGrow');
-export const createFlexShrink = createFactoryForCSSPropertyMixin('flexShrink');
-export const createAlignItems = createFactoryForCSSPropertyMixin('alignItems');
+export const createFlexGrow = createFactoryForCSSPropertyMixin('flex-grow');
+export const createFlexShrink = createFactoryForCSSPropertyMixin('flex-shrink');
+export const createAlignItems = createFactoryForCSSPropertyMixin('align-items');
 export const createJustifyContent = createFactoryForCSSPropertyMixin(
-  'justifyContent',
+  'justify-content',
 );
 
 export const flex = createFlex({map});

@@ -1,7 +1,7 @@
-import {CSSObject} from './styled';
+import {css} from 'styled-components';
+import {Interpolation} from './framework/types';
 import {
   StyleProperty,
-  StyleValue,
   MapFunction,
   MediaConstraint,
   ResponsiveValueConstraint,
@@ -10,23 +10,27 @@ import {
   ResponsiveValue,
 } from './types';
 
-const createStylesFromTransformedValue = (
+function createStylesFromTransformedValue<Props extends ThemeProps>(
   properties: StyleProperty[],
-  value: StyleValue,
-): CSSObject => {
-  const style: Partial<CSSObject> = {};
+  value: Interpolation<Props>,
+): Interpolation<Props>[] {
+  const styles: Interpolation<Props>[] = [];
   for (const property of properties) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    style[property] = value as any;
+    styles.push(
+      css`
+        ${property}: ${value};
+      `,
+    );
   }
-  return style;
-};
+  return styles;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface CreateMixinTransformFunction<
   Value extends ResponsiveValueConstraint
 > {
-  (value: Value): undefined | StyleValue | ((props: ThemeProps) => StyleValue);
+  (value: Value): Interpolation<ThemeProps>;
 }
 
 /**
@@ -57,16 +61,7 @@ export const createMixin = <
     valueOrValues: ResponsiveValue<Media, Value>,
   ) => {
     return map<Value, Props>(valueOrValues, (value) => {
-      const transformedValue = transform(value);
-      if (typeof transformedValue === 'function') {
-        return (props: Props) => {
-          return createStylesFromTransformedValue(
-            properties,
-            transformedValue(props),
-          );
-        };
-      }
-      return createStylesFromTransformedValue(properties, transformedValue);
+      return createStylesFromTransformedValue(properties, transform(value));
     });
   };
 };

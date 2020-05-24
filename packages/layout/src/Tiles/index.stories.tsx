@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box} from '@substance/box';
 import styled from 'styled-components';
-import {TileLayout} from './tiles';
+import {TileLayout} from '.';
 
 export default {
   title: 'layout/TileLayout',

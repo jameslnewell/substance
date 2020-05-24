@@ -1,33 +1,30 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import {map} from './map';
-import {square} from './__stories__';
+import {
+  exampleColors,
+  square,
+  withExampleThemeProvider,
+  exampleQueries,
+  ExampleMedia,
+} from '../../../storybook/src/__fixtures__';
 
 export default {title: 'style/map()'};
 
-const values = {
-  mobile: 'red',
-  tablet: 'green',
-  desktop: 'blue',
-};
-
-const SquareUsingTaggedTemplateLiteral = styled.div`
+const SquareWithColorVariable = styled.div`
   ${square}
-  ${map(values, (value) => `background-color: ${value};`)}
+  ${map(
+    Object.keys(exampleQueries).reduce(
+      (values, media, index) => ({
+        ...values,
+        [media as ExampleMedia]: exampleColors[index],
+      }),
+      {},
+    ),
+    (value) => `background-color: ${value};`,
+  )}
 `;
 
-const SquareUsingCSSObject = styled.div(
-  square,
-  map(values, (value) => ({backgroundColor: value})),
-);
-
-const SquareUsingMixed = styled.div`
-  ${square}
-  ${map(values, (value) => ({backgroundColor: value}))}
-`;
-
-export const UsingTaggedTemplateLiteral = () => (
-  <SquareUsingTaggedTemplateLiteral />
-);
-export const UsingCSSObject = () => <SquareUsingCSSObject />;
-export const UsingMixed = () => <SquareUsingMixed />;
+export const StyledWithColorVariable = withExampleThemeProvider(() => (
+  <SquareWithColorVariable />
+));

@@ -12,11 +12,8 @@ export type Theme = StyledComponents.DefaultTheme;
 export type CSSFunction = StyledComponents.ThemedCssFunction<
   StyledComponents.DefaultTheme
 >;
-export type CSSObject = StyledComponents.CSSObject;
 export type Interpolation<Props> =
   | StyledComponents.SimpleInterpolation
   | StyledComponents.Interpolation<Props>;
 
 // ========== FUNCTIONS ==========
-
-export {default as styled, css} from 'styled-components';

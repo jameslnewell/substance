@@ -1,12 +1,21 @@
 import React from 'react';
 import {Hidden} from './index';
+import {
+  withExampleThemeProvider,
+  ExampleTheme,
+} from '../../../../storybook/src/__fixtures__';
+
+declare module 'styled-components' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  export interface DefaultTheme extends ExampleTheme {}
+}
 
 export default {
   title: 'layout/Hidden',
   component: Hidden,
 };
 
-export const Inline: React.FC = () => (
+export const Inline: React.FC = withExampleThemeProvider(() => (
   <>
     <p>
       I am never{' '}
@@ -37,9 +46,9 @@ export const Inline: React.FC = () => (
       </Hidden>
     </p>
   </>
-);
+));
 
-export const Block: React.FC = () => (
+export const Block: React.FC = withExampleThemeProvider(() => (
   <>
     <Hidden hide={true}>
       <p>I am never visible.</p>
@@ -69,4 +78,4 @@ export const Block: React.FC = () => (
       </p>
     </Hidden>
   </>
-);
+));

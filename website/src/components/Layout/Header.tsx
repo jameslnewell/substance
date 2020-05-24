@@ -27,7 +27,7 @@ export const Header = () => (
   <Outer>
     <ContainerLayout>
       <Inner>
-        <ColumnLayout valign="center">
+        <ColumnLayout alignY="center">
           <ColumnLayout.Column>
             <Text as="div">
               <Logo />
