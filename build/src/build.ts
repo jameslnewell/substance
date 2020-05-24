@@ -21,7 +21,7 @@ const writeFile = util.promisify(fs.writeFile);
 async function generateTypings() {
   // TODO: ignore tests and stories
   const {stdout, stderr} = await exec(
-    `tsc --declaration --emitDeclarationOnly --declarationDir ${getBuildTypesDirectory()}`,
+    `tsc --declaration --emitDeclarationOnly --declarationDir ${getBuildTypesDirectory()} --project tsconfig.json`,
   );
   if (stdout !== '' || stderr !== '') {
     console.log(stdout);
