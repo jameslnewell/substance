@@ -19,7 +19,6 @@ const exec = util.promisify(childProcess.exec);
 const writeFile = util.promisify(fs.writeFile);
 
 async function generateTypings() {
-  // TODO: ignore tests and stories
   const {stdout, stderr} = await exec(
     `tsc --declaration --emitDeclarationOnly --declarationDir ${getBuildTypesDirectory()} --project tsconfig.json`,
   );

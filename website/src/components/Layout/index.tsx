@@ -1,9 +1,11 @@
 import React from 'react';
 import styled, {ThemeProvider, createGlobalStyle} from 'styled-components';
+import {MDXProvider} from '@mdx-js/react';
 import {Reset} from '@substance/reset';
 import {Header} from './Header';
 import {Footer} from './Footer';
 import {Nav} from './Nav';
+import {Code} from './Code';
 
 const Wrapper = styled.div`
   display: grid;
@@ -46,6 +48,11 @@ const theme = {
   },
 };
 
+const components: Record<string, React.FC> = {
+  code: Code,
+  // inlineCode: Code
+};
+
 const GlobalStyle = createGlobalStyle`
   html {
     font-family: system-ui;
@@ -65,12 +72,14 @@ export const Layout: React.FC<LayoutProps> = ({
       <ThemeProvider theme={theme}>
         <Reset />
         <GlobalStyle />
-        <Wrapper>
-          <Header />
-          <main>{children}</main>
-          {isSecondaryNavigationVisible && <Nav />}
-          <Footer />
-        </Wrapper>
+        <MDXProvider components={components}>
+          <Wrapper>
+            <Header />
+            <main>{children}</main>
+            {isSecondaryNavigationVisible && <Nav />}
+            <Footer />
+          </Wrapper>
+        </MDXProvider>
       </ThemeProvider>
     </>
   );
