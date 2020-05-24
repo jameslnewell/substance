@@ -6,11 +6,13 @@
     "@substance/layout": "^0.1.0-preview.18",
     "@substance/mixin": "^0.1.0-preview.13",
     "@substance/style": "^0.1.0-preview.26",
+    "@types/mdx-js__react": "^1.5.2",
     "@types/react": "^16.9.25",
     "@types/react-dom": "^16.9.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-feather": "^2.0.8",
+    "react-syntax-highlighter": "^12.2.1",
     "styled-components": "^5.0.1"
   },
   "devDependencies": {
