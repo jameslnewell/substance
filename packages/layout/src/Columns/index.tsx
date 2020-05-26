@@ -28,7 +28,7 @@ import {
   mapAlignY,
 } from '../utils/alignment';
 
-export type ColumnsLayoutColumnWidth = number | 'content';
+export type ColumnsLayoutColumnWidth = number | 'min' | 'max';
 
 export interface ColumnsLayoutColumnProps<Media extends MediaConstraint> {
   width?: ResponsiveValue<Media, ColumnsLayoutColumnWidth>;
@@ -135,15 +135,36 @@ export const createColumnLayout = <
     ${styles.item}
     ${createProps({
       $width: (width: ResponsiveValue<Media, ColumnsLayoutColumnWidth>) => {
-        return map(
-          width,
-          (w) => css`
-            flex-grow: ${w === undefined ? 1 : 'initial'};
-            flex-shrink: ${w === 'content' ? 1 : 'initial'};
-            flex-basis: ${typeof w === 'number' ? `${w * 100}%` : 'initial'};
-            max-width: ${typeof w === 'number' ? `${w * 100}%` : 'initial'};
-          `,
-        );
+        return map(width, (w) => {
+          switch (w) {
+            case 'min': {
+              return css`
+                flex-grow: 0;
+                flex-basis: auto;
+                /* width: auto; */
+                max-width: none;
+              `;
+            }
+            case 'max': {
+              return css`
+                flex-grow: 1;
+                flex-basis: auto;
+                /* width: auto; */
+                max-width: 100%;
+              `;
+            }
+            default: {
+              const pct =
+                Math.round((typeof w === 'number' ? w : 1) * 100 * 10000) /
+                10000;
+              return css`
+                flex-grow: initial;
+                flex-basis: ${pct}%;
+                max-width: ${pct}%;
+              `;
+            }
+          }
+        });
       },
     })}
   `;

@@ -31,8 +31,8 @@ export const WithWidth: React.FC = () => (
     <ColumnLayout.Column width={1 / 2}>
       <Placeholder>1/2</Placeholder>
     </ColumnLayout.Column>
-    <ColumnLayout.Column width="content">
-      <Placeholder>content</Placeholder>
+    <ColumnLayout.Column width="min">
+      <Placeholder>min</Placeholder>
     </ColumnLayout.Column>
     <ColumnLayout.Column>
       <Placeholder>rest</Placeholder>
@@ -154,8 +154,8 @@ export const WithSpaceX: React.FC = () => (
     <ColumnLayout.Column width={1 / 2}>
       <Placeholder>1/2</Placeholder>
     </ColumnLayout.Column>
-    <ColumnLayout.Column width="content">
-      <Placeholder>content</Placeholder>
+    <ColumnLayout.Column width="min">
+      <Placeholder>min</Placeholder>
     </ColumnLayout.Column>
     <ColumnLayout.Column>
       <Placeholder>rest</Placeholder>
@@ -171,8 +171,8 @@ export const WithSpaceY: React.FC = () => (
     <ColumnLayout.Column width={1 / 2}>
       <Placeholder>1/2</Placeholder>
     </ColumnLayout.Column>
-    <ColumnLayout.Column width="content">
-      <Placeholder>content</Placeholder>
+    <ColumnLayout.Column width="min">
+      <Placeholder>min</Placeholder>
     </ColumnLayout.Column>
     <ColumnLayout.Column>
       <Placeholder>rest</Placeholder>
@@ -188,8 +188,8 @@ export const WithSpaceWrappedColumnAndHAlign: React.FC = () => (
     <ColumnLayout.Column width={1 / 2}>
       <Placeholder>1/2</Placeholder>
     </ColumnLayout.Column>
-    <ColumnLayout.Column width="content">
-      <Placeholder>content</Placeholder>
+    <ColumnLayout.Column width="min">
+      <Placeholder>min</Placeholder>
     </ColumnLayout.Column>
     <ColumnLayout.Column>
       <Placeholder>rest</Placeholder>
@@ -205,8 +205,8 @@ export const WithClassName: React.FC = () => (
     <CustomColumn width={1 / 2}>
       <Placeholder>1/2</Placeholder>
     </CustomColumn>
-    <CustomColumn width="content">
-      <Placeholder>content</Placeholder>
+    <CustomColumn width="min">
+      <Placeholder>min</Placeholder>
     </CustomColumn>
     <CustomColumn>
       <Placeholder>rest</Placeholder>
