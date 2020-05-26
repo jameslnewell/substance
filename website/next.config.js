@@ -3,9 +3,6 @@ const path = require('path');
 const withMDX = require('@next/mdx')({extension: /\.mdx$/});
 
 module.exports = withMDX({
-  experimental: {
-    jsconfigPaths: true,
-  },
   pageExtensions: ['mdx', 'tsx'],
   webpack: (config, options) => {
     // compile monorepo packages

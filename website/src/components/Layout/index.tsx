@@ -5,7 +5,7 @@ import {Reset} from '@substance/reset';
 import {Header} from './Header';
 import {Footer} from './Footer';
 import {Nav} from './Nav';
-import {Code} from './Code';
+import {CodeSample} from '../CodeSample';
 
 const Wrapper = styled.div`
   display: grid;
@@ -49,7 +49,7 @@ const theme = {
 };
 
 const components: Record<string, React.FC> = {
-  code: Code,
+  code: ({children}) => <CodeSample code={children} />,
   // inlineCode: Code
 };
 
