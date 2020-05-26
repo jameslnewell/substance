@@ -16,8 +16,8 @@ import {
   paddingLeft,
   justifyContent,
   alignItems,
-  Mixin,
-  MixinValue,
+  MixinFunction,
+  MixinFunctionValue,
 } from '@substance/mixin';
 import styled, {css} from 'styled-components';
 import {createSpaceStyles} from '../styles';
@@ -39,9 +39,10 @@ export interface ColumnsLayoutProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  space?: ResponsiveValue<Media, Space>;
   alignX?: ResponsiveAlignX<Media>;
   alignY?: ResponsiveAlignY<Media>;
+  spaceX?: ResponsiveValue<Media, Space>;
+  spaceY?: ResponsiveValue<Media, Space>;
   className?: string;
 }
 
@@ -49,23 +50,24 @@ interface WrapperProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $space?: ColumnsLayoutProps<Media, Space>['space'];
+  $spaceY?: ColumnsLayoutProps<Media, Space>['spaceY'];
 }
 
 interface ContainerProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $alignItems?: MixinValue<Media, 'align-items'>;
-  $justifyContent?: MixinValue<Media, 'justify-content'>;
-  $space?: ColumnsLayoutProps<Media, Space>['space'];
+  $alignItems?: MixinFunctionValue<Media, 'align-items'>;
+  $justifyContent?: MixinFunctionValue<Media, 'justify-content'>;
+  $spaceX?: ColumnsLayoutProps<Media, Space>['spaceX'];
 }
 
 interface ItemProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $space?: ColumnsLayoutProps<Media, Space>['space'];
+  $spaceX?: ColumnsLayoutProps<Media, Space>['spaceX'];
+  $spaceY?: ColumnsLayoutProps<Media, Space>['spaceY'];
   $width?: ColumnsLayoutColumnProps<Media>['width'];
 }
 
@@ -75,8 +77,8 @@ export interface CreateColumnLayoutOptions<
 > {
   map: MapFunction<Media>;
   getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space>;
-  alignItems: Mixin<Media, 'align-items'>;
-  justifyContent: Mixin<Media, 'justify-content'>;
+  alignItems: MixinFunction<Media, 'align-items'>;
+  justifyContent: MixinFunction<Media, 'justify-content'>;
   paddingTop: SpaceMixinFunction<Media, Space>;
   paddingLeft: SpaceMixinFunction<Media, Space>;
 }
@@ -99,7 +101,10 @@ export const createColumnLayout = <
   paddingTop,
   paddingLeft,
 }: CreateColumnLayoutOptions<Media, Space>): ColumnLayout<Media, Space> => {
-  const SpaceContext = React.createContext<
+  const SpaceXContext = React.createContext<
+    ResponsiveValue<Media, Space> | undefined
+  >(undefined);
+  const SpaceYContext = React.createContext<
     ResponsiveValue<Media, Space> | undefined
   >(undefined);
 
@@ -148,29 +153,40 @@ export const createColumnLayout = <
     width,
     ...otherProps
   }) => (
-    <SpaceContext.Consumer>
-      {(space): React.ReactElement => (
-        <Item {...otherProps} $space={space} $width={width}>
-          {children}
-        </Item>
+    <SpaceXContext.Consumer>
+      {(spaceX): React.ReactElement => (
+        <SpaceYContext.Consumer>
+          {(spaceY): React.ReactElement => (
+            <Item
+              {...otherProps}
+              $spaceX={spaceX}
+              $spaceY={spaceY}
+              $width={width}
+            >
+              {children}
+            </Item>
+          )}
+        </SpaceYContext.Consumer>
       )}
-    </SpaceContext.Consumer>
+    </SpaceXContext.Consumer>
   );
 
   const ColumnLayout: React.FC<ColumnsLayoutProps<Media, Space>> & {
     Column: typeof ColumnsLayoutColumn;
-  } = ({space, alignX, alignY, children, ...otherProps}) => (
-    <SpaceContext.Provider value={space}>
-      <Wrapper {...otherProps} $space={space}>
-        <Container
-          $alignItems={mapAlignY(alignY)}
-          $justifyContent={mapAlignX(alignX)}
-          $space={space}
-        >
-          {children}
-        </Container>
-      </Wrapper>
-    </SpaceContext.Provider>
+  } = ({spaceX, spaceY, alignX, alignY, children, ...otherProps}) => (
+    <SpaceXContext.Provider value={spaceX}>
+      <SpaceYContext.Provider value={spaceY}>
+        <Wrapper {...otherProps} $spaceY={spaceY}>
+          <Container
+            $alignItems={mapAlignY(alignY)}
+            $justifyContent={mapAlignX(alignX)}
+            $spaceX={spaceX}
+          >
+            {children}
+          </Container>
+        </Wrapper>
+      </SpaceYContext.Provider>
+    </SpaceXContext.Provider>
   );
 
   ColumnLayout.Column = ColumnsLayoutColumn;

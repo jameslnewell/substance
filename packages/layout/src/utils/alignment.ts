@@ -5,7 +5,7 @@ import {
   MediaConstraint,
   unstable_mapValueToValue,
 } from '@substance/style';
-import {MixinValue} from '@substance/mixin';
+import {MixinFunctionValue} from '@substance/mixin';
 
 export type AlignX = 'left' | 'center' | 'right';
 export type AlignY = 'top' | 'center' | 'bottom' | 'stretch';
@@ -37,12 +37,12 @@ const alignYValues: Record<AlignY, StyleValue<'justify-content'>> = {
 
 export function mapAlignX<Media extends MediaConstraint>(
   alignX: ResponsiveAlignX<Media> | undefined,
-): MixinValue<Media, 'justify-content'> | undefined {
+): MixinFunctionValue<Media, 'justify-content'> | undefined {
   return unstable_mapValueToValue(alignX, (align) => alignXValues[align]);
 }
 
 export function mapAlignY<Media extends MediaConstraint>(
   alignY: ResponsiveAlignY<Media> | undefined,
-): MixinValue<Media, 'justify-content'> | undefined {
+): MixinFunctionValue<Media, 'justify-content'> | undefined {
   return unstable_mapValueToValue(alignY, (align) => alignYValues[align]);
 }

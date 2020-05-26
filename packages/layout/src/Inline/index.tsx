@@ -18,8 +18,8 @@ import {
   justifyContent,
   paddingTop,
   paddingLeft,
-  Mixin,
-  MixinValue,
+  MixinFunction,
+  MixinFunctionValue,
 } from '@substance/mixin';
 import {createSpaceStyles} from '../styles';
 import {
@@ -50,8 +50,8 @@ interface ContainerProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $alignItems?: MixinValue<Media, 'align-items'>;
-  $justifyContent?: MixinValue<Media, 'justify-content'>;
+  $alignItems?: MixinFunctionValue<Media, 'align-items'>;
+  $justifyContent?: MixinFunctionValue<Media, 'justify-content'>;
   $space?: InlineLayoutProps<Media, Space>['space'];
 }
 
@@ -68,8 +68,8 @@ export interface CreateInlineLayoutOptions<
 > {
   map: MapFunction<Media>;
   getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space>;
-  alignItems: Mixin<Media, 'align-items'>;
-  justifyContent: Mixin<Media, 'justify-content'>;
+  alignItems: MixinFunction<Media, 'align-items'>;
+  justifyContent: MixinFunction<Media, 'justify-content'>;
   paddingTop: SpaceMixinFunction<Media, Space>;
   paddingLeft: SpaceMixinFunction<Media, Space>;
 }

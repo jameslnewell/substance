@@ -14,10 +14,20 @@ import {
   getSpace,
   ThemedGetSpaceFunction,
   SpaceMixinFunction,
+  alignItems,
+  justifyContent,
   paddingTop,
   paddingLeft,
+  MixinFunction,
+  MixinFunctionValue,
 } from '@substance/mixin';
 import {createSpaceStyles} from '../styles';
+import {
+  mapAlignX,
+  mapAlignY,
+  ResponsiveAlignX,
+  ResponsiveAlignY,
+} from '../utils/alignment';
 
 export type TilesLayoutAlignment = 'left' | 'center' | 'right';
 
@@ -26,8 +36,10 @@ export interface TilesLayoutProps<
   Space extends SpaceConstraint
 > {
   columns?: ResponsiveValue<Media, number>;
-  space?: ResponsiveValue<Media, Space>;
-  align?: ResponsiveValue<Media, TilesLayoutAlignment>;
+  alignX?: ResponsiveAlignX<Media>;
+  alignY?: ResponsiveAlignY<Media>;
+  spaceX?: ResponsiveValue<Media, Space>;
+  spaceY?: ResponsiveValue<Media, Space>;
   className?: string;
 }
 
@@ -35,21 +47,23 @@ interface WrapperProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $space?: TilesLayoutProps<Media, Space>['space'];
+  $spaceY?: TilesLayoutProps<Media, Space>['spaceY'];
 }
 interface ContainerProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $align?: TilesLayoutProps<Media, TilesLayoutAlignment>['align'];
-  $space?: TilesLayoutProps<Media, Space>['space'];
+  $alignItems?: MixinFunctionValue<Media, 'align-items'>;
+  $justifyContent?: MixinFunctionValue<Media, 'justify-content'>;
+  $spaceX?: TilesLayoutProps<Media, Space>['spaceX'];
 }
 interface ItemProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
   $columns?: TilesLayoutProps<Media, number>['columns'];
-  $space?: TilesLayoutProps<Media, Space>['space'];
+  $spaceX?: TilesLayoutProps<Media, Space>['spaceX'];
+  $spaceY?: TilesLayoutProps<Media, Space>['spaceY'];
 }
 
 export interface CreateTileLayoutOptions<
@@ -58,15 +72,11 @@ export interface CreateTileLayoutOptions<
 > {
   map: MapFunction<Media>;
   getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space>;
+  alignItems: MixinFunction<Media, 'justify-content'>;
+  justifyContent: MixinFunction<Media, 'justify-content'>;
   paddingTop: SpaceMixinFunction<Media, Space>;
   paddingLeft: SpaceMixinFunction<Media, Space>;
 }
-
-const horizontalAlignment = {
-  left: 'flex-start',
-  center: 'center',
-  right: 'flex-end',
-};
 
 export const createTileLayout = <
   Media extends MediaConstraint,
@@ -74,6 +84,8 @@ export const createTileLayout = <
 >({
   map,
   getSpace,
+  alignItems,
+  justifyContent,
   paddingTop,
   paddingLeft,
 }: CreateTileLayoutOptions<Media, Space>) => {
@@ -93,8 +105,8 @@ export const createTileLayout = <
     flex-wrap: wrap;
     ${styles.container}
     ${createProps({
-      $align: (align: ResponsiveValue<Media, TilesLayoutAlignment>) =>
-        map(align, (a) => `justify-content: ${horizontalAlignment[a]};`),
+      $alignItems: alignItems,
+      $justifyContent: justifyContent,
     })}
   `;
 
@@ -117,19 +129,30 @@ export const createTileLayout = <
 
   const TileLayout: React.FC<TilesLayoutProps<Media, Space>> = ({
     columns,
-    space,
-    align,
+    alignX,
+    alignY,
+    spaceX,
+    spaceY,
     children,
     ...otherProps
   }) => (
-    <Wrapper {...otherProps} $space={space}>
-      <Container $align={align} $space={space}>
+    <Wrapper {...otherProps} $spaceY={spaceY}>
+      <Container
+        $alignItems={mapAlignY(alignY)}
+        $justifyContent={mapAlignX(alignX)}
+        $spaceX={spaceX}
+      >
         {flattenChildren(children).map((child, index) => {
           if (!React.isValidElement(child)) {
             return child;
           }
           return (
-            <Item key={child.key || index} $columns={columns} $space={space}>
+            <Item
+              key={child.key || index}
+              $columns={columns}
+              $spaceX={spaceX}
+              $spaceY={spaceY}
+            >
               {child}
             </Item>
           );
@@ -144,6 +167,8 @@ export const createTileLayout = <
 export const TileLayout = createTileLayout({
   map,
   getSpace,
+  alignItems,
+  justifyContent,
   paddingTop,
   paddingLeft,
 });

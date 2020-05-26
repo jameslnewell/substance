@@ -16,7 +16,7 @@ import {
   SpaceConstraint,
   SpaceMixinFunction,
   display,
-  Mixin,
+  MixinFunction,
 } from '@substance/mixin';
 import {Hidden} from '../Hidden';
 import {ResponsiveAlignX, mapAlignX} from '../utils/alignment';
@@ -25,8 +25,8 @@ export interface StackLayoutProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  space?: ResponsiveValue<Media, Space>;
   alignX?: ResponsiveAlignX<Media>;
+  spaceY?: ResponsiveValue<Media, Space>;
   className?: string;
 }
 
@@ -34,7 +34,7 @@ export interface CreateStackLayoutOptions<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  alignItems: Mixin<Media, 'align-items'>;
+  alignItems: MixinFunction<Media, 'align-items'>;
   display: ResponsiveMixinFunction<Media, StyleValue<'display'>>;
   marginBottom: SpaceMixinFunction<Media, Space>;
   getChildDisplayValue: (
@@ -71,7 +71,7 @@ export const createStackLayout = <
 
   const StackLayout: React.FC<StackLayoutProps<Media, Space>> = ({
     alignX,
-    space,
+    spaceY,
     children,
     ...otherProps
   }) => (
@@ -84,7 +84,7 @@ export const createStackLayout = <
           <Item
             key={child.key || index}
             $display={getChildDisplayValue(child)}
-            $marginBottom={space}
+            $marginBottom={spaceY}
           >
             {child}
           </Item>

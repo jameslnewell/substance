@@ -1,5 +1,11 @@
 {
   "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@substance/storybook/*": ["./src/*"]
+    }
+  },
   "include": [".storybook", "src", "../packages/*/src"],
   "exclude": ["node_modules"]
 }

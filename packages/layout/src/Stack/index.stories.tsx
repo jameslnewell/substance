@@ -28,11 +28,11 @@ export const WithoutSpace: React.FC = () => (
 );
 
 export const WithSpace: React.FC = () => (
-  <StackLayout space={3}>{content}</StackLayout>
+  <StackLayout spaceY={3}>{content}</StackLayout>
 );
 
 export const WithResponsiveSpace: React.FC = () => (
-  <StackLayout space={{mobile: 2, tablet: 4}}>{content}</StackLayout>
+  <StackLayout spaceY={{mobile: 2, tablet: 4}}>{content}</StackLayout>
 );
 
 export const WithAlignX: React.FC = () => (
@@ -50,11 +50,11 @@ export const WithAlignX: React.FC = () => (
 );
 
 export const WithClassName: React.FC = () => (
-  <CustomStackLayout space={3}>{content}</CustomStackLayout>
+  <CustomStackLayout>{content}</CustomStackLayout>
 );
 
 export const DoesNotAddSpaceOnHiddenChildren = () => (
-  <StackLayout space={4}>
+  <StackLayout spaceY={4}>
     <span>A</span>
     <Hidden hide={{sm: true, md: false, lg: true}}>
       <span>B</span>
