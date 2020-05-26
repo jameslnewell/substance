@@ -19,9 +19,11 @@
     "@mdx-js/loader": "^1.6.1",
     "@next/mdx": "^9.3.6",
     "babel-plugin-styled-components": "^1.10.7",
-    "next": "^9.3.6"
+    "next": "^9.4.2",
+    "typedoc": "^0.17.7"
   },
   "scripts": {
+    "generate-docs": "cd ../packages/style && typedoc --json ../../website/docs/style.json",
     "typing": "tsc --noEmit",
     "start": "next dev",
     "build": "next build && next export"
