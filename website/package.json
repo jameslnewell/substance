@@ -27,7 +27,7 @@
     "generate-docs": "cd ../packages/style && typedoc --json ../../website/docs/style.json",
     "typing": "tsc --noEmit",
     "start": "next dev",
-    "build": "next build && next export"
+    "build": "yarn run generate-docs && next build && next export"
   },
   "license": "MIT"
 }
