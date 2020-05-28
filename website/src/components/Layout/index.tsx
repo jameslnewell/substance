@@ -49,7 +49,8 @@ const theme = {
 };
 
 const components: Record<string, React.FC> = {
-  code: ({children}) => <CodeSample code={children} />,
+  // eslint-disable-next-line react/display-name
+  code: ({children}) => <CodeSample code={String(children)} />,
   // inlineCode: Code
 };
 
