@@ -35,7 +35,8 @@ export interface InlineLayoutProps<
 > {
   alignX?: ResponsiveAlignX<Media>;
   alignY?: ResponsiveAlignY<Media>;
-  space?: ResponsiveValue<Media, Space>;
+  spaceX?: ResponsiveValue<Media, Space>;
+  spaceY?: ResponsiveValue<Media, Space>;
   className?: string;
 }
 
@@ -43,7 +44,7 @@ interface WrapperProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $space?: InlineLayoutProps<Media, Space>['space'];
+  $spaceY?: InlineLayoutProps<Media, Space>['spaceY'];
 }
 
 interface ContainerProps<
@@ -52,14 +53,15 @@ interface ContainerProps<
 > {
   $alignItems?: MixinFunctionValue<Media, 'align-items'>;
   $justifyContent?: MixinFunctionValue<Media, 'justify-content'>;
-  $space?: InlineLayoutProps<Media, Space>['space'];
+  $spaceX?: InlineLayoutProps<Media, Space>['spaceX'];
 }
 
 interface ItemProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $space?: InlineLayoutProps<Media, Space>['space'];
+  $spaceX?: InlineLayoutProps<Media, Space>['spaceX'];
+  $spaceY?: InlineLayoutProps<Media, Space>['spaceY'];
 }
 
 export interface CreateInlineLayoutOptions<
@@ -112,24 +114,25 @@ export const createInlineLayout = <
   `;
 
   const InlineLayout: React.FC<InlineLayoutProps<Media, Space>> = ({
-    space,
+    spaceX,
+    spaceY,
     alignX,
     alignY,
     children,
     ...otherProps
   }) => (
-    <Wrapper {...otherProps} $space={space}>
+    <Wrapper {...otherProps} $spaceY={spaceY}>
       <Container
         $justifyContent={mapAlignX(alignX)}
         $alignItems={mapAlignY(alignY)}
-        $space={space}
+        $spaceX={spaceX}
       >
         {flattenChildren(children).map((child, index) => {
           if (!React.isValidElement(child)) {
             return child;
           }
           return (
-            <Item key={child.key || index} $space={space}>
+            <Item key={child.key || index} $spaceX={spaceX} $spaceY={spaceY}>
               {child}
             </Item>
           );

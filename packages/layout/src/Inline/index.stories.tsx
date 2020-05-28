@@ -90,13 +90,17 @@ export const WithoutSpace: React.FC = () => (
 
 export const WithSpace: React.FC = () => (
   <Box backgroundColor="deeppink">
-    <InlineLayout space={2}>{tags}</InlineLayout>
+    <InlineLayout spaceX={3} spaceY={4}>
+      {tags}
+    </InlineLayout>
   </Box>
 );
 
 export const WithResponsiveSpace: React.FC = () => (
   <Box backgroundColor="deeppink">
-    <InlineLayout space={{sm: 2, md: 4}}>{tags}</InlineLayout>
+    <InlineLayout spaceX={{sm: 2, md: 4}} spaceY={{sm: 2, md: 4}}>
+      {tags}
+    </InlineLayout>
   </Box>
 );
 
