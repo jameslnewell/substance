@@ -31,6 +31,7 @@ import {
 export type ColumnsLayoutColumnWidth = number | 'min' | 'max';
 
 export interface ColumnsLayoutColumnProps<Media extends MediaConstraint> {
+  offset?: ResponsiveValue<Media, number>;
   width?: ResponsiveValue<Media, ColumnsLayoutColumnWidth>;
   className?: string;
 }
@@ -68,6 +69,7 @@ interface ItemProps<
 > {
   $spaceX?: ColumnsLayoutProps<Media, Space>['spaceX'];
   $spaceY?: ColumnsLayoutProps<Media, Space>['spaceY'];
+  $offset?: ColumnsLayoutColumnProps<Media>['offset'];
   $width?: ColumnsLayoutColumnProps<Media>['width'];
 }
 
@@ -134,6 +136,14 @@ export const createColumnLayout = <
     flex-grow: 1;
     ${styles.item}
     ${createProps({
+      $offset: (offset: ResponsiveValue<Media, number>) => {
+        return map(offset, (o) => {
+          const pct = Math.round(o * 100 * 10000) / 10000;
+          return css`
+            margin-left: ${pct}%;
+          `;
+        });
+      },
       $width: (width: ResponsiveValue<Media, ColumnsLayoutColumnWidth>) => {
         return map(width, (w) => {
           switch (w) {
@@ -171,6 +181,7 @@ export const createColumnLayout = <
 
   const ColumnsLayoutColumn: React.FC<ColumnsLayoutColumnProps<Media>> = ({
     children,
+    offset,
     width,
     ...otherProps
   }) => (
@@ -182,6 +193,7 @@ export const createColumnLayout = <
               {...otherProps}
               $spaceX={spaceX}
               $spaceY={spaceY}
+              $offset={offset}
               $width={width}
             >
               {children}

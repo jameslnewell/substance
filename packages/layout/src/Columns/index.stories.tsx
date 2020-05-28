@@ -60,6 +60,29 @@ export const WithResponsiveWidth: React.FC = () => (
   </ColumnLayout>
 );
 
+export const WithOffset: React.FC = () => (
+  <>
+    <ColumnLayout>
+      <ColumnLayout.Column width={1 / 2} offset={1 / 4}>
+        <Placeholder>1/2</Placeholder>
+      </ColumnLayout.Column>
+    </ColumnLayout>
+    <ColumnLayout>
+      <ColumnLayout.Column width="min">
+        <Placeholder>min</Placeholder>
+      </ColumnLayout.Column>
+      <ColumnLayout.Column offset={1 / 12}>
+        <Placeholder>rest</Placeholder>
+      </ColumnLayout.Column>
+    </ColumnLayout>
+    <ColumnLayout>
+      <ColumnLayout.Column width={2 / 3} offset={1 / 3}>
+        <Placeholder>2/3</Placeholder>
+      </ColumnLayout.Column>
+    </ColumnLayout>
+  </>
+);
+
 export const WithAlignX: React.FC = () => (
   <>
     <ColumnLayout alignX="left">
