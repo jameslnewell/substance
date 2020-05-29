@@ -1,13 +1,13 @@
 {
   "name": "@substance/website",
-  "version": "1.0.0-preview.6",
+  "version": "1.0.0-preview.7",
   "private": true,
   "dependencies": {
     "@babel/core": "^7.9.0",
     "@changesets/cli": "^2.6.5",
-    "@substance/layout": "^0.1.0-preview.18",
-    "@substance/mixin": "^0.1.0-preview.13",
-    "@substance/style": "^0.1.0-preview.26",
+    "@substance/layout": "^0.1.0-preview.21",
+    "@substance/mixin": "^0.1.0-preview.14",
+    "@substance/style": "^0.1.0-preview.28",
     "@types/jest": "^25.2.1",
     "@types/mdx-js__react": "^1.5.2",
     "@types/react": "^16.9.25",

@@ -1,5 +1,11 @@
 # @substance/style
 
+## 0.1.0-preview.28
+
+### Patch Changes
+
+- 1f93498: Split space and align into X/Y variants, added offset and improved docs
+
 ## 0.1.0-preview.27
 
 ### Patch Changes
