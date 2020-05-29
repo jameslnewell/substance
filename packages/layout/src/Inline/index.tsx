@@ -18,8 +18,8 @@ import {
   justifyContent,
   paddingTop,
   paddingLeft,
-  Mixin,
-  MixinValue,
+  MixinFunction,
+  MixinFunctionValue,
 } from '@substance/mixin';
 import {createSpaceStyles} from '../styles';
 import {
@@ -35,7 +35,8 @@ export interface InlineLayoutProps<
 > {
   alignX?: ResponsiveAlignX<Media>;
   alignY?: ResponsiveAlignY<Media>;
-  space?: ResponsiveValue<Media, Space>;
+  spaceX?: ResponsiveValue<Media, Space>;
+  spaceY?: ResponsiveValue<Media, Space>;
   className?: string;
 }
 
@@ -43,23 +44,24 @@ interface WrapperProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $space?: InlineLayoutProps<Media, Space>['space'];
+  $spaceY?: InlineLayoutProps<Media, Space>['spaceY'];
 }
 
 interface ContainerProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $alignItems?: MixinValue<Media, 'align-items'>;
-  $justifyContent?: MixinValue<Media, 'justify-content'>;
-  $space?: InlineLayoutProps<Media, Space>['space'];
+  $alignItems?: MixinFunctionValue<Media, 'align-items'>;
+  $justifyContent?: MixinFunctionValue<Media, 'justify-content'>;
+  $spaceX?: InlineLayoutProps<Media, Space>['spaceX'];
 }
 
 interface ItemProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $space?: InlineLayoutProps<Media, Space>['space'];
+  $spaceX?: InlineLayoutProps<Media, Space>['spaceX'];
+  $spaceY?: InlineLayoutProps<Media, Space>['spaceY'];
 }
 
 export interface CreateInlineLayoutOptions<
@@ -68,8 +70,8 @@ export interface CreateInlineLayoutOptions<
 > {
   map: MapFunction<Media>;
   getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space>;
-  alignItems: Mixin<Media, 'align-items'>;
-  justifyContent: Mixin<Media, 'justify-content'>;
+  alignItems: MixinFunction<Media, 'align-items'>;
+  justifyContent: MixinFunction<Media, 'justify-content'>;
   paddingTop: SpaceMixinFunction<Media, Space>;
   paddingLeft: SpaceMixinFunction<Media, Space>;
 }
@@ -112,24 +114,25 @@ export const createInlineLayout = <
   `;
 
   const InlineLayout: React.FC<InlineLayoutProps<Media, Space>> = ({
-    space,
+    spaceX,
+    spaceY,
     alignX,
     alignY,
     children,
     ...otherProps
   }) => (
-    <Wrapper {...otherProps} $space={space}>
+    <Wrapper {...otherProps} $spaceY={spaceY}>
       <Container
         $justifyContent={mapAlignX(alignX)}
         $alignItems={mapAlignY(alignY)}
-        $space={space}
+        $spaceX={spaceX}
       >
         {flattenChildren(children).map((child, index) => {
           if (!React.isValidElement(child)) {
             return child;
           }
           return (
-            <Item key={child.key || index} $space={space}>
+            <Item key={child.key || index} $spaceX={spaceX} $spaceY={spaceY}>
               {child}
             </Item>
           );

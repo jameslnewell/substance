@@ -1,0 +1,92 @@
+import {DocumentationLayout, PropsTable, CodeSample} from '~/components';
+export default DocumentationLayout;
+
+# @substance/layout
+
+## Columns
+
+The `Columns` component is used for horizontal layouts of fixed widths. `Columns`
+are wrapped when unable to fit on a row.
+
+### Installation
+
+```
+yarn add @substance/layout
+```
+
+### Usage
+
+```jsx
+<Columns>
+  <Columns.Column width={{mobile: 1, tablet: 1 / 3, desktop: 1 / 5}}>
+    touch
+  </Columns.Column>
+  <Columns.Column width={{mobile: 1, tablet: 1 / 3, desktop: 1 / 5}}>
+    sight
+  </Columns.Column>
+  <Columns.Column width={{mobile: 1, tablet: 1 / 3, desktop: 1 / 5}}>
+    hearing
+  </Columns.Column>
+  <Columns.Column width={{mobile: 1, tablet: 1 / 3, desktop: 1 / 5}}>
+    smell
+  </Columns.Column>
+  <Columns.Column width={{mobile: 1, tablet: 1 / 3, desktop: 1 / 5}}>
+    taste
+  </Columns.Column>
+</Columns>
+```
+
+### Props
+
+#### Columns
+
+<PropsTable>
+  <tr>
+    <td>alignX</td>
+    <td>left | center | right</td>
+  </tr>
+  <tr>
+    <td>alignY</td>
+    <td>top | center | bottom</td>
+  </tr>
+  <tr>
+    <td>spaceX</td>
+    <td>Space</td>
+  </tr>
+  <tr>
+    <td>spaceY</td>
+    <td>Space</td>
+  </tr>
+</PropsTable>
+
+#### Columns.Column
+
+<PropsTable>
+  <tr>
+    <td>offset</td>
+    <td>number</td>
+  </tr>
+  <tr>
+    <td>width</td>
+    <td>number | min | max</td>
+  </tr>
+</PropsTable>
+
+### Examples
+
+###
+
+```jsx
+<Columns alignY="center">
+  <Columns.Column width="min">
+    <Logo />
+    <Link />
+    <Link />
+  </Columns.Column>
+  <Columns.Column width="max">
+    <Hamburger />
+  </Columns.Column>
+</Columns>
+```
+
+<CodeSample />

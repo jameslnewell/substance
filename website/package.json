@@ -3,28 +3,36 @@
   "version": "1.0.0-preview.6",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.9.0",
+    "@changesets/cli": "^2.6.5",
     "@substance/layout": "^0.1.0-preview.18",
     "@substance/mixin": "^0.1.0-preview.13",
     "@substance/style": "^0.1.0-preview.26",
+    "@types/jest": "^25.2.1",
     "@types/mdx-js__react": "^1.5.2",
     "@types/react": "^16.9.25",
     "@types/react-dom": "^16.9.5",
+    "lerna": "^3.20.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-feather": "^2.0.8",
+    "react-live": "^2.2.2",
     "react-syntax-highlighter": "^12.2.1",
-    "styled-components": "^5.0.1"
+    "styled-components": "^5.0.1",
+    "typescript": "^3.8.3"
   },
   "devDependencies": {
-    "@mdx-js/loader": "^1.6.1",
-    "@next/mdx": "^9.3.6",
+    "@mdx-js/loader": "^1.6.4",
+    "@next/mdx": "^9.4.4",
     "babel-plugin-styled-components": "^1.10.7",
-    "next": "^9.3.6"
+    "next": "^9.4.4",
+    "typedoc": "^0.17.7"
   },
   "scripts": {
+    "generate-docs": "cd ../packages/style && typedoc --json ../../website/docs/style.json",
     "typing": "tsc --noEmit",
     "start": "next dev",
-    "build": "next build && next export"
+    "build": "yarn run generate-docs && next build && next export"
   },
   "license": "MIT"
 }

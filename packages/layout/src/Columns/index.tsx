@@ -16,8 +16,8 @@ import {
   paddingLeft,
   justifyContent,
   alignItems,
-  Mixin,
-  MixinValue,
+  MixinFunction,
+  MixinFunctionValue,
 } from '@substance/mixin';
 import styled, {css} from 'styled-components';
 import {createSpaceStyles} from '../styles';
@@ -28,9 +28,10 @@ import {
   mapAlignY,
 } from '../utils/alignment';
 
-export type ColumnsLayoutColumnWidth = number | 'content';
+export type ColumnsLayoutColumnWidth = number | 'min' | 'max';
 
 export interface ColumnsLayoutColumnProps<Media extends MediaConstraint> {
+  offset?: ResponsiveValue<Media, number>;
   width?: ResponsiveValue<Media, ColumnsLayoutColumnWidth>;
   className?: string;
 }
@@ -39,9 +40,10 @@ export interface ColumnsLayoutProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  space?: ResponsiveValue<Media, Space>;
   alignX?: ResponsiveAlignX<Media>;
   alignY?: ResponsiveAlignY<Media>;
+  spaceX?: ResponsiveValue<Media, Space>;
+  spaceY?: ResponsiveValue<Media, Space>;
   className?: string;
 }
 
@@ -49,23 +51,25 @@ interface WrapperProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $space?: ColumnsLayoutProps<Media, Space>['space'];
+  $spaceY?: ColumnsLayoutProps<Media, Space>['spaceY'];
 }
 
 interface ContainerProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $alignItems?: MixinValue<Media, 'align-items'>;
-  $justifyContent?: MixinValue<Media, 'justify-content'>;
-  $space?: ColumnsLayoutProps<Media, Space>['space'];
+  $alignItems?: MixinFunctionValue<Media, 'align-items'>;
+  $justifyContent?: MixinFunctionValue<Media, 'justify-content'>;
+  $spaceX?: ColumnsLayoutProps<Media, Space>['spaceX'];
 }
 
 interface ItemProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $space?: ColumnsLayoutProps<Media, Space>['space'];
+  $spaceX?: ColumnsLayoutProps<Media, Space>['spaceX'];
+  $spaceY?: ColumnsLayoutProps<Media, Space>['spaceY'];
+  $offset?: ColumnsLayoutColumnProps<Media>['offset'];
   $width?: ColumnsLayoutColumnProps<Media>['width'];
 }
 
@@ -75,8 +79,8 @@ export interface CreateColumnLayoutOptions<
 > {
   map: MapFunction<Media>;
   getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space>;
-  alignItems: Mixin<Media, 'align-items'>;
-  justifyContent: Mixin<Media, 'justify-content'>;
+  alignItems: MixinFunction<Media, 'align-items'>;
+  justifyContent: MixinFunction<Media, 'justify-content'>;
   paddingTop: SpaceMixinFunction<Media, Space>;
   paddingLeft: SpaceMixinFunction<Media, Space>;
 }
@@ -99,7 +103,10 @@ export const createColumnLayout = <
   paddingTop,
   paddingLeft,
 }: CreateColumnLayoutOptions<Media, Space>): ColumnLayout<Media, Space> => {
-  const SpaceContext = React.createContext<
+  const SpaceXContext = React.createContext<
+    ResponsiveValue<Media, Space> | undefined
+  >(undefined);
+  const SpaceYContext = React.createContext<
     ResponsiveValue<Media, Space> | undefined
   >(undefined);
 
@@ -129,48 +136,90 @@ export const createColumnLayout = <
     flex-grow: 1;
     ${styles.item}
     ${createProps({
+      $offset: (offset: ResponsiveValue<Media, number>) => {
+        return map(offset, (o) => {
+          const pct = Math.round(o * 100 * 10000) / 10000;
+          return css`
+            margin-left: ${pct}%;
+          `;
+        });
+      },
       $width: (width: ResponsiveValue<Media, ColumnsLayoutColumnWidth>) => {
-        return map(
-          width,
-          (w) => css`
-            flex-grow: ${w === undefined ? 1 : 'initial'};
-            flex-shrink: ${w === 'content' ? 1 : 'initial'};
-            flex-basis: ${typeof w === 'number' ? `${w * 100}%` : 'initial'};
-            max-width: ${typeof w === 'number' ? `${w * 100}%` : 'initial'};
-          `,
-        );
+        return map(width, (w) => {
+          switch (w) {
+            case 'min': {
+              return css`
+                flex-grow: 0;
+                flex-basis: auto;
+                /* width: auto; */
+                max-width: none;
+              `;
+            }
+            case 'max': {
+              return css`
+                flex-grow: 1;
+                flex-basis: auto;
+                /* width: auto; */
+                max-width: 100%;
+              `;
+            }
+            default: {
+              const pct =
+                Math.round((typeof w === 'number' ? w : 1) * 100 * 10000) /
+                10000;
+              return css`
+                flex-grow: initial;
+                flex-basis: ${pct}%;
+                max-width: ${pct}%;
+              `;
+            }
+          }
+        });
       },
     })}
   `;
 
   const ColumnsLayoutColumn: React.FC<ColumnsLayoutColumnProps<Media>> = ({
     children,
+    offset,
     width,
     ...otherProps
   }) => (
-    <SpaceContext.Consumer>
-      {(space): React.ReactElement => (
-        <Item {...otherProps} $space={space} $width={width}>
-          {children}
-        </Item>
+    <SpaceXContext.Consumer>
+      {(spaceX): React.ReactElement => (
+        <SpaceYContext.Consumer>
+          {(spaceY): React.ReactElement => (
+            <Item
+              {...otherProps}
+              $spaceX={spaceX}
+              $spaceY={spaceY}
+              $offset={offset}
+              $width={width}
+            >
+              {children}
+            </Item>
+          )}
+        </SpaceYContext.Consumer>
       )}
-    </SpaceContext.Consumer>
+    </SpaceXContext.Consumer>
   );
 
   const ColumnLayout: React.FC<ColumnsLayoutProps<Media, Space>> & {
     Column: typeof ColumnsLayoutColumn;
-  } = ({space, alignX, alignY, children, ...otherProps}) => (
-    <SpaceContext.Provider value={space}>
-      <Wrapper {...otherProps} $space={space}>
-        <Container
-          $alignItems={mapAlignY(alignY)}
-          $justifyContent={mapAlignX(alignX)}
-          $space={space}
-        >
-          {children}
-        </Container>
-      </Wrapper>
-    </SpaceContext.Provider>
+  } = ({spaceX, spaceY, alignX, alignY, children, ...otherProps}) => (
+    <SpaceXContext.Provider value={spaceX}>
+      <SpaceYContext.Provider value={spaceY}>
+        <Wrapper {...otherProps} $spaceY={spaceY}>
+          <Container
+            $alignItems={mapAlignY(alignY)}
+            $justifyContent={mapAlignX(alignX)}
+            $spaceX={spaceX}
+          >
+            {children}
+          </Container>
+        </Wrapper>
+      </SpaceYContext.Provider>
+    </SpaceXContext.Provider>
   );
 
   ColumnLayout.Column = ColumnsLayoutColumn;

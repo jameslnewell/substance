@@ -9,6 +9,7 @@ export type ResponsiveSpaceX<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > = ResponsiveValue<Media, SpaceX<Space>>;
+
 export type ResponsiveSpaceY<
   Media extends MediaConstraint,
   Space extends SpaceConstraint

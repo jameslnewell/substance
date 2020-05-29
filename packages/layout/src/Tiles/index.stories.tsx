@@ -40,36 +40,71 @@ export const WithResponsiveColumns: React.FC = () => (
   <TileLayout columns={{sm: 1, md: 3, lg: 4}}>{createTiles(5)}</TileLayout>
 );
 
-export const WithAlign: React.FC = () => (
+export const WithAlignX: React.FC = () => (
   <>
-    <TileLayout columns={2} align="left">
+    <TileLayout columns={2} alignX="left">
       {createTiles(3)}
     </TileLayout>
     <br />
-    <TileLayout columns={2} align="center">
+    <TileLayout columns={2} alignX="center">
       {createTiles(3)}
     </TileLayout>
     <br />
-    <TileLayout columns={2} align="right">
+    <TileLayout columns={2} alignX="right">
       {createTiles(3)}
     </TileLayout>
   </>
 );
 
-export const WithSpace: React.FC = () => (
-  <TileLayout columns={2} space={3}>
+export const WithAlignY: React.FC = () => (
+  <>
+    <TileLayout columns={2} alignY="top">
+      <Box backgroundColor="grey" padding={2} minHeight={Math.random() * 100}>
+        Align
+      </Box>
+      <Box backgroundColor="grey" padding={2} minHeight={Math.random() * 100}>
+        Top
+      </Box>
+    </TileLayout>
+    <br />
+    <TileLayout columns={2} alignY="center">
+      <Box backgroundColor="grey" padding={2} minHeight={Math.random() * 100}>
+        Align
+      </Box>
+      <Box backgroundColor="grey" padding={2} minHeight={Math.random() * 100}>
+        Center
+      </Box>
+    </TileLayout>
+    <br />
+    <TileLayout columns={2} alignY="bottom">
+      <Box backgroundColor="grey" padding={2} minHeight={Math.random() * 100}>
+        Align
+      </Box>
+      <Box backgroundColor="grey" padding={2} minHeight={Math.random() * 100}>
+        Bottom
+      </Box>
+    </TileLayout>
+  </>
+);
+
+export const WithSpaceX: React.FC = () => (
+  <TileLayout columns={2} spaceX={3}>
     {createTiles(3)}
   </TileLayout>
 );
 
-export const WithResponsiveSpace: React.FC = () => (
-  <TileLayout columns={2} space={{sm: 3, md: 4, lg: 5}}>
+export const WithSpaceY: React.FC = () => (
+  <TileLayout columns={2} spaceY={3}>
+    {createTiles(3)}
+  </TileLayout>
+);
+
+export const WithResponsiveSpaceX: React.FC = () => (
+  <TileLayout columns={2} spaceX={{sm: 3, md: 4, lg: 5}}>
     {createTiles(5)}
   </TileLayout>
 );
 
 export const WithClassName: React.FC = () => (
-  <CustomTiles columns={2} space={3}>
-    {createTiles(3)}
-  </CustomTiles>
+  <CustomTiles columns={2}>{createTiles(3)}</CustomTiles>
 );

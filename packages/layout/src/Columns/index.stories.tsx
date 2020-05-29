@@ -31,8 +31,8 @@ export const WithWidth: React.FC = () => (
     <ColumnLayout.Column width={1 / 2}>
       <Placeholder>1/2</Placeholder>
     </ColumnLayout.Column>
-    <ColumnLayout.Column width="content">
-      <Placeholder>content</Placeholder>
+    <ColumnLayout.Column width="min">
+      <Placeholder>min</Placeholder>
     </ColumnLayout.Column>
     <ColumnLayout.Column>
       <Placeholder>rest</Placeholder>
@@ -44,7 +44,7 @@ export const WithWidth: React.FC = () => (
 );
 
 export const WithResponsiveWidth: React.FC = () => (
-  <ColumnLayout space={4}>
+  <ColumnLayout spaceX={4} spaceY={4}>
     <ColumnLayout.Column width={{mobile: 1, tablet: 1 / 2, desktop: 1 / 4}}>
       <Placeholder>Feature</Placeholder>
     </ColumnLayout.Column>
@@ -58,6 +58,29 @@ export const WithResponsiveWidth: React.FC = () => (
       <Placeholder>Feature</Placeholder>
     </ColumnLayout.Column>
   </ColumnLayout>
+);
+
+export const WithOffset: React.FC = () => (
+  <>
+    <ColumnLayout>
+      <ColumnLayout.Column width={1 / 2} offset={1 / 4}>
+        <Placeholder>1/2</Placeholder>
+      </ColumnLayout.Column>
+    </ColumnLayout>
+    <ColumnLayout>
+      <ColumnLayout.Column width="min">
+        <Placeholder>min</Placeholder>
+      </ColumnLayout.Column>
+      <ColumnLayout.Column offset={1 / 12}>
+        <Placeholder>rest</Placeholder>
+      </ColumnLayout.Column>
+    </ColumnLayout>
+    <ColumnLayout>
+      <ColumnLayout.Column width={2 / 3} offset={1 / 3}>
+        <Placeholder>2/3</Placeholder>
+      </ColumnLayout.Column>
+    </ColumnLayout>
+  </>
 );
 
 export const WithAlignX: React.FC = () => (
@@ -149,13 +172,30 @@ export const WithAlignY: React.FC = () => (
   </>
 );
 
-export const WithSpace: React.FC = () => (
-  <ColumnLayout space={3}>
+export const WithSpaceX: React.FC = () => (
+  <ColumnLayout spaceX={3}>
     <ColumnLayout.Column width={1 / 2}>
       <Placeholder>1/2</Placeholder>
     </ColumnLayout.Column>
-    <ColumnLayout.Column width="content">
-      <Placeholder>content</Placeholder>
+    <ColumnLayout.Column width="min">
+      <Placeholder>min</Placeholder>
+    </ColumnLayout.Column>
+    <ColumnLayout.Column>
+      <Placeholder>rest</Placeholder>
+    </ColumnLayout.Column>
+    <ColumnLayout.Column width={2 / 3}>
+      <Placeholder>2/3</Placeholder>
+    </ColumnLayout.Column>
+  </ColumnLayout>
+);
+
+export const WithSpaceY: React.FC = () => (
+  <ColumnLayout spaceY={3}>
+    <ColumnLayout.Column width={1 / 2}>
+      <Placeholder>1/2</Placeholder>
+    </ColumnLayout.Column>
+    <ColumnLayout.Column width="min">
+      <Placeholder>min</Placeholder>
     </ColumnLayout.Column>
     <ColumnLayout.Column>
       <Placeholder>rest</Placeholder>
@@ -167,12 +207,12 @@ export const WithSpace: React.FC = () => (
 );
 
 export const WithSpaceWrappedColumnAndHAlign: React.FC = () => (
-  <ColumnLayout space={3} alignX="center">
+  <ColumnLayout spaceX={3} spaceY={3} alignX="center">
     <ColumnLayout.Column width={1 / 2}>
       <Placeholder>1/2</Placeholder>
     </ColumnLayout.Column>
-    <ColumnLayout.Column width="content">
-      <Placeholder>content</Placeholder>
+    <ColumnLayout.Column width="min">
+      <Placeholder>min</Placeholder>
     </ColumnLayout.Column>
     <ColumnLayout.Column>
       <Placeholder>rest</Placeholder>
@@ -184,12 +224,12 @@ export const WithSpaceWrappedColumnAndHAlign: React.FC = () => (
 );
 
 export const WithClassName: React.FC = () => (
-  <CustomColumns space={3}>
+  <CustomColumns spaceX={3} spaceY={3}>
     <CustomColumn width={1 / 2}>
       <Placeholder>1/2</Placeholder>
     </CustomColumn>
-    <CustomColumn width="content">
-      <Placeholder>content</Placeholder>
+    <CustomColumn width="min">
+      <Placeholder>min</Placeholder>
     </CustomColumn>
     <CustomColumn>
       <Placeholder>rest</Placeholder>

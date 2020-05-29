@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import {queries, createMatch, createMap, createProps} from '@substance/style';
-import {square} from '@substance/style/src/__stories__';
+import {square} from '@substance/storybook/src/__fixtures__';
 import {createPadding, createPaddingX, createGetSpace, defaultSpaces} from '.';
 
 export default {title: 'mixin/spacing'};
@@ -17,7 +17,9 @@ const paddingProps = createProps({
   paddingX,
 });
 
-const Square = styled.div(square, paddingProps);
+const Square = styled.div`
+  ${square} ${paddingProps}
+`;
 
 export const Padding = () => (
   <Square padding={{mobile: 2, tablet: 3, desktop: 4}} />

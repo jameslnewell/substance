@@ -3,7 +3,7 @@ import {InlineLayout} from '@substance/layout';
 
 export const Logo = () => (
   <>
-    <InlineLayout space={1}>
+    <InlineLayout spaceX={1}>
       <span aria-hidden="true">⚗️</span>
       <span>Substance</span>
     </InlineLayout>

@@ -33,7 +33,7 @@ export const Header = () => (
               <Logo />
             </Text>
           </ColumnLayout.Column>
-          <ColumnLayout.Column width="content">
+          <ColumnLayout.Column width="min">
             <Text
               href="https://github.com/jameslnewell/substance"
               rel="noopener noreferrer"

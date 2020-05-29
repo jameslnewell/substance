@@ -26,7 +26,8 @@ export interface StyleProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $space?: ResponsiveValue<Media, Space>;
+  $spaceX?: ResponsiveValue<Media, Space>;
+  $spaceY?: ResponsiveValue<Media, Space>;
 }
 
 export const createSpaceStyles = <
@@ -45,7 +46,7 @@ export const createSpaceStyles = <
       content: '';
       margin-top: -1px;
       ${createProps({
-        $space: (space: ResponsiveValue<Media, Space>) =>
+        $spaceY: (space: ResponsiveValue<Media, Space>) =>
           map(
             space,
             (s) => css`
@@ -58,7 +59,7 @@ export const createSpaceStyles = <
 
   const container = css<StyleProps<Media, Space>>`
     ${createProps({
-      $space: (space: ResponsiveValue<Media, Space>) =>
+      $spaceX: (space: ResponsiveValue<Media, Space>) =>
         map(
           space,
           (s) =>
@@ -71,8 +72,9 @@ export const createSpaceStyles = <
 
   const item = css<StyleProps<Media, Space>>`
     box-sizing: border-box;
-    ${createProps<{$space: SpaceMixinFunction<Media, Space>[]}>({
-      $space: [paddingTop, paddingLeft],
+    ${createProps({
+      $spaceY: paddingTop,
+      $spaceX: paddingLeft,
     })}
   `;
 
