@@ -3,7 +3,7 @@ import {Hidden} from './index';
 import {
   withExampleThemeProvider,
   ExampleTheme,
-} from '../../../../storybook/src/__fixtures__';
+} from '@substance/test-utilities';
 
 declare module 'styled-components' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface

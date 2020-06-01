@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import {queries, createMatch, createMap, createProps} from '@substance/style';
-import {square} from '@substance/storybook/src/__fixtures__';
+import {square} from '@substance/test-utilities';
 import {createPadding, createPaddingX, createGetSpace, defaultSpaces} from '.';
 
 export default {title: 'mixin/spacing'};

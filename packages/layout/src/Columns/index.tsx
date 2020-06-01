@@ -133,7 +133,6 @@ export const createColumnLayout = <
   `;
 
   const Item = styled.div<ItemProps<Media, Space>>`
-    flex-grow: 1;
     ${styles.item}
     ${createProps({
       $offset: (offset: ResponsiveValue<Media, number>) => {
@@ -182,7 +181,7 @@ export const createColumnLayout = <
   const ColumnsLayoutColumn: React.FC<ColumnsLayoutColumnProps<Media>> = ({
     children,
     offset,
-    width,
+    width = 1,
     ...otherProps
   }) => (
     <SpaceXContext.Consumer>

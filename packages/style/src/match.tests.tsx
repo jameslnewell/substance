@@ -6,7 +6,7 @@ import {
   exampleQueries,
   exampleColors,
   ExampleMedia,
-} from '../../../storybook/src/__fixtures__';
+} from '@substance/test-utilities';
 
 describe('match()', () => {
   Object.keys(exampleQueries).forEach((media, index) => {

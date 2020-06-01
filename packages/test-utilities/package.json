@@ -4,13 +4,20 @@
   "version": "0.1.0-preview.1",
   "repository": "jameslnewell/substance",
   "website": "https://jameslnewell.github.io/substance",
-  "source": "src/index.ts",
+  "source": "src/index.tsx",
   "main": "dist/test-utilities.cjs.js",
   "module": "dist/test-utilities.esm.js",
   "sideEffects": false,
   "files": [
     "dist"
   ],
+  "dependencies": {
+    "@types/react": "^16.9.35",
+    "@types/styled-components": "^5.1.0",
+    "react": "^16.13.1",
+    "react-is": "^16.13.1",
+    "styled-components": "^5.0.1"
+  },
   "devDependencies": {
     "@babel/runtime": "^7.9.6",
     "@substance/build": "^0.1.0-preview.1"
