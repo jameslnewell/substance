@@ -3,7 +3,7 @@ import styled, {css} from 'styled-components';
 import {MatchFunction} from './types';
 import {queries, DefaultMedia} from './queries';
 import {createMatch} from './createMatch';
-import {exampleColors, square} from '../../../storybook/src/__fixtures__';
+import {exampleColors, square} from '@substance/test-utilities';
 
 export default {title: 'style/createMatch()'};
 

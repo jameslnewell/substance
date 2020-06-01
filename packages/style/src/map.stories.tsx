@@ -7,7 +7,7 @@ import {
   withExampleThemeProvider,
   exampleQueries,
   ExampleMedia,
-} from '../../../storybook/src/__fixtures__';
+} from '@substance/test-utilities';
 
 export default {title: 'style/map()'};
 

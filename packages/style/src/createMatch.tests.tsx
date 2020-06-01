@@ -10,7 +10,7 @@ import {
   exampleColors,
   exampleTheme,
   ExampleThemeWrapper,
-} from '../../../storybook/src/__fixtures__';
+} from '@substance/test-utilities';
 import {
   StyledWithObject,
   StyledWithFunction,

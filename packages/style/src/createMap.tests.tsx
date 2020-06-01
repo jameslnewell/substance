@@ -2,15 +2,14 @@ import 'jest-styled-components';
 import React from 'react';
 import styled from 'styled-components';
 import {render} from '@testing-library/react';
-import {keysOf} from '@substance/test-utilities';
+import {
+  keysOf,   
+  exampleColors,
+  ExampleThemeWrapper,
+  exampleTheme,} from '@substance/test-utilities';
 import {MediaQueries, MapFunction, MediaConstraint} from './types';
 import {queries, DefaultMedia} from './queries';
 import {createMatch} from './createMatch';
-import {
-  exampleColors,
-  ExampleThemeWrapper,
-  exampleTheme,
-} from '../../../storybook/src/__fixtures__';
 import {
   StyleWithTaggedTemplateLiteral,
   StyledWithFunction,
