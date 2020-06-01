@@ -1,5 +1,11 @@
 # @substance/style
 
+## 0.1.0-preview.29
+
+### Patch Changes
+
+- 4122119: Improve typings for createVariant()
+
 ## 0.1.0-preview.28
 
 ### Patch Changes
