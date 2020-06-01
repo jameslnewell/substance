@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import {createVariant} from './createVariant';
 import {createProps} from './createProps';
 
@@ -116,15 +116,15 @@ export const UsingStyleObjects: React.FC = () => {
   };
 
   const color = createVariant({
-    gold: {
-      backgroundColor: 'gold',
-    },
-    silver: {
-      backgroundColor: 'silver',
-    },
-    bronze: {
-      backgroundColor: 'peru',
-    },
+    gold: css`
+      background-color: gold;
+    `,
+    silver: css`
+      background-color: silver;
+    `,
+    bronze: css`
+      background-color: peru;
+    `,
   });
 
   const GoldMedal = styled.div(circle, color('gold'));
