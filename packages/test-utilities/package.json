@@ -4,7 +4,7 @@
   "version": "0.1.0-preview.1",
   "repository": "jameslnewell/substance",
   "website": "https://jameslnewell.github.io/substance",
-  "source": "src/index.ts",
+  "source": "src/index.tsx",
   "main": "dist/test-utilities.cjs.js",
   "module": "dist/test-utilities.esm.js",
   "sideEffects": false,
