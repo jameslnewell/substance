@@ -11,6 +11,13 @@
   "files": [
     "dist"
   ],
+  "dependencies": {
+    "@types/react": "^16.9.35",
+    "@types/styled-components": "^5.1.0",
+    "react": "^16.13.1",
+    "react-is": "^16.13.1",
+    "styled-components": "^5.0.1"
+  },
   "devDependencies": {
     "@babel/runtime": "^7.9.6",
     "@substance/build": "^0.1.0-preview.1"
