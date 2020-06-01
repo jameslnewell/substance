@@ -29,9 +29,7 @@ const CustomColumn = styled(ColumnLayout.Column)({
 
 export const Default: React.FC = withExampleThemeProvider(() => (
   <ColumnLayout>
-    <ColumnLayout.Column>
-      Coulumn
-    </ColumnLayout.Column>
+    <ColumnLayout.Column>Coulumn</ColumnLayout.Column>
   </ColumnLayout>
 ));
 
@@ -45,31 +43,25 @@ export const WithOffset: React.FC = withExampleThemeProvider(() => (
 
 export const WidthMin: React.FC = withExampleThemeProvider(() => (
   <ColumnLayout>
-    <ColumnLayout.Column width="min">
-      Column
-    </ColumnLayout.Column>
+    <ColumnLayout.Column width="min">Column</ColumnLayout.Column>
   </ColumnLayout>
 ));
 
 export const WidthMax: React.FC = withExampleThemeProvider(() => (
   <ColumnLayout>
-    <ColumnLayout.Column width="max">
-      Column
-    </ColumnLayout.Column>
+    <ColumnLayout.Column width="max">Column</ColumnLayout.Column>
   </ColumnLayout>
 ));
 
 export const WidthNumber: React.FC = withExampleThemeProvider(() => (
   <ColumnLayout>
-    <ColumnLayout.Column width={1 / 2}>
-      Column
-    </ColumnLayout.Column>
+    <ColumnLayout.Column width={1 / 2}>Column</ColumnLayout.Column>
   </ColumnLayout>
 ));
 
 export const WidthResponsive: React.FC = withExampleThemeProvider(() => (
   <ColumnLayout>
-    <ColumnLayout.Column width={{sm: 1, md: 'min', lg: 1/4}}>
+    <ColumnLayout.Column width={{sm: 1, md: 'min', lg: 1 / 4}}>
       Column
     </ColumnLayout.Column>
   </ColumnLayout>
@@ -77,65 +69,49 @@ export const WidthResponsive: React.FC = withExampleThemeProvider(() => (
 
 export const AlignXLeft: React.FC = withExampleThemeProvider(() => (
   <ColumnLayout alignX="left">
-    <ColumnLayout.Column width={1 / 4}>
-      Coulumn
-    </ColumnLayout.Column>
+    <ColumnLayout.Column width={1 / 4}>Coulumn</ColumnLayout.Column>
   </ColumnLayout>
 ));
 
 export const AlignXCenter: React.FC = withExampleThemeProvider(() => (
   <ColumnLayout alignX="center">
-    <ColumnLayout.Column width={1 / 4}>
-      Coulumn
-    </ColumnLayout.Column>
+    <ColumnLayout.Column width={1 / 4}>Coulumn</ColumnLayout.Column>
   </ColumnLayout>
 ));
 
 export const AlignXRight: React.FC = withExampleThemeProvider(() => (
   <ColumnLayout alignX="right">
-    <ColumnLayout.Column width={1 / 4}>
-      Coulumn
-    </ColumnLayout.Column>
+    <ColumnLayout.Column width={1 / 4}>Coulumn</ColumnLayout.Column>
   </ColumnLayout>
 ));
 
 export const AlignXResponsive: React.FC = withExampleThemeProvider(() => (
   <ColumnLayout alignX={{sm: 'left', md: 'center', lg: 'right'}}>
-    <ColumnLayout.Column width={1 / 4}>
-      Coulumn
-    </ColumnLayout.Column>
+    <ColumnLayout.Column width={1 / 4}>Coulumn</ColumnLayout.Column>
   </ColumnLayout>
 ));
 
 export const AlignYTop: React.FC = withExampleThemeProvider(() => (
   <ColumnLayout alignY="top">
-    <ColumnLayout.Column width={1 / 4}>
-      Coulumn
-    </ColumnLayout.Column>
+    <ColumnLayout.Column width={1 / 4}>Coulumn</ColumnLayout.Column>
   </ColumnLayout>
 ));
 
 export const AlignYCenter: React.FC = withExampleThemeProvider(() => (
   <ColumnLayout alignY="center">
-    <ColumnLayout.Column width={1 / 4}>
-      Coulumn
-    </ColumnLayout.Column>
+    <ColumnLayout.Column width={1 / 4}>Coulumn</ColumnLayout.Column>
   </ColumnLayout>
 ));
 
 export const AlignYBottom: React.FC = withExampleThemeProvider(() => (
   <ColumnLayout alignY="bottom">
-    <ColumnLayout.Column width={1 / 4}>
-      Coulumn
-    </ColumnLayout.Column>
+    <ColumnLayout.Column width={1 / 4}>Coulumn</ColumnLayout.Column>
   </ColumnLayout>
 ));
 
 export const AlignYResponsive: React.FC = withExampleThemeProvider(() => (
   <ColumnLayout alignY={{sm: 'top', md: 'center', lg: 'bottom'}}>
-    <ColumnLayout.Column width={1 / 4}>
-      Coulumn
-    </ColumnLayout.Column>
+    <ColumnLayout.Column width={1 / 4}>Coulumn</ColumnLayout.Column>
   </ColumnLayout>
 ));
 

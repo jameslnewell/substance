@@ -1,118 +1,150 @@
 import 'jest-styled-components';
 import React from 'react';
 import {render} from '@testing-library/react';
-import {Default, AlignXLeft, AlignXCenter, AlignXRight, AlignXResponsive, AlignYTop, AlignYCenter, AlignYBottom, AlignYResponsive, WidthMin, WidthMax, WidthNumber, WidthResponsive, WithOffset} from './index.stories';
-import { exampleQueries } from '@substance/test-utilities';
+import {
+  Default,
+  AlignXLeft,
+  AlignXCenter,
+  AlignXRight,
+  AlignXResponsive,
+  AlignYTop,
+  AlignYCenter,
+  AlignYBottom,
+  AlignYResponsive,
+  WidthMin,
+  WidthMax,
+  WidthNumber,
+  WidthResponsive,
+  WithOffset,
+} from './index.stories';
+import {exampleQueries} from '@substance/test-utilities';
 
 const getColumnsWrapper = (html: HTMLElement) => {
-  const element = html.firstChild; 
+  const element = html.firstChild;
   if (!element) {
     throw new Error('Could not find columns wrapper.');
-   }
-   return element;
-}
+  }
+  return element;
+};
 
 const getColumnsContainer = (html: HTMLElement) => {
-  const element = getColumnsWrapper(html).firstChild; 
+  const element = getColumnsWrapper(html).firstChild;
   if (!element) {
     throw new Error('Could not find columns container.');
-   }
-   return element;
-}
+  }
+  return element;
+};
 
 const getColumnsColumn = (html: HTMLElement) => {
-  const element = getColumnsContainer(html).firstChild; 
+  const element = getColumnsContainer(html).firstChild;
   if (!element) {
     throw new Error('Could not find column.');
-   }
-   return element;
-}
+  }
+  return element;
+};
 
 describe('Columns', () => {
-
   describe('alignX', () => {
     test('has default style', () => {
-      const {container} = render(
-        <Default/>,
-      );
+      const {container} = render(<Default />);
       expect(container.firstChild).not.toHaveStyleRule('justify-content');
     });
     test('has style for align left', () => {
-      const {container} = render(
-        <AlignXLeft/>,
+      const {container} = render(<AlignXLeft />);
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'justify-content',
+        'flex-start',
       );
-      expect(getColumnsContainer(container)).toHaveStyleRule('justify-content', 'flex-start');
     });
     test('has style for align center', () => {
-      const {container} = render(
-        <AlignXCenter/>,
+      const {container} = render(<AlignXCenter />);
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'justify-content',
+        'center',
       );
-      expect(getColumnsContainer(container)).toHaveStyleRule('justify-content', 'center');
     });
     test('has style for align right', () => {
-      const {container} = render(
-        <AlignXRight/>,
+      const {container} = render(<AlignXRight />);
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'justify-content',
+        'flex-end',
       );
-      expect(getColumnsContainer(container)).toHaveStyleRule('justify-content', 'flex-end');
     });
     test('has style for align responsive', () => {
-      const {container} = render(
-        <AlignXResponsive/>,
+      const {container} = render(<AlignXResponsive />);
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'justify-content',
+        'flex-start',
+        {media: exampleQueries['sm']},
       );
-      expect(getColumnsContainer(container)).toHaveStyleRule('justify-content', 'flex-start', {media: exampleQueries['sm']});
-      expect(getColumnsContainer(container)).toHaveStyleRule('justify-content', 'center', {media: exampleQueries['md']});
-      expect(getColumnsContainer(container)).toHaveStyleRule('justify-content', 'flex-end', {media: exampleQueries['lg']});
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'justify-content',
+        'center',
+        {media: exampleQueries['md']},
+      );
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'justify-content',
+        'flex-end',
+        {media: exampleQueries['lg']},
+      );
     });
   });
 
-  describe('alignY', () => {    
+  describe('alignY', () => {
     test('has default style', () => {
-      const {container} = render(
-        <Default/>,
-      );
+      const {container} = render(<Default />);
       expect(container.firstChild).not.toHaveStyleRule('align-items');
     });
     test('has style for align top', () => {
-      const {container} = render(
-        <AlignYTop/>,
+      const {container} = render(<AlignYTop />);
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'align-items',
+        'flex-start',
       );
-      expect(getColumnsContainer(container)).toHaveStyleRule('align-items', 'flex-start');
     });
     test('has style for align center', () => {
-      const {container} = render(
-        <AlignYCenter/>,
+      const {container} = render(<AlignYCenter />);
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'align-items',
+        'center',
       );
-      expect(getColumnsContainer(container)).toHaveStyleRule('align-items', 'center');
     });
     test('has style for align bottom', () => {
-      const {container} = render(
-        <AlignYBottom/>,
+      const {container} = render(<AlignYBottom />);
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'align-items',
+        'flex-end',
       );
-      expect(getColumnsContainer(container)).toHaveStyleRule('align-items', 'flex-end');
     });
     test('has style for align responsive', () => {
-      const {container} = render(
-        <AlignYResponsive/>,
+      const {container} = render(<AlignYResponsive />);
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'align-items',
+        'flex-start',
+        {media: exampleQueries['sm']},
       );
-      expect(getColumnsContainer(container)).toHaveStyleRule('align-items', 'flex-start', {media: exampleQueries['sm']});
-      expect(getColumnsContainer(container)).toHaveStyleRule('align-items', 'center', {media: exampleQueries['md']});
-      expect(getColumnsContainer(container)).toHaveStyleRule('align-items', 'flex-end', {media: exampleQueries['lg']});
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'align-items',
+        'center',
+        {media: exampleQueries['md']},
+      );
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'align-items',
+        'flex-end',
+        {media: exampleQueries['lg']},
+      );
     });
   });
 
   describe('offset', () => {
     test('has default style', () => {
-      const {container} = render(
-        <Default/>,
-      );
+      const {container} = render(<Default />);
       const column = getColumnsColumn(container);
       expect(column).not.toHaveStyleRule('margin-left');
     });
 
     test('has style for specific offset', () => {
-      const {container} = render(
-        <WithOffset/>,
-      );
+      const {container} = render(<WithOffset />);
       const column = getColumnsColumn(container);
       expect(column).toHaveStyleRule('margin-left', '25%');
     });
@@ -120,9 +152,7 @@ describe('Columns', () => {
 
   describe('width', () => {
     test('has default style', () => {
-      const {container} = render(
-        <Default/>,
-      );
+      const {container} = render(<Default />);
       const column = getColumnsColumn(container);
       expect(column).toHaveStyleRule('flex-grow', 'initial');
       expect(column).toHaveStyleRule('flex-basis', '100%');
@@ -130,9 +160,7 @@ describe('Columns', () => {
     });
 
     test('has style for min width', () => {
-      const {container} = render(
-        <WidthMin/>,
-      );
+      const {container} = render(<WidthMin />);
       const column = getColumnsColumn(container);
       expect(column).toHaveStyleRule('flex-grow', '0');
       expect(column).toHaveStyleRule('flex-basis', 'auto');
@@ -140,9 +168,7 @@ describe('Columns', () => {
     });
 
     test('has style for max width', () => {
-      const {container} = render(
-        <WidthMax/>,
-      );
+      const {container} = render(<WidthMax />);
       const column = getColumnsColumn(container);
       expect(column).toHaveStyleRule('flex-grow', '1');
       expect(column).toHaveStyleRule('flex-basis', 'auto');
@@ -150,9 +176,7 @@ describe('Columns', () => {
     });
 
     test('has style for specific width', () => {
-      const {container} = render(
-        <WidthNumber/>,
-      );
+      const {container} = render(<WidthNumber />);
       const column = getColumnsColumn(container);
       expect(column).toHaveStyleRule('flex-grow', 'initial');
       expect(column).toHaveStyleRule('flex-basis', '50%');
@@ -160,19 +184,35 @@ describe('Columns', () => {
     });
 
     test('has style for responsive width', () => {
-      const {container} = render(
-        <WidthResponsive/>,
-      );
+      const {container} = render(<WidthResponsive />);
       const column = getColumnsColumn(container);
-      expect(column).toHaveStyleRule('flex-grow', 'initial', {media: exampleQueries['sm']});
-      expect(column).toHaveStyleRule('flex-basis', '100%', {media: exampleQueries['sm']});
-      expect(column).toHaveStyleRule('max-width', '100%', {media: exampleQueries['sm']});
-      expect(column).toHaveStyleRule('flex-grow', '0', {media: exampleQueries['md']});
-      expect(column).toHaveStyleRule('flex-basis', 'auto', {media: exampleQueries['md']});
-      expect(column).toHaveStyleRule('max-width', 'none', {media: exampleQueries['md']});
-      expect(column).toHaveStyleRule('flex-grow', 'initial', {media: exampleQueries['lg']});
-      expect(column).toHaveStyleRule('flex-basis', '25%', {media: exampleQueries['lg']});
-      expect(column).toHaveStyleRule('max-width', '25%', {media: exampleQueries['lg']});
+      expect(column).toHaveStyleRule('flex-grow', 'initial', {
+        media: exampleQueries['sm'],
+      });
+      expect(column).toHaveStyleRule('flex-basis', '100%', {
+        media: exampleQueries['sm'],
+      });
+      expect(column).toHaveStyleRule('max-width', '100%', {
+        media: exampleQueries['sm'],
+      });
+      expect(column).toHaveStyleRule('flex-grow', '0', {
+        media: exampleQueries['md'],
+      });
+      expect(column).toHaveStyleRule('flex-basis', 'auto', {
+        media: exampleQueries['md'],
+      });
+      expect(column).toHaveStyleRule('max-width', 'none', {
+        media: exampleQueries['md'],
+      });
+      expect(column).toHaveStyleRule('flex-grow', 'initial', {
+        media: exampleQueries['lg'],
+      });
+      expect(column).toHaveStyleRule('flex-basis', '25%', {
+        media: exampleQueries['lg'],
+      });
+      expect(column).toHaveStyleRule('max-width', '25%', {
+        media: exampleQueries['lg'],
+      });
     });
   });
 });

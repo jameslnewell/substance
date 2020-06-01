@@ -3,10 +3,11 @@ import React from 'react';
 import styled from 'styled-components';
 import {render} from '@testing-library/react';
 import {
-  keysOf,   
+  keysOf,
   exampleColors,
   ExampleThemeWrapper,
-  exampleTheme,} from '@substance/test-utilities';
+  exampleTheme,
+} from '@substance/test-utilities';
 import {MediaQueries, MapFunction, MediaConstraint} from './types';
 import {queries, DefaultMedia} from './queries';
 import {createMatch} from './createMatch';
