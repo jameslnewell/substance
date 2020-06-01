@@ -32,12 +32,12 @@ export type VariantConstraint = string | number;
  * )
  *
  */
-export const createVariant = <Variant extends VariantConstraint>(
+export const createVariant = <Variant extends VariantConstraint, Props extends PropsConstraint = DefaultProps>(
   variants: {
-    [variant in Variant]: Interpolation<unknown>;
+    [variant in Variant]: Interpolation<Props>;
   },
 ) => {
-  return <Props extends PropsConstraint = DefaultProps>(
+  return (
     variant: Variant,
   ): Interpolation<Props> => {
     const style = variants[variant];
