@@ -1,5 +1,5 @@
-import {DefaultTheme} from '@substance/style';
 import {defaultSpaces} from '@substance/mixin';
+import {DefaultTheme} from 'styled-components';
 
 export const theme: DefaultTheme = {
   color: {
