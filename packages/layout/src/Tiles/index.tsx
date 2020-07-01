@@ -107,7 +107,7 @@ export const createTileLayout = <
     })}
   `;
 
-  const OuterItem = styled.div<ItemProps<Media>>`
+  const OuterItem = styled.div<ItemProps<Media, Space>>`
     flex: 0 0 100%;
     ${styles.item}
     ${createProps({
