@@ -57,14 +57,8 @@ interface ContainerProps<
   $justifyContent?: MixinFunctionValue<Media, 'justify-content'>;
   $spaceX?: TilesLayoutProps<Media, Space>['spaceX'];
 }
-interface OuterItemProps<Media extends MediaConstraint> {
+interface ItemProps<Media extends MediaConstraint, Space extends SpaceConstraint> {
   $columns?: TilesLayoutProps<Media, number>['columns'];
-}
-
-interface InnerItemProps<
-  Media extends MediaConstraint,
-  Space extends SpaceConstraint
-> {
   $spaceX?: TilesLayoutProps<Media, Space>['spaceX'];
   $spaceY?: TilesLayoutProps<Media, Space>['spaceY'];
 }
@@ -113,21 +107,22 @@ export const createTileLayout = <
     })}
   `;
 
-  const OuterItem = styled.div<OuterItemProps<Media>>`
+  const OuterItem = styled.div<ItemProps<Media>>`
     flex: 0 0 100%;
+    ${styles.item}
     ${createProps({
       $columns: (columns: ResponsiveValue<Media, number>) =>
         map(
           columns,
-          (c) => css`
-            flex: 0 0 ${c !== undefined ? `${(1 / c) * 100}%` : undefined};
-          `,
+          (c) => {
+            const width = `${(1 / c) * 100}%`;
+            return css`
+              flex: 0 0 ${width};
+              max-width: ${width};
+            `;
+          },
         ),
     })}
-  `;
-
-  const InnerItem = styled.div<InnerItemProps<Media, Space>>`
-    ${styles.item}
   `;
 
   const TileLayout: React.FC<TilesLayoutProps<Media, Space>> = ({
@@ -150,14 +145,8 @@ export const createTileLayout = <
             return child;
           }
           return (
-            <OuterItem key={child.key || index} $columns={columns}>
-              {/*  
-                its necessary to apply padding to the inner item as the padding 
-                affects the flex properties and results in uneven tile widths
-              */}
-              <InnerItem $spaceX={spaceX} $spaceY={spaceY}>
-                {child}
-              </InnerItem>
+            <OuterItem key={child.key || index} $columns={columns} $spaceX={spaceX} $spaceY={spaceY}>
+              {child}
             </OuterItem>
           );
         })}
