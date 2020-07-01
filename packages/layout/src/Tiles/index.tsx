@@ -57,9 +57,7 @@ interface ContainerProps<
   $justifyContent?: MixinFunctionValue<Media, 'justify-content'>;
   $spaceX?: TilesLayoutProps<Media, Space>['spaceX'];
 }
-interface OuterItemProps<
-  Media extends MediaConstraint,
-> {
+interface OuterItemProps<Media extends MediaConstraint> {
   $columns?: TilesLayoutProps<Media, number>['columns'];
 }
 
@@ -70,7 +68,6 @@ interface InnerItemProps<
   $spaceX?: TilesLayoutProps<Media, Space>['spaceX'];
   $spaceY?: TilesLayoutProps<Media, Space>['spaceY'];
 }
-
 
 export interface CreateTileLayoutOptions<
   Media extends MediaConstraint,
@@ -153,19 +150,12 @@ export const createTileLayout = <
             return child;
           }
           return (
-            <OuterItem
-              key={child.key || index}
-              $columns={columns}
-              
-            >
+            <OuterItem key={child.key || index} $columns={columns}>
               {/*  
                 its necessary to apply padding to the inner item as the padding 
                 affects the flex properties and results in uneven tile widths
               */}
-              <InnerItem 
-                $spaceX={spaceX}
-                $spaceY={spaceY}
-              >
+              <InnerItem $spaceX={spaceX} $spaceY={spaceY}>
                 {child}
               </InnerItem>
             </OuterItem>
