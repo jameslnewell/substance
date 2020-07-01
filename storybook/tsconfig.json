@@ -6,6 +6,6 @@
       "@substance/storybook/*": ["./src/*"]
     }
   },
-  "include": [".storybook", "src", "../packages/*/src"],
+  "include": ["typings", ".storybook", "src", "../packages/*/src"],
   "exclude": ["node_modules"]
 }

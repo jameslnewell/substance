@@ -29,7 +29,7 @@
   "scripts": {
     "_typing": "tsc --noEmit",
     "start": "start-storybook -p 3001",
-    "_build": "build-storybook"
+    "build": "build-storybook"
   },
   "license": "MIT"
 }
