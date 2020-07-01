@@ -108,3 +108,14 @@ export const WithResponsiveSpaceX: React.FC = () => (
 export const WithClassName: React.FC = () => (
   <CustomTiles columns={2}>{createTiles(3)}</CustomTiles>
 );
+
+export const WithDifferentWidthContent: React.FC = () => (
+  <TileLayout columns={2} spaceX={3}>
+    <Box backgroundColor="grey" padding={2}>
+      <h1>Longer content than the other tile</h1>
+    </Box>
+    <Box backgroundColor="grey" padding={2}>
+      <h1>Shorter content</h1>
+    </Box>
+  </TileLayout>
+);
