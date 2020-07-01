@@ -57,7 +57,10 @@ interface ContainerProps<
   $justifyContent?: MixinFunctionValue<Media, 'justify-content'>;
   $spaceX?: TilesLayoutProps<Media, Space>['spaceX'];
 }
-interface ItemProps<Media extends MediaConstraint, Space extends SpaceConstraint> {
+interface ItemProps<
+  Media extends MediaConstraint,
+  Space extends SpaceConstraint
+> {
   $columns?: TilesLayoutProps<Media, number>['columns'];
   $spaceX?: TilesLayoutProps<Media, Space>['spaceX'];
   $spaceY?: TilesLayoutProps<Media, Space>['spaceY'];
@@ -112,16 +115,13 @@ export const createTileLayout = <
     ${styles.item}
     ${createProps({
       $columns: (columns: ResponsiveValue<Media, number>) =>
-        map(
-          columns,
-          (c) => {
-            const width = `${(1 / c) * 100}%`;
-            return css`
-              flex: 0 0 ${width};
-              max-width: ${width};
-            `;
-          },
-        ),
+        map(columns, (c) => {
+          const width = `${(1 / c) * 100}%`;
+          return css`
+            flex: 0 0 ${width};
+            max-width: ${width};
+          `;
+        }),
     })}
   `;
 
@@ -145,7 +145,12 @@ export const createTileLayout = <
             return child;
           }
           return (
-            <OuterItem key={child.key || index} $columns={columns} $spaceX={spaceX} $spaceY={spaceY}>
+            <OuterItem
+              key={child.key || index}
+              $columns={columns}
+              $spaceX={spaceX}
+              $spaceY={spaceY}
+            >
               {child}
             </OuterItem>
           );
