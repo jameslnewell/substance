@@ -57,11 +57,14 @@ interface ContainerProps<
   $justifyContent?: MixinFunctionValue<Media, 'justify-content'>;
   $spaceX?: TilesLayoutProps<Media, Space>['spaceX'];
 }
-interface ItemProps<
+interface OuterItemProps<Media extends MediaConstraint> {
+  $columns?: TilesLayoutProps<Media, number>['columns'];
+}
+
+interface InnerItemProps<
   Media extends MediaConstraint,
   Space extends SpaceConstraint
 > {
-  $columns?: TilesLayoutProps<Media, number>['columns'];
   $spaceX?: TilesLayoutProps<Media, Space>['spaceX'];
   $spaceY?: TilesLayoutProps<Media, Space>['spaceY'];
 }
@@ -110,21 +113,21 @@ export const createTileLayout = <
     })}
   `;
 
-  const Item = styled.div<ItemProps<Media, Space>>`
-    flex-grow: 1;
-    flex-shrink: 1;
-    ${styles.item}
+  const OuterItem = styled.div<OuterItemProps<Media>>`
+    flex: 0 0 100%;
     ${createProps({
       $columns: (columns: ResponsiveValue<Media, number>) =>
         map(
           columns,
           (c) => css`
-            flex-grow: 0;
-            flex-shrink: 0;
-            flex-basis: ${c !== undefined ? `${(1 / c) * 100}%` : undefined};
+            flex: 0 0 ${c !== undefined ? `${(1 / c) * 100}%` : undefined};
           `,
         ),
     })}
+  `;
+
+  const InnerItem = styled.div<InnerItemProps<Media, Space>>`
+    ${styles.item}
   `;
 
   const TileLayout: React.FC<TilesLayoutProps<Media, Space>> = ({
@@ -147,14 +150,15 @@ export const createTileLayout = <
             return child;
           }
           return (
-            <Item
-              key={child.key || index}
-              $columns={columns}
-              $spaceX={spaceX}
-              $spaceY={spaceY}
-            >
-              {child}
-            </Item>
+            <OuterItem key={child.key || index} $columns={columns}>
+              {/*  
+                its necessary to apply padding to the inner item as the padding 
+                affects the flex properties and results in uneven tile widths
+              */}
+              <InnerItem $spaceX={spaceX} $spaceY={spaceY}>
+                {child}
+              </InnerItem>
+            </OuterItem>
           );
         })}
       </Container>
