@@ -1,6 +1,6 @@
 {
   "name": "@substance/layout",
-  "version": "0.1.0-preview.23",
+  "version": "0.1.0-preview.24",
   "author": "James Newell",
   "repository": "jameslnewell/substance",
   "website": "https://jameslnewell.github.io/substance",
@@ -18,7 +18,7 @@
   "dependencies": {
     "@babel/runtime": "^7.9.6",
     "@substance/style": "^0.1.0-preview.28",
-    "@substance/mixin": "^0.1.0-preview.14",
+    "@substance/mixin": "^0.1.0-preview.15",
     "react-keyed-flatten-children": "^1.2.0"
   },
   "devDependencies": {
