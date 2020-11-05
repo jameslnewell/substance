@@ -14,7 +14,6 @@ import {
   SpaceMixinFunction,
   paddingTop,
   paddingLeft,
-  justifyContent,
   alignItems,
   MixinFunction,
   MixinFunctionValue,
@@ -24,7 +23,6 @@ import {createSpaceStyles} from '../styles';
 import {
   ResponsiveAlignX,
   ResponsiveAlignY,
-  mapAlignX,
   mapAlignY,
 } from '../utils/alignment';
 
@@ -44,6 +42,7 @@ export interface ColumnsLayoutProps<
   alignY?: ResponsiveAlignY<Media>;
   spaceX?: ResponsiveValue<Media, Space>;
   spaceY?: ResponsiveValue<Media, Space>;
+  reverse?: ResponsiveValue<Media, boolean>;
   className?: string;
 }
 
@@ -59,7 +58,8 @@ interface ContainerProps<
   Space extends SpaceConstraint
 > {
   $alignItems?: MixinFunctionValue<Media, 'align-items'>;
-  $justifyContent?: MixinFunctionValue<Media, 'justify-content'>;
+  $halign?: ResponsiveAlignX<Media>;
+  $reverse?: ResponsiveValue<Media, boolean>;
   $spaceX?: ColumnsLayoutProps<Media, Space>['spaceX'];
 }
 
@@ -80,7 +80,6 @@ export interface CreateColumnLayoutOptions<
   map: MapFunction<Media>;
   getSpace: GetSpaceFunction<Space> | ThemedGetSpaceFunction<Space>;
   alignItems: MixinFunction<Media, 'align-items'>;
-  justifyContent: MixinFunction<Media, 'justify-content'>;
   paddingTop: SpaceMixinFunction<Media, Space>;
   paddingLeft: SpaceMixinFunction<Media, Space>;
 }
@@ -99,7 +98,6 @@ export const createColumnLayout = <
   map,
   getSpace,
   alignItems,
-  justifyContent,
   paddingTop,
   paddingLeft,
 }: CreateColumnLayoutOptions<Media, Space>): ColumnLayout<Media, Space> => {
@@ -109,6 +107,70 @@ export const createColumnLayout = <
   const SpaceYContext = React.createContext<
     ResponsiveValue<Media, Space> | undefined
   >(undefined);
+
+  function halign({
+    $halign,
+    $reverse,
+  }: {
+    $halign?: ResponsiveAlignX<Media>;
+    $reverse?: ResponsiveValue<Media, boolean>;
+  }) {
+    //if no value is specified, then don't output any css (it just makes it harder for the consumer to override)
+    if (typeof $halign === 'undefined' && typeof $reverse === 'undefined') {
+      return ``;
+    }
+
+    return map($halign, (value = 'left') => {
+      let rule = '';
+      switch (value) {
+        case 'left':
+          if ($reverse) {
+            rule = 'flex-end';
+          } else {
+            rule = 'flex-start';
+          }
+          break;
+
+        case 'right':
+          if ($reverse) {
+            rule = 'flex-start';
+          } else {
+            rule = 'flex-end';
+          }
+          break;
+
+        case 'center':
+          rule = 'center';
+          break;
+
+        default:
+          throw new Error(
+            `styled-components-grid: halign must be one of "left", "right", "center". Got "${String(
+              value,
+            )}"`,
+          );
+      }
+      return css`
+        justify-content: ${rule};
+      `;
+    });
+  }
+
+  function reverse(reverse: ResponsiveValue<Media, boolean>) {
+    //if no value is specified, then don't output any css (it just makes it harder for the consumer to override)
+    if (typeof reverse === 'undefined') {
+      return css``;
+    }
+
+    return map(
+      reverse,
+      (value = false) =>
+        `
+          flex-direction: ${(value && 'row-reverse') || 'row'};
+          flex-wrap: ${(value && 'wrap-reverse') || 'wrap'};
+        `,
+    );
+  }
 
   const styles = createSpaceStyles<Media, Space>({
     map,
@@ -125,10 +187,11 @@ export const createColumnLayout = <
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    ${halign}
     ${styles.container}
     ${createProps({
       $alignItems: alignItems,
-      $justifyContent: justifyContent,
+      $reverse: reverse,
     })}
   `;
 
@@ -205,13 +268,14 @@ export const createColumnLayout = <
 
   const ColumnLayout: React.FC<ColumnsLayoutProps<Media, Space>> & {
     Column: typeof ColumnsLayoutColumn;
-  } = ({spaceX, spaceY, alignX, alignY, children, ...otherProps}) => (
+  } = ({spaceX, spaceY, alignX, alignY, reverse, children, ...otherProps}) => (
     <SpaceXContext.Provider value={spaceX}>
       <SpaceYContext.Provider value={spaceY}>
         <Wrapper {...otherProps} $spaceY={spaceY}>
           <Container
             $alignItems={mapAlignY(alignY)}
-            $justifyContent={mapAlignX(alignX)}
+            $halign={alignX}
+            $reverse={reverse}
             $spaceX={spaceX}
           >
             {children}
@@ -230,7 +294,6 @@ export const ColumnLayout = createColumnLayout({
   map,
   getSpace,
   alignItems,
-  justifyContent,
   paddingTop,
   paddingLeft,
 });

@@ -15,7 +15,7 @@ export const createJustifyContent = createFactoryForCSSPropertyMixin(
 
 export const flex = createFlex({map});
 export const flexBasis = createFlexBasis({map});
-export const flexDirection = createFlexBasis({map});
+export const flexDirection = createFlexDirection({map});
 export const flexGrow = createFlexBasis({map});
 export const flexShrink = createFlexBasis({map});
 export const alignItems = createAlignItems({map});
