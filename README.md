@@ -25,6 +25,12 @@ yarn run start:storybook
 yarn run start:website
 ```
 
+### Testing
+
+```
+yarn run testing
+```
+
 ### Versioning
 
 ```
