@@ -16,6 +16,10 @@ import {
   WidthNumber,
   WidthResponsive,
   WithOffset,
+  WithReverse,
+  WithReverseAlignXRight,
+  WithReverseAlignXLeft,
+  WithReverseResponsive,
 } from './index.stories';
 import {exampleQueries} from '@substance/test-utilities';
 
@@ -47,7 +51,9 @@ describe('Columns', () => {
   describe('alignX', () => {
     test('has default style', () => {
       const {container} = render(<Default />);
-      expect(container.firstChild).not.toHaveStyleRule('justify-content');
+      expect(getColumnsContainer(container)).not.toHaveStyleRule(
+        'justify-content',
+      );
     });
     test('has style for align left', () => {
       const {container} = render(<AlignXLeft />);
@@ -86,6 +92,65 @@ describe('Columns', () => {
         'justify-content',
         'flex-end',
         {media: exampleQueries['lg']},
+      );
+    });
+  });
+
+  describe('reverse', () => {
+    test('has default style', () => {
+      const {container} = render(<Default />);
+      expect(getColumnsContainer(container)).not.toHaveStyleRule(
+        'flex-direction',
+      );
+      expect(getColumnsContainer(container)).not.toHaveStyleRule('flex-wrap');
+    });
+    test('has reverse style', () => {
+      const {container} = render(<WithReverse />);
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'flex-direction',
+        'row-reverse',
+      );
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'flex-wrap',
+        'wrap-reverse',
+      );
+    });
+    test('has reverse and aligned right style', () => {
+      const {container} = render(<WithReverseAlignXRight />);
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'flex-direction',
+        'row-reverse',
+      );
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'flex-wrap',
+        'wrap-reverse',
+      );
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'justify-content',
+        'flex-start',
+      );
+    });
+    test('has reverse and aligned left style', () => {
+      const {container} = render(<WithReverseAlignXLeft />);
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'flex-direction',
+        'row-reverse',
+      );
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'flex-wrap',
+        'wrap-reverse',
+      );
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'justify-content',
+        'flex-end',
+      );
+    });
+    test.skip('has reverse responsive style', () => {
+      const {container} = render(<WithReverseResponsive />);
+      expect(getColumnsContainer(container)).toHaveStyleRule(
+        'flex-direction',
+        'row-reverse',
+        {media: exampleQueries['sm']},
       );
     });
   });

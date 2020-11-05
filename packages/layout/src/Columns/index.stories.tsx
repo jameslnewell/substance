@@ -115,6 +115,54 @@ export const AlignYResponsive: React.FC = withExampleThemeProvider(() => (
   </ColumnLayout>
 ));
 
+export const WithReverse: React.FC = () => (
+  <ColumnLayout reverse spaceX={3}>
+    <ColumnLayout.Column width={1 / 2}>
+      <Placeholder>One</Placeholder>
+    </ColumnLayout.Column>
+
+    <ColumnLayout.Column width={1 / 2}>
+      <Placeholder>Two</Placeholder>
+    </ColumnLayout.Column>
+  </ColumnLayout>
+);
+
+export const WithReverseAlignXRight: React.FC = () => (
+  <ColumnLayout reverse alignX="right" spaceX={3}>
+    <ColumnLayout.Column width={1 / 3}>
+      <Placeholder>One</Placeholder>
+    </ColumnLayout.Column>
+
+    <ColumnLayout.Column width={1 / 3}>
+      <Placeholder>Two</Placeholder>
+    </ColumnLayout.Column>
+  </ColumnLayout>
+);
+
+export const WithReverseAlignXLeft: React.FC = () => (
+  <ColumnLayout reverse alignX="left" spaceX={3}>
+    <ColumnLayout.Column width={1 / 3}>
+      <Placeholder>One</Placeholder>
+    </ColumnLayout.Column>
+
+    <ColumnLayout.Column width={1 / 3}>
+      <Placeholder>Two</Placeholder>
+    </ColumnLayout.Column>
+  </ColumnLayout>
+);
+
+export const WithReverseResponsive: React.FC = () => (
+  <ColumnLayout reverse={{sm: true, md: false}} spaceX={3}>
+    <ColumnLayout.Column width={1 / 2}>
+      <Placeholder>One</Placeholder>
+    </ColumnLayout.Column>
+
+    <ColumnLayout.Column width={1 / 2}>
+      <Placeholder>Two</Placeholder>
+    </ColumnLayout.Column>
+  </ColumnLayout>
+);
+
 export const WithSpaceX: React.FC = () => (
   <ColumnLayout spaceX={3}>
     <ColumnLayout.Column width={1 / 2}>
